@@ -42,7 +42,7 @@
                 console.log(res)
                 this.form = res.area
             }).catch(err => {
-
+                
             })
         },
         onSubmit() {

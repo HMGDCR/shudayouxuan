@@ -51,7 +51,7 @@ export default {
                 console.log(res)
                 this.list = res.areas
                 this.totalList = res.total
-                this.loading = false
+                this.loading = false 
             })
         },
         // 删除事件
@@ -73,7 +73,6 @@ export default {
                 }).catch(err => {
                     this.$message.error("删除失败！")
                 }),
-
                 this.$message({ type: 'success', message: '删除成功!'});
             }).catch(() => {
                 this.$message({ type: 'info', message: '已取消删除'

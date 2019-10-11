@@ -1,5 +1,6 @@
 # project01
-
+这是卖座项目
+这个项目是用来练习的
 ## Project setup
 ```
 npm install
