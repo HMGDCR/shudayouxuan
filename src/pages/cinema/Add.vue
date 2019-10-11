@@ -1,6 +1,6 @@
 <template>
    <div>
-       影院添加
+       影院添加1
    </div>
 </template>
 

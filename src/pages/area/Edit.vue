@@ -10,7 +10,6 @@
             <el-form-item label="区域名称">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
-            
             <el-form-item>
                 <el-button type="primary" @click="onSubmit" :loading="loading">立即修改</el-button>
                 <el-button @click.native="cancel">取消</el-button>
