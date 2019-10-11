@@ -3,18 +3,20 @@
        <div slot="header">
             区域修改
         </div>
-        <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="区域ID">
-                <el-input v-model="form.areaId" disabled></el-input>
-            </el-form-item>
-            <el-form-item label="区域名称">
-                <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSubmit" :loading="loading">立即修改</el-button>
-                <el-button @click.native="cancel">取消</el-button>
-            </el-form-item>
-        </el-form>
+        <div class="maincontents">
+            <el-form ref="form" :model="form" label-width="80px">
+                <el-form-item label="区域ID">
+                    <el-input v-model="form.areaId" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="区域名称">
+                    <el-input v-model="form.name"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit" :loading="loading">立即修改</el-button>
+                    <el-button @click.native="cancel">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
    </el-card>
 </template>
 
@@ -68,3 +70,9 @@
     }
   }
 </script>
+
+<style lang="less" scoped>
+.maincontents {
+    width: 500px;
+}
+</style>
