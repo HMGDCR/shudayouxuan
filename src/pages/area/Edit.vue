@@ -1,9 +1,22 @@
 <template>
    <el-card>
-       <div slot="header">
+        <div slot="header">
             区域修改
         </div>
         <div class="maincontents">
+
+            <el-form ref="form" :model="cityform" label-width="80px">
+                <el-form-item label="城市ID">
+                    <el-input v-model="cityform.cityId" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="城市名称">
+                    <el-select v-model="value" clearable placeholder="请选择城市" style="width:422px;">
+                        <el-option v-for="item in options" :key="item.cityName" :label="item.cityId" :value="item.cityName" @click.native="chose(item)">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="区域ID">
                     <el-input v-model="form.areaId" disabled></el-input>
@@ -28,6 +41,12 @@
             form: {
                 areaId:"",
                 name: ''
+            },
+            value:"",
+            options:[],
+            cityform:{
+                cityId:"",
+                cityName:""
             }
         }
     },
@@ -35,8 +54,23 @@
         let areaId = this.$route.params.areaId
         this.getArea(areaId)
         console.log(areaId)
+        this.getCitylist()
     },
     methods: {
+        // 获取城市列表
+        getCitylist(){
+            let url ="/city/allCity"
+            this.$axios.get(url).then(res => {
+                console.log(res)
+                this.options = res.cities
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        chose(item){
+
+        },
+
         getArea(areaId){
             let url = "/area/findById?areaId=" + areaId;
             this.$axios.get(url).then(res => {

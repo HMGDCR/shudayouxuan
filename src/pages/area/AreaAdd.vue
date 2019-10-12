@@ -7,8 +7,7 @@
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="城市名称">
                     <el-select v-model="value" clearable placeholder="请选择城市" style="width:422px;">
-                        <el-option v-for="item in options" :key="item.name" :label="item.name" :value="item.cityId" @click.native="chose(item)">
-                        </el-option>
+                        <el-option v-for="item in options" :key="item.name" :label="item.name" :value="item.cityId" @click.native="chose(item)"> </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="区域名称">
