@@ -9,7 +9,7 @@ export const routes = [
     {
         path:"",
         redirect: "/home",
-        mata:{
+        meta:{
             title:"重定向",
             hidden:true,
             iconfont:"icon-shouye"
@@ -18,7 +18,7 @@ export const routes = [
     {
         path:"/home",
         component:() => import("@/pages/home/Index"),
-        mata:{
+        meta:{
             title:"首页",
             hidden:true,
             iconfont:"icon-shouye"
@@ -27,7 +27,7 @@ export const routes = [
     {
         path:"/city",
         component:Layout,
-        mata:{
+        meta:{
             title:"城市导航",
             hidden:false,
             iconfont:"icon-chengshi"
@@ -36,7 +36,7 @@ export const routes = [
             {
                 path:"add",
                 component:() => import("@/pages/city/Add"),
-                mata:{
+                meta:{
                     title:"添加城市",
                     hidden:false,
                     iconfont:"icon-lvzhou_tianjiazizhanghaodequyushouquan"
@@ -45,7 +45,7 @@ export const routes = [
             {
                 path:"list",
                 component:() => import("@/pages/city/List"),
-                mata:{
+                meta:{
                     title:"城市列表",
                     hidden:false,
                     iconfont:"icon-liebiao"
@@ -54,7 +54,7 @@ export const routes = [
             {
                 path:"edit/:cityId",
                 component:() => import("@/pages/city/Edit"),
-                mata:{
+                meta:{
                     title:"城市修改",
                     hidden:true,
                     iconfont:"icon-xiugai07"
@@ -65,7 +65,7 @@ export const routes = [
     {
         path:"/area",
         component:Layout,
-        mata:{
+        meta:{
             title:"区域导航",
             hidden:false,
             iconfont:"icon-quyu"
@@ -74,7 +74,7 @@ export const routes = [
             {
                 path:"add",
                 component:() => import("@/pages/area/AreaAdd"),
-                mata:{
+                meta:{
                     title:"区域添加",
                     hidden:false,
                     iconfont:"icon-lvzhou_tianjiazizhanghaodequyushouquan"
@@ -83,7 +83,7 @@ export const routes = [
             {
                 path:"list",
                 component:() => import("@/pages/area/AreaList"),
-                mata:{
+                meta:{
                     title:"区域列表",
                     hidden:false,
                     iconfont:"icon-liebiao"
@@ -92,7 +92,7 @@ export const routes = [
             {
                 path:"edit/:areaId",
                 component:() => import("@/pages/area/Edit"),
-                mata:{
+                meta:{
                     title:"区域修改",
                     hidden:true,
                     iconfont:"icon-xiugai07"
@@ -103,7 +103,7 @@ export const routes = [
     {
         path:"/cinema",
         component:Layout,
-        mata:{
+        meta:{
             title:"影院导航",
             hidden:false,
             iconfont:"icon-yingyuana"
@@ -112,7 +112,7 @@ export const routes = [
             {
                 path:"add",
                 component:() => import("@/pages/cinema/Add"),
-                mata:{
+                meta:{
                     title:"影院添加",
                     hidden:false,
                     iconfont:"icon-lvzhou_tianjiazizhanghaodequyushouquan"
@@ -121,7 +121,7 @@ export const routes = [
             {
                 path:"list",
                 component:() => import("@/pages/cinema/List"),
-                mata:{
+                meta:{
                     title:"影院列表",
                     hidden:false,
                     iconfont:"icon-liebiao"
@@ -132,7 +132,7 @@ export const routes = [
     {
         path:"/demo",
         component:Layout,
-        mata:{
+        meta:{
             title:"demo",
             iconfont:"icon-xiugai07"
         },
@@ -140,7 +140,7 @@ export const routes = [
             {
                 path:"demo1",
                 component:() => import("@/pages/demo/demo1"),
-                mata:{
+                meta:{
                     title:"demo01",
                     hidden:false,
                     iconfont:"icon-xiugai07"
@@ -157,16 +157,15 @@ let router = new Router({
 // 路由守卫
 // 获取登录状态 isLogin 的值 this.$store.state
 router.beforeEach((to, from, next) => {
-    //修改网页标题
-    document.title = to.mata.title;
-
+    // 修改网页标题
+    document.title = to.meta.title;
     let isLogin = store.state.isLogin;
     // 如果没有登录，并且去的页面不是登录页面，就跳转到电脑关了页面
     if( !isLogin && to.path !== "/home" ){
         next("/home");
     }else{
-        next()
+        next();
     }
 })
 
-export default router
+export default router;

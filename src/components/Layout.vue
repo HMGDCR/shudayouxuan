@@ -3,12 +3,12 @@
         <el-container style="height:100%;border: 1px solid #eee" class="layout">
             <el-aside width="200px" style="background-color: rgb(238, 241, 246)" class="asidesty">
                 <el-menu :default-openeds="[menuIndex]">
-                    <el-submenu @click.native="switchs(String(index+1))" :index="`${index+1}`" v-for="(item,index) in routes" :key="index" v-show="!item.mata.hidden">
-                        <template slot="title"><i :class="`iconfont ${item.mata.iconfont}`"></i>{{item.mata&&item.mata.title}}</template>
+                    <el-submenu @click.native="switchs(String(index+1))" :index="`${index+1}`" v-for="(item,index) in routes" :key="index" v-show="!item.meta.hidden">
+                        <template slot="title"><i :class="`iconfont ${item.meta.iconfont}`"></i>{{item.meta&&item.meta.title}}</template>
                         <el-menu-item-group>
                             <!-- 遍历 children 的数组 -->
-                            <el-menu-item :index="`${index}-${ind}`" v-for="(ite,ind) in item.children || []" :key="ite.path" v-show="!ite.mata.hidden">
-                                <router-link :to="`${item.path}/${ite.path}`"><i :class="`iconfont ${ite.mata.iconfont}`"></i>{{ite.mata.title}}</router-link>
+                            <el-menu-item :index="`${index}-${ind}`" v-for="(ite,ind) in item.children || []" :key="ite.path" v-show="!ite.meta.hidden">
+                                <router-link :to="`${item.path}/${ite.path}`"><i :class="`iconfont ${ite.meta.iconfont}`"></i>{{ite.meta.title}}</router-link>
                             </el-menu-item>
                         </el-menu-item-group>
                     </el-submenu>
