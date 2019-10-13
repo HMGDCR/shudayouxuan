@@ -107,13 +107,14 @@ export default {
                 this.$store.commit("login","")
                 this.$router.push("/home")
                 this.$message({ type: 'success', message: '退出成功!'})
+                // 改变登录状态
+                this.$store.commit("loginState",false)
             }).catch(err => {
                 this.$message({ type: 'info', message: '退出失败！' })       
             })
         },
         // 当未登录时跳转到登录界面
         logins(){
-            console.log(22222222)
             if( !this.$store.state.username ){
                 this.$router.push("/home")
             }else{
@@ -122,8 +123,13 @@ export default {
         }
     },
     computed:{
+        // 获取用户名
         username(){
             return this.$store.state.username
+        },
+        // 获取登录状态
+        loginState(){
+            return this.$store.state.isLogin
         }
     }
 };

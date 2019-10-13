@@ -29,7 +29,11 @@ export default {
             let url = "/user/login"
             this.$axios.post(url,data).then(res => {
                 this.$message({ type: 'success', message: '登录成功!'})
+                // 保存用户名
                 this.$store.commit("login",this.account)
+                // 修改登录状态
+                this.$store.commit("loginState",true)
+                // 登录后跳转的目标位置
                 this.$router.push("/city")
             }).catch(err => {
                 this.$message({ type: 'info', message: '登录失败！' })        
