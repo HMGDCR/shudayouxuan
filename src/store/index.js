@@ -8,7 +8,8 @@ const config = {
     // 本地持久化
     plugins: [createPersistedState()],
     state:{
-        username:""
+        username:"",
+        isLogin:false
     },
 
     getters:{
@@ -16,8 +17,13 @@ const config = {
     },
 
     mutations:{
+        // 获取用户名
         login(state,payload){
             state.username = payload
+        },
+        // 获取登录状态
+        loginState(state,payload){
+            state.isLogin = payload
         }
     },
 
@@ -31,5 +37,7 @@ const config = {
 
 
 }
+
+
 
 export default new Vuex.Store(config)

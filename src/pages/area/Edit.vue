@@ -11,7 +11,7 @@
                 </el-form-item>
                 <el-form-item label="城市名称">
                     <el-select v-model="value" clearable placeholder="请选择城市" style="width:422px;">
-                        <el-option v-for="item in options" :key="item.cityName" :label="item.cityId" :value="item.cityName" @click.native="chose(item)">
+                        <el-option v-for="item in options" :key="item.name" :label="item.name" :value="item.cityId" @click.native="chose(item)">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -68,14 +68,19 @@
             })
         },
         chose(item){
-
+            console.log(item)
+            this.cityform = {
+                cityId:item.cityId,
+                cityName:item.name
+            }
         },
 
         getArea(areaId){
             let url = "/area/findById?areaId=" + areaId;
             this.$axios.get(url).then(res => {
-                console.log(res)
                 this.form = res.area
+                this.cityform = res.area
+                this.value = res.area.cityName
             }).catch(err => {
                 
             })
@@ -83,7 +88,8 @@
         onSubmit() {
             console.log('submit!');
             let url = "/area/edit";
-            let data = this.form
+            let data = Object.assign( this.form,this.cityform )
+            console.log(data)
             this.loading = true;
             this.$axios
                 .post(url,data)

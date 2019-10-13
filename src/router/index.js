@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Router from "vue-router"
+import store from "../store/index"
 import Layout from "../components/Layout"
 
 Vue.use(Router)
@@ -149,6 +150,23 @@ export const routes = [
     }
 ]
 
-export default new Router({
+let router = new Router({
     routes
 })
+
+// 路由守卫
+// 获取登录状态 isLogin 的值 this.$store.state
+// router.beforeEach((to, from, next) => {
+//     //修改网页标题
+//     document.title = to.mata.title;
+
+//     let isLogin = store.state.isLogin;
+//     // 如果没有登录，并且去的页面不是登录页面，就跳转到电脑关了页面
+//     if( !isLogin && to.path !== "/home" ){
+//         next("/home");
+//     }else{
+//         next()
+//     }
+// })
+
+export default router
