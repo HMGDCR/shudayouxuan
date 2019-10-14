@@ -16,8 +16,8 @@
 export default {
     data(){
         return {
-            account:"",
-            inputPwd:""
+            account:"zhangpeng",
+            inputPwd:"123"
         }
     },
     methods: {

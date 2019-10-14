@@ -1,22 +1,34 @@
 <template>
-  <el-card>
-     
-
-
-        <div class="block">
-    <span class="demonstration">显示总数</span>
-    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="currentPage1" :page-size="100" layout="total, prev, pager, next" :total="1000">
-    </el-pagination>
-  </div>
-  </el-card>
+    <div class="block">
+        <el-cascader v-model="value" 
+        :options="options" 
+        :props="{ expandTrigger: 'hover' }" 
+        @change="handleChange">
+        </el-cascader>
+    </div>
 </template>
 
 <script>
   export default {
     data() {
-        return {
-            
+      return {
+        value: [],
+        options: [{
+            value: 'zhinan',
+            label: '指南',
+            children: [{ value: 'shejiyuanze', label: '设计原则1' }]
+        },{
+            value: 'zhinan',
+            label: '指南',
+            children: [{ value: 'shejiyuanze', label: '设计原则2' }]
         }
+        ]
+      }
+    },
+    methods: {
+      handleChange(value) {
+        console.log(value);
+      }
     }
-  }
+  };
 </script>

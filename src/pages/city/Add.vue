@@ -17,8 +17,8 @@
                 </el-form-item>
                 
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit" :loading="loading">立即创建</el-button>
-                    <el-button>取消</el-button>
+                    <el-button type="primary" @click="onSubmit" :loading="loading">立即添加</el-button>
+                    <el-button @click.native="clearinput">取消</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -39,19 +39,27 @@
     },
     methods: {
         onSubmit() {
-            console.log('submit!');
-            let url = "/city/add";
-            let data = this.form
-            this.loading = true;
-            this.$axios
-                .post(url,data)
-                .then(res => {
-                this.loading = false;
-                this.$message.success('城市添加成功！');
-            }).catch(err => {
-                this.$message.error(err);
-                this.loading = false;
-            });
+            if( this.form.name && this.form.pinyin ){
+                console.log('submit!');
+                let url = "/city/add";
+                let data = this.form
+                this.loading = true;
+                this.$axios
+                    .post(url,data)
+                    .then(res => {
+                    this.loading = false;
+                    this.$message.success('城市添加成功！');
+                }).catch(err => {
+                    this.$message.error(err);
+                    this.loading = false;
+                });
+            }else{
+                this.$message.error('请输入完整信息！');
+            }
+        },
+        clearinput(){
+            this.form.name = ""
+            this.form.pinyin = ""
         }
     }
   }

@@ -126,6 +126,15 @@ export const routes = [
                     hidden:false,
                     iconfont:"icon-liebiao"
                 }
+            },
+            {
+                path:"edit/:name/:cinemaId",
+                component:() => import("@/pages/cinema/Edit"),
+                meta:{
+                    title:"影院修改",
+                    hidden:true,
+                    iconfont:"icon-liebiao"
+                }
             }
         ]
     },
