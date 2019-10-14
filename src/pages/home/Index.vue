@@ -3,7 +3,7 @@
         <div class="login">
             <p>卖座网后台管理系统</p>
             <el-input placeholder="请输入用户名" prefix-icon="el-icon-s-custom" v-model="account"> </el-input>
-            <el-input placeholder="请输入密码" v-model="inputPwd" show-password></el-input>
+            <el-input placeholder="请输入密码" v-model="inputPwd" show-password @keyup.enter.native="submits"></el-input>
             <div class="loginButton">
                 <el-button class="butt" type="success" @click.native="submitForm">登录</el-button>
                 <el-button class="butt" type="info" @click.native="resetForm">取消</el-button>
@@ -21,6 +21,10 @@ export default {
         }
     },
     methods: {
+        // 回车提交
+        submits(){
+            this.submitForm()
+        },
         submitForm() {
             let data = {
                 username:this.account,

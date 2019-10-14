@@ -6,13 +6,11 @@
         <div class="maincontents">
             <el-form ref="form" :model="cityform" label-width="80px">
                 <el-form-item label="城市ID">
-                    <el-input v-model="cityform.cityId"></el-input>
+                    <el-input v-model="cityform.cityId" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="区域ID">
-                    <el-input v-model="cityform.areaId"></el-input>
+                    <el-input v-model="cityform.areaId" disabled></el-input>
                 </el-form-item>
-            </el-form>
-            <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="城市区域">
                     <el-cascader v-model="value" 
                     placeholder="请选择城市区域"
@@ -22,6 +20,8 @@
                     @change="handleChange">
                     </el-cascader>
                 </el-form-item>
+            </el-form>
+            <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="影院名称">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
@@ -50,13 +50,13 @@
                 name: '',
                 lowPrice:""
             },
-            value:"",
+            value:["5da41bdbeaa375006dbc6a45","5da41c7930863b00683c5c23"],
 
             options:[],
 
             cityform:{
-                cityId:"",
-                areaId:"",
+                cityId:"11",
+                areaId:"22",
                 cityName:"",
                 areaName:""
             },
@@ -72,20 +72,31 @@
     },
     created(){
         // 获取动态路由传过来的参数【 影院名称、影院id 】
-        let name = this.$route.params.name
         let cinemaId = this.$route.params.cinemaId
-
+        console.log( cinemaId )
         this.getData()
-
-
-
+        // 进入之后的根据 cinemaId 获取影院信息
         this.getCinema(cinemaId)
-        this.getCitylist()
     },
     methods: {
-        // 进入之后的默认值
-        
-        // 获取城市、区域的数据
+        // 进入之后的根据 cinemaId 获取影院信息
+        getCinema(cinemaId){
+            let url = "/cinema/getDetail?cinemaId=" + cinemaId;
+            this.$axios.get(url).then(res => {
+                console.log( res )
+                this.form = res.cinema
+                // 给 cityId areaId 赋初始值
+                this.cityform.cityId = res.cinema.cityId
+                this.cityform.areaId = res.cinema.areaId
+                this.cityform.cityName = res.cinema.cityName
+                this.cityform.areaName = res.cinema.areaName
+                console.log( this.cityform.cityId,this.cityform.areaId )
+            }).catch(err => {
+                
+            })
+        },
+
+        // 获取城市、区域的数据,用于级联选择器数据渲染
         getData(){
             let cityUrl = "/city/allCity"
             let areaUrl = "/area/allArea"
@@ -120,19 +131,6 @@
             })
         },
 
-
-
-
-        // 获取城市列表
-        getCitylist(){
-            let url ="/city/allCity"
-            this.$axios.get(url).then(res => {
-                console.log(res)
-                this.options = res.cities
-            }).catch(err => {
-                console.log(err)
-            })
-        },
         chose(item){
             console.log(item)
             this.cityform = {
@@ -141,17 +139,7 @@
             }
         },
 
-        // 通过 cinemaId 获取影院详情
-        getCinema(cinemaId){
-            let url = "/cinema/getDetail?cinemaId=" + cinemaId;
-            this.$axios.get(url).then(res => {
-                console.log( res )
-                this.form = res.cinema
-                this.value = res.area.cityName
-            }).catch(err => {
-                
-            })
-        },
+        
         handleChange(value){
             let cityItem = this.cityList.filter(items => {
                 return items.cityId == value[0]

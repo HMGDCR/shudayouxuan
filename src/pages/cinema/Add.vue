@@ -10,10 +10,10 @@
                     <AddressAdd @datas="childData"></AddressAdd>
                 </el-form-item>
                 <el-form-item label="城市ID">
-                    <el-input v-model="form.cityId" placeholder=""></el-input>
+                    <el-input v-model="form.cityId" placeholder="" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="区域ID">
-                    <el-input v-model="form.areaId" placeholder=""></el-input>
+                    <el-input v-model="form.areaId" placeholder="" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="影院名称">
                     <el-input v-model="form.name" placeholder="请输入影院名称"></el-input>
