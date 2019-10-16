@@ -5,7 +5,6 @@
         </div>   
         <div class="maincont">
             <el-form ref="form" :model="form" label-width="80px">
-                
                 <el-form-item label="城市区域">
                     <AddressAdd @datas="childData"></AddressAdd>
                 </el-form-item>
@@ -26,7 +25,7 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit" :loading="loading">立即添加</el-button>
-                    <el-button>取消</el-button>
+                    <el-button @click.native="clearAll">取消</el-button>
                 </el-form-item>
             </el-form>
         </div>    
@@ -67,14 +66,23 @@ export default {
             }
         },
         onSubmit() {
+            this.loading = true
             let url = "/cinema/add"
             let data = this.form
             console.log(data)
             this.$axios.post(url,data).then(res => {
                 this.$message.success('影院添加成功！');
+                this.loading = false
             }).catch(err => {
                 this.$message.error('请输入完整信息！');
+                this.loading = false
             })
+        },
+        clearAll(){
+            // 清空当前
+            this.form = {}
+            this.$store.commit( "clearCinemaAdd",true )
+            console.log( this.$store.state.isClear )
         }
     }
 }

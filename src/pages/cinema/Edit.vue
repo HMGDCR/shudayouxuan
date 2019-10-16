@@ -5,10 +5,10 @@
         </div>
         <div class="maincontents">
             <el-form ref="form" :model="cityform" label-width="80px">
-                <el-form-item label="城市ID">
+                <el-form-item label="城市ID" disabled>
                     <el-input v-model="cityform.cityId" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="区域ID">
+                <el-form-item label="区域ID" disabled>
                     <el-input v-model="cityform.areaId" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="城市区域">
@@ -17,6 +17,7 @@
                     style="width:100%;"
                     :options="citiOptions" 
                     :props="{ expandTrigger: 'hover' }" 
+                    clearable
                     @change="handleChange">
                     </el-cascader>
                 </el-form-item>
@@ -44,14 +45,15 @@
   export default {
     data() {
         return {
+            states:true,
             loading:false,
             form: {
                 address:"",
                 name: '',
                 lowPrice:""
             },
-            value:["5da41bdbeaa375006dbc6a45","5da41c7930863b00683c5c23"],
-
+            // 这个 value 是给级联选择器赋初始值
+            value:[],
             options:[],
 
             cityform:{
@@ -67,16 +69,23 @@
                 children: [{ value: 'shejiyuanze', label: '设计原则1' }]
             }],
             cityList:[],
-            areaList:[]
+            areaList:[],
+            enterLoading:""
         }
     },
     created(){
         // 获取动态路由传过来的参数【 影院名称、影院id 】
         let cinemaId = this.$route.params.cinemaId
-        console.log( cinemaId )
         this.getData()
         // 进入之后的根据 cinemaId 获取影院信息
         this.getCinema(cinemaId)
+        // 进入之后的 loading
+        this.enterLoading = this.$loading({
+            lock: true,
+            text: '努力加载中...',
+            // spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.6)'
+        });
     },
     methods: {
         // 进入之后的根据 cinemaId 获取影院信息
@@ -90,9 +99,13 @@
                 this.cityform.areaId = res.cinema.areaId
                 this.cityform.cityName = res.cinema.cityName
                 this.cityform.areaName = res.cinema.areaName
-                console.log( this.cityform.cityId,this.cityform.areaId )
+                console.log( res )
+                this.value = [res.cinema.cityId,res.cinema.areaId]
             }).catch(err => {
-                
+                this.$message.error( err )
+            }).finally(() => {
+                // 得到数据后终止 loading
+                this.enterLoading.close()
             })
         },
 
@@ -141,6 +154,11 @@
 
         
         handleChange(value){
+            console.log( value )
+            // 当传过来的值为空时后面的就不执行了
+            if( value.length == 0 ){
+                return false
+            }
             let cityItem = this.cityList.filter(items => {
                 return items.cityId == value[0]
             })
@@ -156,6 +174,7 @@
             
         },
         onSubmit() {
+            this.loading = true;
             console.log('submit!');
             let url = "/cinema/edit";
             let data = Object.assign( this.form,this.cityform )
@@ -177,6 +196,20 @@
         cancel(){
             this.$router.push("/cinema/list")           
         }
+    },
+    watch:{
+
+        // 可以用监听来获取当前的 value 是否为空从而进行清空
+        value:{
+            handler( newValue ){
+                if( newValue.length == 0 ){
+                    this.cityform = {}
+                }
+            },
+            deep:true,
+            immediate:true
+        }
+
     }
   }
 </script>

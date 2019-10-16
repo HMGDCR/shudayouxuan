@@ -59,6 +59,10 @@
                         children:areaData
                     }
                 })
+                // 当子区域不存在时，城市不显示
+                this.options = this.options.filter(items => {
+                    return items.children.length > 0
+                })
 
             }).catch(err => {
                 this.$message.error(err);
@@ -80,6 +84,21 @@
             }
             this.$emit( "datas",childrenData )
         }
-    }
+    },
+    computed: {
+        flag(){
+            return this.$store.state.isClear
+        }
+    },
+    watch: {
+        flag(newValue){
+            console.log(newValue)
+            if( this.$store.state.isClear ){
+                this.$store.commit( "clearCinemaAdd",false )
+                this.value = []
+                console.log( this.value )
+            }
+        }
+    },
   };
 </script>

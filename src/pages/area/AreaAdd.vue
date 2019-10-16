@@ -54,6 +54,7 @@ export default {
             })
         },
         onSubmit(){
+            this.loading = true
             let url = "/area/add";
             let data = {
                 name:this.form.areaName,
@@ -63,8 +64,10 @@ export default {
             this.$axios.post(url,data).then(res => {
                 console.log(res)
                 this.$message.success('区域添加成功！');
+                this.loading = false
             }).catch(err => {
                 this.$message.error(err);
+                this.loading = false
             })
         }
     }

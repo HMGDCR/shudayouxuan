@@ -9,7 +9,9 @@ const config = {
     plugins: [createPersistedState()],
     state:{
         username:"",
-        isLogin:false
+        isLogin:false,
+        // 清除影院添加的级联选择器数据标志
+        isClear:false
     },
 
     getters:{
@@ -24,6 +26,9 @@ const config = {
         // 获取登录状态
         loginState(state,payload){
             state.isLogin = payload
+        },
+        clearCinemaAdd( state,payload ){
+            state.isClear = payload
         }
     },
 

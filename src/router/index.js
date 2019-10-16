@@ -35,7 +35,7 @@ export const routes = [
         children:[
             {
                 path:"add",
-                component:() => import("@/pages/city/Add"),
+                component:() => import("@/pages/city/Edit"),
                 meta:{
                     title:"添加城市",
                     hidden:false,
@@ -137,6 +137,53 @@ export const routes = [
                 }
             }
         ]
+    },{
+        path:"/movie",
+        component:Layout,
+        meta:{
+            title:"电影导航",
+            hidden:false,
+            iconfont:"icon-yingyuana"
+        },
+        children:[
+            {
+                path:"add",
+                component:() => import("@/pages/movie/Add"),
+                meta:{
+                    title:"电影添加",
+                    hidden:false,
+                    iconfont:"icon-lvzhou_tianjiazizhanghaodequyushouquan"
+                }
+            },
+            {
+                path:"list",
+                component:() => import("@/pages/movie/List"),
+                meta:{
+                    title:"电影列表",
+                    hidden:false,
+                    iconfont:"icon-liebiao"
+                }
+            },
+            {
+                path:"edit/:filmId",
+                component:() => import("@/pages/movie/Add"),
+                meta:{
+                    title:"电影编辑",
+                    hidden:true,
+                    iconfont:"icon-liebiao"
+                }
+            },
+            {
+                path:"movieDetail",
+                component:() => import("@/pages/movie/components/MovieDetail"),
+                meta:{
+                    title:"电影详情",
+                    hidden:true,
+                    iconfont:"icon-liebiao"
+                }
+        
+            },
+        ]
     },
     {
         path:"/demo",
@@ -153,7 +200,7 @@ export const routes = [
                     title:"demo01",
                     hidden:false,
                     iconfont:"icon-xiugai07"
-                },
+                }
             }
         ]
     }

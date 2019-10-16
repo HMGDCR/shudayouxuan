@@ -81,14 +81,16 @@ export default {
             this.listArr = arr
         },
         getTime(time){
+            // 获取时间戳，将其转化成指定格式
             let date = new Date(time)
             let year = date.getFullYear()
             let month = date.getMonth() + 1
             let dates = date.getDate()
-            console.log( year,month,dates )
+            // 当月份小于10时  前面加个0
             if ( month < 10 ){
                 month = '0' + month
             }
+            // 当天小于10时  前面加个0
             if ( dates < 10 ){
                 dates = "0" + dates
             }
@@ -110,7 +112,7 @@ export default {
                 // 该请求删除后台数据
                 this.$axios.post(url,data).then(res => {
                     // 删除页面数据
-                    this.list.splice($index,1)
+                    this.listArr.splice($index,1)
                 }).catch(err => {
                     this.$message.error("删除失败！")
                 }),
