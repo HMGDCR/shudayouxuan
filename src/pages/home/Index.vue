@@ -38,7 +38,7 @@ export default {
                 // 修改登录状态
                 this.$store.commit("loginState",true)
                 // 登录后跳转的目标位置
-                this.$router.push("/city")
+                this.$router.push("/city/showHome")
             }).catch(err => {
                 this.$message({ type: 'info', message: '登录失败！' })        
             })
