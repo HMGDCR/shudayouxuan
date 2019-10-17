@@ -11,7 +11,9 @@ const config = {
         username:"",
         isLogin:false,
         // 清除影院添加的级联选择器数据标志
-        isClear:false
+        isClear:false,
+        // 编辑时海报默认选中
+        posterDefault:""
     },
 
     getters:{
@@ -29,6 +31,12 @@ const config = {
         },
         clearCinemaAdd( state,payload ){
             state.isClear = payload
+        },
+        posterToChild( state,payload ){
+            state.posterDefault = payload
+        },
+        posterClear( state,payload ){
+            state.posterDefault = payload
         }
     },
 

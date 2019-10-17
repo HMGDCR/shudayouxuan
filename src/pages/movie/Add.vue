@@ -48,22 +48,33 @@
                         </el-form-item>
                     </div>
                     <el-form-item label="海报">
-                        <el-upload action="http://122.51.25.152:3000/admin/film/upload" list-type="picture-card"
-                        :auto-upload="true" :on-success="handleAvatarSuccess">
-                            <i slot="default" class="el-icon-plus"></i>
-                            <div slot="file" slot-scope="{file}">
-                                <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" >
-                                <span class="el-upload-list__item-actions">
-                                    <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)" > <i class="el-icon-zoom-in"></i> </span>
-                                    <span v-if="!disabled" class="el-upload-list__item-delete" @change="handleDownload(file)" > <i class="el-icon-download"></i> </span>
-                                    <span v-if="!disabled" class="el-upload-list__item-delete" @change="handleRemove(file)" > <i class="el-icon-delete"></i> </span>
-                                </span>
-                            </div>
+
+                        <!-- <el-upload
+                            class="avatar-uploader"
+                            action="http://122.51.25.152:3000/admin/film/upload"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload> -->
+                        <Poster @sonData="getChildData" @imgUplLoadState="imgUpload"></Poster>
+                    </el-form-item>
+                    <el-form-item label="剧照">
+                        <el-upload
+                            action="http://122.51.25.152:3000/admin/film/upload" list-type="picture-card"
+                            :on-preview="handlePreviewPhoto"
+                            :on-success="photoUpload"
+                            :on-remove="handleRemovePhoto">
+                            <i class="el-icon-plus"></i>
                         </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                            <img width="100%" :src="dialogImageUrl" alt="">
+                        </el-dialog>
                     </el-form-item>
                 </div>
                 <el-form-item class="add-submit">
-                    <el-button type="primary" @click="onSubmit" :loading="loading">立即{{isAdd?"添加":"编辑"}}</el-button>
+                    <el-button type="primary" @click="onSubmit" :loading="loading" :disabled="imgUpdateState">立即{{isAdd?"添加":"编辑"}}</el-button>
                     <el-button @click.native="clearAll">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -72,52 +83,58 @@
 </template>
 
 <script>
+import Poster from "./components/Poster"
 export default {
+    components:{
+        Poster
+    },
     data(){
         return {
+            imageUrl:"",
+            imgUpdateState:true,
             loading:false,
             dialogImageUrl: '',
             dialogVisible: false,
             disabled: false,
             movieData:{
-                // category: "凄凄切切群",
-                // director: "啊啊啊啊啊啊啊啊",
-                // premiereAt: "1310572800000",
-                // name: "111111",
-                // update: "08-13 20:30:08",
-                // photos: [
-                //     {
-                //         url: "http://lc-TtxW25v5.cn-n1.lcfile.com/c0b3ee4fbabc278da43b.PNG",
-                //         name: "00000.PNG",
-                //         imgId: "5d527886a91c93006980890e",
-                //         uid: 1565685895672,
-                //         status: "success"
-                //     }
-                // ],
-                // actors: [
-                //     {
-                //         name: "算得上是",
-                //         role: " 是s",
-                //         avatarAddress: "",
-                //         key: 1565685916282
-                //     }
-                // ],
-                // poster: "",
-                // grade: "1",
-                // language: " 少时诵诗书",
-                // filmId: "5d517927eaa375006cdbdc6b",
-                // runtime: "asdfg",
-                // filmType: "2D",
-                // isPresale: false,
-                // timeType: "",
-                // isSale: true,
-                // synopsis: "s",
-                // nation: " 2222"
+                category: "凄凄切切群",
+                director: "啊啊啊啊啊啊啊啊",
+                premiereAt: "1310572800000",
+                name: "111111",
+                update: "08-13 20:30:08",
+                photos: [
+                    // {
+                    //     url: "http://lc-TtxW25v5.cn-n1.lcfile.com/c0b3ee4fbabc278da43b.PNG",
+                    //     name: "00000.PNG",
+                    //     imgId: "5d527886a91c93006980890e",
+                    //     uid: 1565685895672,
+                    //     status: "success"
+                    // }
+                ],
+                actors: [
+                    {
+                        name: "算得上是",
+                        role: " 是s",
+                        avatarAddress: "",
+                        key: 1565685916282
+                    }
+                ],
+                poster: "",
+                grade: "1",
+                language: " 少时诵诗书",
+                filmId: "5d517927eaa375006cdbdc6b",
+                runtime: "asdfg",
+                filmType: "2D",
+                isPresale: false,
+                timeType: "",
+                isSale: true,
+                synopsis: "s",
+                nation: " 2222"
             }
-
         }
     },
     created(){
+        
         if( this.isAdd ){
             return false
         }
@@ -133,31 +150,46 @@ export default {
             this.$axios.get(url).then(res => {
                 console.log( res )
                 this.movieData = res.film
+                // 将 poster 的 url 给vuex
+                // debugger
+                this.$store.commit( "posterToChild",this.movieData.poster )
+                console.log( this.movieData.poster )
             }).catch(err => {
                 console.log( err )
             })
         },
-        // 删除
-        handleRemove(file) {
-            console.log(file);
+        // 图片上传成功时的状态
+        imgUpload(res){
+            this.imgUpdateState = res
         },
-        // 预览
-        handlePictureCardPreview(file) {
-            this.dialogImageUrl = file.url;
-            this.dialogVisible = true;
-            console.log( file.url )
-            this.movieData.poster = file.url
-            console.log( this.movieData.poster )
+        // 剧照删除
+        handleRemovePhoto(file, fileList) {
+            console.log(file, fileList);
         },
-        // 下载
-        handleDownload(file) {
-            console.log(file);
+        // 剧照预览
+        handlePreviewPhoto(file) {
+            console.log( file )
         },
-        // 成功的钩子函数
-        handleAvatarSuccess(response, file, fileList){
-            console.log( response )
-            this.movieData.poster = response.image.url
-            console.log( this.movieData.poster )
+         // 剧照图片上传成功回调函数
+        photoUpload(response, file, fileList){
+            console.log(response)
+            console.log(file)
+            console.log(fileList)
+            // 获取数组中的url等信息
+            this.movieData.photos.push(
+                {
+                    url: file.response.image.url,
+                    name: file.name,
+                    imgId: file.response.image.imgId,
+                    uid: file.uid,
+                    status: file.status
+                }
+            )
+        },
+        // 获取子元素【海报】传过来的数据
+        getChildData(res){
+            console.log( 11111111111,res )
+            this.movieData.poster = res
         },
         // 在售回调函数
         isSaleState( data ){
@@ -192,6 +224,8 @@ export default {
             if( !this.isAdd ){
                 this.$router.push( "/movie/list" )
             }
+            // 点击取消，将海报清空
+            
         }
     },
     computed:{
@@ -204,7 +238,7 @@ export default {
 </script>
 
 <style scoped>
-/* 图片上传样式 */
+/* 海报上传样式 */
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
