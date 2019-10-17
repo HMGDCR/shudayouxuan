@@ -58,6 +58,7 @@
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload> -->
+
                         <Poster @sonData="getChildData" @imgUplLoadState="imgUpload"></Poster>
                     </el-form-item>
                     <el-form-item label="剧照">
@@ -134,7 +135,6 @@ export default {
         }
     },
     created(){
-        
         if( this.isAdd ){
             return false
         }
@@ -172,9 +172,6 @@ export default {
         },
          // 剧照图片上传成功回调函数
         photoUpload(response, file, fileList){
-            console.log(response)
-            console.log(file)
-            console.log(fileList)
             // 获取数组中的url等信息
             this.movieData.photos.push(
                 {
@@ -188,7 +185,6 @@ export default {
         },
         // 获取子元素【海报】传过来的数据
         getChildData(res){
-            console.log( 11111111111,res )
             this.movieData.poster = res
         },
         // 在售回调函数
@@ -211,10 +207,9 @@ export default {
                 this.loading = false
                 if( !this.isAdd ){
                     this.$router.push("/movie/list")
-                    console.log( 222222222222222 )
                 }
             }).catch(err => {
-                this.$message.error('请输入完整信息！');
+                this.$message.error( err );
                 this.loading = false
             })
         },
@@ -224,14 +219,25 @@ export default {
             if( !this.isAdd ){
                 this.$router.push( "/movie/list" )
             }
-            // 点击取消，将海报清空
-            
         }
     },
     computed:{
         isAdd(){
-            console.log( 111111111 )
             return this.$route.path.includes("add")
+        }
+    },
+    watch:{
+        $route:{
+            handler(newRoute,oldRoute){
+                console.log( newRoute )
+                if( newRoute.path == "/movie/add" ){
+                    this.movieData = {}
+                    // 如果是添加页面，就将 vuex 里面的 posterDefault 清空
+                    this.$store.commit( "posterToChild","" )
+                }
+            },
+            deep:true,
+            immediate:true
         }
     }
 }

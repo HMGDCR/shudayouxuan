@@ -1,5 +1,5 @@
 <template>
-  <div id="chart" style="width: 800px;height:400px;" />
+  <div id="chart" class="mainContent"></div>
 </template>
 
 <script>
@@ -10,8 +10,8 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(document.getElementById("chart"));
-      this.chart.setOption({
+        this.chart = echarts.init(document.getElementById("chart"));
+        this.chart.setOption({
         title: {
           text: "卖座后台数据统计"
         },
@@ -32,3 +32,12 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="less">
+.mainContent {
+    width: 900px;
+    height:500px;
+    margin: 0 auto;
+    margin-top: 160px;
+}
+</style>

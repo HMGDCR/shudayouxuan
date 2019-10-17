@@ -18,15 +18,13 @@ export default {
         }
     },
     mounted(){
-        this.imageUrl =this.$store.state.posterDefault
-        this.$store.commit( "posterClear","" )
+        
+        // this.$store.commit( "posterClear","" )
     },
     methods: {
         handleAvatarSuccess(res, file) {
-            console.log( res )
-            console.log( file )
             this.imageUrl = res.image.url
-            console.log( this.imageUrl )
+            // 上传成功后，将该状态给到父组件 
             this.$emit( "imgUplLoadState",false )
         },
         beforeAvatarUpload(file) {
@@ -44,9 +42,13 @@ export default {
     },
     watch:{
         imageUrl( newValue,oldValue ){
-            console.log( newValue )
+            // 将子元素的 url 给到父组件
             this.$emit( "sonData",newValue )
             this.imageUrl = newValue
+        },
+        // 监听 vuex 里面 newValue 的值得变化
+        "$store.state.posterDefault"( newValue,oldValue ){
+            this.imageUrl =newValue
         }
     }
 }

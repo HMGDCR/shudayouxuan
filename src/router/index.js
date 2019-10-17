@@ -59,6 +59,15 @@ export const routes = [
                     hidden:true,
                     iconfont:"icon-xiugai07"
                 }
+            },
+            {
+                path:"showHome",
+                component:() => import("@/pages/city/ShowHome"),
+                meta:{
+                    title:"首页显示",
+                    hidden:false,
+                    iconfont:"icon-xiugai07"
+                }
             }
         ]
     },
