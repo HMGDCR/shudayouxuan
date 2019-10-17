@@ -74,7 +74,7 @@
                     </el-form-item>
                 </div>
                 <el-form-item class="add-submit">
-                    <el-button type="primary" @click="onSubmit" :loading="loading" :disabled="imgUpdateState">立即{{isAdd?"添加":"编辑"}}</el-button>
+                    <el-button type="primary" @click="onSubmit" :loading="loading" :disabled="!isAdd?false:imgUpdateState">立即{{isAdd?"添加":"编辑"}}</el-button>
                     <el-button @click.native="clearAll">取消</el-button>
                 </el-form-item>
             </el-form>
