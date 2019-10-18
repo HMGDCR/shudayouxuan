@@ -47,32 +47,23 @@
                             <el-switch v-model="movieData.isPresale" :active-text="movieData.isPresale?'是':'否'" @change="isPresaleState"></el-switch>
                         </el-form-item>
                     </div>
-                    <el-form-item label="海报">
-
-                        <!-- <el-upload
-                            class="avatar-uploader"
-                            action="http://122.51.25.152:3000/admin/film/upload"
-                            :show-file-list="false"
-                            :on-success="handleAvatarSuccess"
-                            :before-upload="beforeAvatarUpload">
-                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload> -->
-
-                        <Poster @sonData="getChildData" @imgUplLoadState="imgUpload"></Poster>
-                    </el-form-item>
-                    <el-form-item label="剧照">
-                        <el-upload
-                            action="http://122.51.25.152:3000/admin/film/upload" list-type="picture-card"
-                            :on-preview="handlePreviewPhoto"
-                            :on-success="photoUpload"
-                            :on-remove="handleRemovePhoto">
-                            <i class="el-icon-plus"></i>
-                        </el-upload>
-                        <el-dialog :visible.sync="dialogVisible">
-                            <img width="100%" :src="dialogImageUrl" alt="">
-                        </el-dialog>
-                    </el-form-item>
+                    <div class="poster-photo">
+                        <el-form-item label="海报" class="poster">
+                            <Poster @sonData="getChildData" @imgUplLoadState="imgUpload"></Poster>
+                        </el-form-item>
+                        <el-form-item label="剧照">
+                            <el-upload
+                                action="http://122.51.25.152:3000/admin/film/upload" list-type="picture-card"
+                                :on-preview="handlePreviewPhoto"
+                                :on-success="photoUpload"
+                                :on-remove="handleRemovePhoto">
+                                <i class="el-icon-plus"></i>
+                            </el-upload>
+                            <el-dialog :visible.sync="dialogVisible">
+                                <img width="100%" :src="dialogImageUrl" alt="">
+                            </el-dialog>
+                        </el-form-item>
+                    </div>
                 </div>
                 <el-form-item class="add-submit">
                     <el-button type="primary" @click="onSubmit" :loading="loading" :disabled="!isAdd?false:imgUpdateState">立即{{isAdd?"添加":"编辑"}}</el-button>
@@ -97,6 +88,7 @@ export default {
             dialogImageUrl: '',
             dialogVisible: false,
             disabled: false,
+            // 以下是提交的数据结构
             movieData:{
                 category: "凄凄切切群",
                 director: "啊啊啊啊啊啊啊啊",
@@ -131,7 +123,8 @@ export default {
                 isSale: true,
                 synopsis: "s",
                 nation: " 2222"
-            }
+            },
+            photosArr:[]
         }
     },
     created(){
@@ -173,7 +166,8 @@ export default {
          // 剧照图片上传成功回调函数
         photoUpload(response, file, fileList){
             // 获取数组中的url等信息
-            this.movieData.photos.push(
+            // console.log( file )
+            this.photosArr.push(
                 {
                     url: file.response.image.url,
                     name: file.name,
@@ -200,8 +194,9 @@ export default {
             this.loading = true
             // 添加时间
             let url = `${this.isAdd?"/film/add":"/film/edit"}`
+            // 给对象添加属性并赋值
+            this.movieData[ "photos" ] = this.photosArr
             let data = this.movieData
-            console.log(data)
             this.$axios.post(url,data).then(res => {
                 this.$message.success(`电影${this.isAdd?"添加":"修改"}成功！`);
                 this.loading = false
@@ -231,6 +226,7 @@ export default {
             handler(newRoute,oldRoute){
                 console.log( newRoute )
                 if( newRoute.path == "/movie/add" ){
+                    // 进入时将该对象清空，会导致 photos 找不到
                     this.movieData = {}
                     // 如果是添加页面，就将 vuex 里面的 posterDefault 清空
                     this.$store.commit( "posterToChild","" )
@@ -243,7 +239,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less">
+.el-upload {
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
+    text-align: center;
+}
+</style>
+
+<style scoped lang="less">
 /* 海报上传样式 */
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
@@ -255,17 +260,18 @@ export default {
 .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
 }
+
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
     text-align: center;
 }
 .avatar {
-    width: 178px;
-    height: 178px;
+    width: 148px;
+    height: 148px;
     display: block;
 }
 .switchButton {
@@ -296,5 +302,12 @@ export default {
 /* 调试是否按钮 */
 .preSell {
     padding-left: 0;
+}
+.poster-photo {
+    display: flex;
+    flex-wrap: nowrap;
+    .poster .el-form-item {
+        width: 300px;
+    }
 }
 </style>
