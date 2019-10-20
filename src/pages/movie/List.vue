@@ -7,7 +7,7 @@
             <el-table v-loading="loading" :data="list" border style="width: 100%" >
                 <el-table-column prop="poster" label="海报" align="center">
                     <template   slot-scope="scope">            
-                        <img :src="scope.row.poster" style="width:110px; heigth:60px;" />
+                        <img :src="scope.row.poster" class="posterImage" />
                     </template>
                 </el-table-column>
                 <el-table-column prop="name" label="电影名称" align="center"> </el-table-column>
@@ -98,6 +98,13 @@ export default {
     }
 }
 </script>
+
+<style lang="less">
+.posterImage {
+    width: 110px;
+    height: 60px;
+}
+</style>
 
 <style lang="less" scoped>
 .pages {

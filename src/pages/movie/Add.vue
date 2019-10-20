@@ -7,37 +7,37 @@
             <el-form ref="form" :model="movieData" label-width="80px"  class="main-content">
                 <div class="filmInfo">
                     <el-form-item label="电影名称">
-                        <el-input v-model="movieData.name" placeholder=""></el-input>
+                        <el-input v-model="movieData.name" placeholder="请输入电影名称"></el-input>
                     </el-form-item>
                     <el-form-item label="电影ID" v-if="!isAdd">
                         <el-input v-model="movieData.filmId" placeholder="" disabled></el-input>
                     </el-form-item>
                     <el-form-item label="内容分类">
-                        <el-input v-model="movieData.category" placeholder=""></el-input>
+                        <el-input v-model="movieData.category" placeholder="内容分类"></el-input>
                     </el-form-item>
                     <el-form-item label="导演">
-                        <el-input v-model="movieData.director" placeholder=""></el-input>
+                        <el-input v-model="movieData.director" placeholder="导演"></el-input>
                     </el-form-item>
                     <el-form-item label="上映时间">
                         <el-date-picker v-model="movieData.premiereAt" type="date" placeholder="选择日期" class="timePicker"> </el-date-picker>
                     </el-form-item>
                     <el-form-item label="评分">
-                        <el-input v-model="movieData.grade" placeholder=""></el-input>
+                        <el-input v-model="movieData.grade" placeholder="评分"></el-input>
                     </el-form-item>
                     <el-form-item label="语言">
-                        <el-input v-model="movieData.language" placeholder=""></el-input>
+                        <el-input v-model="movieData.language" placeholder="语言"></el-input>
                     </el-form-item>
                     <el-form-item label="时长">
-                        <el-input v-model="movieData.runtime" placeholder=""></el-input>
+                        <el-input v-model="movieData.runtime" placeholder="时长"></el-input>
                     </el-form-item>
                     <el-form-item label="产地">
-                        <el-input v-model="movieData.nation" placeholder=""></el-input>
+                        <el-input v-model="movieData.nation" placeholder="产地"></el-input>
                     </el-form-item>
                     <el-form-item label="电影类型">
-                        <el-input v-model="movieData.filmType" placeholder=""></el-input>
+                        <el-input v-model="movieData.filmType" placeholder="电影类型"></el-input>
                     </el-form-item>
                     <el-form-item label="简介">
-                        <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="movieData.synopsis" resize="none"> </el-input>
+                        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="movieData.synopsis"> </el-input>
                     </el-form-item>
                     <div class="switchButton">
                         <el-form-item label="在售"  class="onSale">
@@ -49,14 +49,18 @@
                     </div>
                     <div class="poster-photo">
                         <el-form-item label="海报" class="poster">
-                            <Poster @sonData="getChildData" @imgUplLoadState="imgUpload"></Poster>
+                            <Poster @sonData="getChildData" @imgUplLoadState="imgUpload" ></Poster>
                         </el-form-item>
                         <el-form-item label="剧照">
                             <el-upload
                                 action="http://122.51.25.152:3000/admin/film/upload" list-type="picture-card"
                                 :on-preview="handlePreviewPhoto"
                                 :on-success="photoUpload"
-                                :on-remove="handleRemovePhoto">
+                                :on-change="handChange"
+                                :file-list="movieData.photos"
+                                :on-remove="handleRemovePhoto"
+                                ref="upload"
+                                :auto-upload="true">
                                 <i class="el-icon-plus"></i>
                             </el-upload>
                             <el-dialog :visible.sync="dialogVisible">
@@ -132,8 +136,8 @@ export default {
             return false
         }
         this.$route.params.filmId
-        console.log( this.$route.params.filmId )
-        console.log( this.$route.path.includes("add") )
+        // console.log( this.$route.params.filmId )
+        // console.log( this.$route.path.includes("add") )
         this.getFilmDetail( this.$route.params.filmId )
     },
     methods: {
@@ -141,12 +145,13 @@ export default {
         getFilmDetail( filmId ){
             let url = "/film/getDetail?filmId="+filmId;
             this.$axios.get(url).then(res => {
-                console.log( res )
+                // console.log( res )
                 this.movieData = res.film
                 // 将 poster 的 url 给vuex
                 // debugger
+                this.photosArr = res.film.photos
                 this.$store.commit( "posterToChild",this.movieData.poster )
-                console.log( this.movieData.poster )
+                // console.log( this.movieData.poster )
             }).catch(err => {
                 console.log( err )
             })
@@ -155,13 +160,20 @@ export default {
         imgUpload(res){
             this.imgUpdateState = res
         },
-        // 剧照删除
+        // 剧照删除成功时的钩子函数
         handleRemovePhoto(file, fileList) {
-            console.log(file, fileList);
+            // console.log( 1111111111 )
+            // console.log(file, fileList);
+            // 删除当前选中项
+            this.movieData.photos.forEach((item,index) => {
+                if( item.url == file.url  ){
+                    this.movieData.photos.splice( index,1  )
+                }
+            })
         },
         // 剧照预览
         handlePreviewPhoto(file) {
-            console.log( file )
+            // console.log( file )
         },
          // 剧照图片上传成功回调函数
         photoUpload(response, file, fileList){
@@ -169,13 +181,15 @@ export default {
             // console.log( file )
             this.photosArr.push(
                 {
-                    url: file.response.image.url,
                     name: file.name,
-                    imgId: file.response.image.imgId,
-                    uid: file.uid,
-                    status: file.status
+                    url: file.response.image.url
                 }
             )
+
+        },
+        handChange(file, fileList){
+            // console.log( file )
+            // console.log( fileList )
         },
         // 获取子元素【海报】传过来的数据
         getChildData(res){
@@ -189,13 +203,12 @@ export default {
         isPresaleState( data ){
             this.movieData.isSale = !this.movieData.isPresale
         },
-        // 提交
+        // 提交,提交是为了修改后台的数据
         onSubmit() {
             this.loading = true
             // 添加时间
             let url = `${this.isAdd?"/film/add":"/film/edit"}`
-            // 给对象添加属性并赋值
-            this.movieData[ "photos" ] = this.photosArr
+            
             let data = this.movieData
             this.$axios.post(url,data).then(res => {
                 this.$message.success(`电影${this.isAdd?"添加":"修改"}成功！`);
@@ -209,6 +222,9 @@ export default {
             })
         },
         clearAll(){
+            // 点击时触发该标志
+            this.$store.commit("changeClearPosterFlag")
+
             // 清空当前
             this.movieData = {}
             if( !this.isAdd ){
@@ -231,6 +247,25 @@ export default {
                     // 如果是添加页面，就将 vuex 里面的 posterDefault 清空
                     this.$store.commit( "posterToChild","" )
                 }
+            },
+            deep:true,
+            immediate:true
+        },
+        photosArr:{
+            handler( newValue,oldValue ){
+                // 添加页面，之前没有 photos ,有 photos 则替换,添加一个属性并赋值
+                    this.movieData[ "photos" ] = this.photosArr
+
+                // 以下方法错误，因为这样会导致数据重复，因为每次数据变化时都会触发，从而 contact 的数据会有重复
+                // // 给对象添加属性并赋值
+                // if( this.isAdd ){
+                //     // 添加页面，之前没有 photos ,添加一个属性并赋值
+                //     this.movieData[ "photos" ] = this.photosArr
+                // }else{
+                //     // 编辑页面，之前有该属性，添加时直接拼接字符串
+                //     this.movieData.photos = this.movieData.photos.concat( this.photosArr )
+                // }
+                console.log( newValue )
             },
             deep:true,
             immediate:true

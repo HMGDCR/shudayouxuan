@@ -4,7 +4,9 @@
         action="http://132.232.87.95:3000/admin/film/upload"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
+        :before-upload="beforeAvatarUpload"
+        :auto-upload="true"
+        ref="upload">
         <img v-if="imageUrl" :src="imageUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
@@ -26,6 +28,8 @@ export default {
             this.imageUrl = res.image.url
             // 上传成功后，将该状态给到父组件 
             this.$emit( "imgUplLoadState",false )
+
+            // this.$refs.upload.clearFiles()
         },
         beforeAvatarUpload(file) {
             const isJPG = file.type === 'image/jpeg';
@@ -49,6 +53,11 @@ export default {
         // 监听 vuex 里面 newValue 的值得变化
         "$store.state.posterDefault"( newValue,oldValue ){
             this.imageUrl =newValue
+        },
+        "$store.state.clearPosterFlag"( newValue,oldValue ){
+            console.log( newValue )
+            // this.$refs.upload.clearFiles()
+            this.imageUrl = ""
         }
     }
 }

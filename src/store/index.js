@@ -1,6 +1,7 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import createPersistedState from 'vuex-persistedstate'
+import { stat } from "fs"
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ const config = {
         // 清除影院添加的级联选择器数据标志
         isClear:false,
         // 编辑时海报默认选中
-        posterDefault:""
+        posterDefault:"",
+        clearPosterFlag:true
     },
 
     getters:{
@@ -37,6 +39,9 @@ const config = {
         },
         posterClear( state,payload ){
             state.posterDefault = payload
+        },
+        changeClearPosterFlag( state ){
+            state.clearPosterFlag = !state.clearPosterFlag
         }
     },
 
