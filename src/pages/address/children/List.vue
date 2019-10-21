@@ -1,7 +1,6 @@
 <template>
    <div>
-       首页模块
-       <router-view></router-view>
+       地址列表
    </div>
 </template>
 

@@ -1,7 +1,6 @@
 <template>
    <div>
-       首页模块
-       <router-view></router-view>
+       订单列表
    </div>
 </template>
 

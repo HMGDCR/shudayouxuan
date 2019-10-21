@@ -1,6 +1,6 @@
 <template>
    <div>
-       首页模块
+       显示地址信息
        <router-view></router-view>
    </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
    <div>
-       首页模块
+       我的页面
        <router-view></router-view>
    </div>
 </template>

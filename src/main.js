@@ -8,11 +8,12 @@ import store from "./store/index"
 import $axios from '@/utils/request';
 Vue.prototype.$axios = $axios;
 
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+// 有赞UI库引入
+import Vant from 'vant';
+import 'vant/lib/index.css';
+Vue.use(Vant);
 
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
