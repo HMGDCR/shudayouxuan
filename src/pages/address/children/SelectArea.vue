@@ -1,6 +1,6 @@
 <template>
    <div>
-       <router-view></router-view>
+       选择地区
    </div>
 </template>
 

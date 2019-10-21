@@ -83,6 +83,10 @@ export const routes = [
             {
                 path:"list",
                 component:() => import("@/pages/address/children/List")
+            },
+            {
+                path:"area",
+                component:() => import("@/pages/address/children/SelectArea")
             }
         ]
     },
