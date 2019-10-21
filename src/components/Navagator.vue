@@ -1,10 +1,24 @@
 <template>
    <div class="footNave">
         <van-grid>
-            <van-grid-item icon="wap-home-o" text="首页" style="font-size: 10px;" />
-            <van-grid-item icon="point-gift-o" text="企业福利" />
-            <van-grid-item icon="shopping-cart-o" text="购物车" />
-            <van-grid-item icon="manager-o" text="我的" />
+            <ul class="navagator">
+                <li>
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>首页</span>
+                </li>
+                <li>
+                    <i class="iconfont icon-fuli-"></i>
+                    <span>企业福利</span>
+                </li>
+                <li>
+                    <i class="iconfont cart icon-gouwu"></i>
+                    <span>购物车</span>
+                </li>
+                <li>
+                    <i class="iconfont icon-wode"></i>
+                    <span>我的</span>
+                </li>
+            </ul>
         </van-grid>
    </div>
 </template>
@@ -15,26 +29,37 @@ export default {
 }
 </script>
 
-<style lang="less">
-.footNave .van-grid-item__content .van-grid-item__icon {
-    font-size: 31px;
-    color: #797d82;
-    font-weight: 300;
-}  
-.footNave .van-grid-item__content .van-grid-item__text {
-    margin-top: 0;
-} 
-.footNave .van-grid-item .van-grid-item__content {
-    padding-top: 0;
-} 
-</style>
-
 <style scoped lang="less">
 .footNave {
     position: fixed;
     width: 100%;
     bottom: 0;
     height: 49px;
+    box-sizing: border-box;
+    background: #ffffff;
+    .navagator {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 5px;
+        li {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            .iconfont {
+                font-size: 20px;
+            }
+            .iconfont.cart {
+                font-size: 25px;
+            }
+            span {
+                margin-top: 2px;
+                font-size: 12px;
+                color: #797d82;
+            }
+        }
+    }
 }
 
 

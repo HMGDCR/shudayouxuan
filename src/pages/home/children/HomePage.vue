@@ -150,11 +150,14 @@ export default {
 // 轮播图高度
 .swipe {
     height: 210px;
+    width: 100%;
+    img {
+        width: 100%;
+    }
 }
 // 宫格样式调整
 
 .grid {
-    background: red;
     margin-bottom: 10px;
     
 }
