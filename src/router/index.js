@@ -6,7 +6,7 @@ Vue.use(Router)
 export const routes = [
     {
         path:"",
-        redirect: "/home",
+        redirect: "/home/homePage",
         meta:{
             title:"首页",
         }
@@ -16,6 +16,10 @@ export const routes = [
         path:"/home",
         component:() => import("@/pages/home/Index"),
         children:[
+            {
+                path:"homePage",
+                component:() => import("@/pages/home/children/HomePage")
+            },
             {
                 path:"list",
                 component:() => import("@/pages/home/children/List")
