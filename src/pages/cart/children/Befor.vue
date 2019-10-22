@@ -75,7 +75,7 @@
       </van-checkbox>
       <van-button style="height:49px;width:105px;font-size:17px" color="#C03131">结算</van-button>
     </div>
-    <Navagater></Navagater>
+    <!-- <Navagater></Navagater> -->
   </div>
 </template>
 
@@ -132,7 +132,7 @@ export default {
   background: #fff;
   position: fixed;
   left: 0px;
-  bottom: 49px;
+  bottom: 0;
 }
 .van-card__content {
   padding-right: 15px;

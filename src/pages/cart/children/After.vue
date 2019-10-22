@@ -79,7 +79,7 @@
         <span style="height:33px">删除</span>
       </van-button>
     </div>
-    <Navagater></Navagater>
+    <!-- <Navagater></Navagater> -->
   </div>
 </template>
 
@@ -132,7 +132,7 @@ export default {
   background: #fff;
   position: fixed;
   left: 0px;
-  bottom: 49px;
+  bottom: 0;
 }
 .van-card__content {
   padding-right: 15px;
