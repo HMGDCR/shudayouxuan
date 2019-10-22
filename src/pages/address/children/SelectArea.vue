@@ -67,6 +67,10 @@ export default {
           {
             name: "广西自治区",
             address: "贵港市"
+          },
+              {
+            name: "新疆",
+            address: "维吾尔"
           }
         ];
       } else {
