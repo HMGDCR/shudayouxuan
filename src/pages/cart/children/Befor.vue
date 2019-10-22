@@ -121,6 +121,7 @@ export default {
 }
 .navagator .van-nav-bar .van-icon {
   color: #2e2f30;
+  
 }
 .navagator .van-nav-bar__text {
   color: #2e2f30;

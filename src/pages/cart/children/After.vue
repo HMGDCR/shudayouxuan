@@ -214,6 +214,7 @@ export default {
   right: 0;
   color: rgb(184, 181, 181);
   font-size: 12px;
+  
 }
 .small-box {
   width: 115px;
