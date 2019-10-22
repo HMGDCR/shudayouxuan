@@ -79,7 +79,7 @@
         <span style="height:33px">删除</span>
       </van-button>
     </div>
-    <!-- <Navagater></Navagater> -->
+    <Navagater></Navagater>
   </div>
 </template>
 
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-        this.$router.push("/home/homePage");
+      this.$router.push("/home/homePage");
     },
     checkAll() {
       this.$refs.checkboxGroup.toggleAll(true);
