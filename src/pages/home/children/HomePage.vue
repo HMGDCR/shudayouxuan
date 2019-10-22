@@ -90,35 +90,35 @@ export default {
             ],
             value:[
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 },
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 },
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 },
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 },
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 },
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 },
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 },
                 {
-                    img:"https://mall.s.maizuo.com/2023015378f55bdcf9583d385ee94b14.jpg?x-oss-process=image/resize,w_68",
+                    img:"https://mall.s.maizuo.com/a14f2cbaaf1880b3edc549a1b82cf2e4.jpg?x-oss-process=image/resize,w_68",
                     name:"进口零食"
                 }
             ]
@@ -164,14 +164,11 @@ export default {
     }
 }
 // 宫格样式调整
-
 .grid {
     margin-bottom: 10px;
-    
-}
-.van-grid-item__content {
-    padding-top: 5.5px;
-    padding-bottom: 5.5px;
+    height: 190px;
+    padding:15px 0;
+    background: #ffffff;
 }
 // 主体内容
 .content {
@@ -197,7 +194,6 @@ export default {
                 margin-left: 5px;
                 transform: scale(0.7);
             }
-
         }
     }
     .goods {
@@ -220,6 +216,8 @@ export default {
                 display: flex;
                 flex-direction: column;
                 .goodsName {
+                    margin-top: 12px;
+                    color: #2c3e50;
                     font-size: 14px;
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -229,7 +227,7 @@ export default {
                 .goodDetails {
                     font-size: 12px;
                     color: #797d82;
-                    margin-top: 5px;
+                    margin-top: 7px;
                     margin-bottom: 5px;
                     overflow: hidden;
                     text-overflow: ellipsis;
@@ -238,6 +236,7 @@ export default {
                 }
                 .price {
                     color: #c03131;
+                    margin-top: 4px;
                     .ren {
                         font-size: 10px;
                         padding-right: 3px;
@@ -250,5 +249,4 @@ export default {
         }
     }
 }
-
 </style>
