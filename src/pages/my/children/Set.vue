@@ -1,14 +1,14 @@
 <template>
     <div class="my-set">
         <van-nav-bar title="系统设置" left-arrow @click-left="onClickLeft" >
-    <van-icon name="wap-home-o" size="23px" color="black" slot="left" />
+    <van-icon name="wap-home-o" size="20px" color="gray" slot="left" />
     </van-nav-bar>
         <div class="label flex aic jc-sb border-bottom">
-            <span>清除缓存</span>
+            <span class="f15">清除缓存</span>
             <span class="kb">1010.6 KB</span>
         </div>
-        <div class="label flex aic jc-sb">意见反馈</div>
-        <div class="label flex aic jc-c loginOut" @click="goBack">退出</div>
+        <div class="label flex aic jc-sb f15">意见反馈</div>
+        <div class="label flex aic jc-c loginOut" style="font-size:15px;" @click="goBack">退出</div>
         <div class="vs">版本号 V1.6.0</div>
     </div>
 </template>
@@ -69,5 +69,9 @@ export default {
 }
 .van-dialog{
     border-radius:0;
+}
+.f15{
+    font-size:15px;
+    color: #2e2f30;
 }
 </style>
