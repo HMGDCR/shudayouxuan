@@ -2,12 +2,12 @@
     <div class="cart-befor">
         <!-- 导航栏 -->
         <div class="navagator">
-            <van-nav-bar title="购物车" right-text="完成" @click.native="toCart">
-                <van-icon style="font-size:20px;" name="wap-home-o" slot="left" />
+            <van-nav-bar title="购物车" right-text="完成"  class="edit" @click.native="toCart">
+                <van-icon style="font-size:23px;" name="wap-home-o" class="icon-line-height" slot="left" />
             </van-nav-bar>
         </div>
         <!-- 商城运费 -->
-        <div style="height:44px;background:#fff;display:flex;line-height:44px">
+        <div style="height:44px;background:#fff;display:flex;line-height:44px;border-bottom: 1px solid #F4F4F4">
             <van-checkbox style="padding: 0 15px" v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
             <span style="font-size:15px">商城承担运费</span>
         </div>
@@ -15,7 +15,7 @@
         <div>
             <div class="flx-cent">
                 <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-                <van-card price="42.5" title="海边理发店" thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
+                <van-card price="42.5" title="海边理后方可读后感发动" thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
                 <van-divider />
             </van-card>
             <van-stepper style="padding-top:60px;padding-right:15px" v-model="value" />
@@ -30,8 +30,8 @@
         </div>
         <!-- 底部结算 -->
         <div class="buttom-nav">
-        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll">全选</van-checkbox>
-            <van-button style="height:49px; width:105px; font-size:16px;" color="#c03131" >删除</van-button>
+        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll"><span style="color: #797d82;">全选</span></van-checkbox>
+            <van-button style="display:flex; justify-content: center;  align-items: center; height:33px; width:85px;margin-top: 8px;margin-right: 15px; font-size:16px;" color="#ef4040" ><span style="height:33px">删除</span></van-button>
         </div>
         <Navagater></Navagater>
     </div>
@@ -61,6 +61,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.van-nav-bar__left, .van-nav-bar__right {
+    font-size: 17px
+}
+
+.van-button{
+    line-height: 0px;
+}
 .navagator .van-nav-bar .van-icon {
     color: #2e2f30;
 }
@@ -68,6 +75,7 @@ export default {
     color: #2e2f30;
 }
 .buttom-nav{
+   
     display: flex;
     justify-content: space-between;
     height: 49px;
@@ -85,9 +93,10 @@ export default {
     background:white
 }
 .flx-cent{
-    padding-bottom:  15px;
+    padding:15px 15px 15px 0;
     display: flex;
-    background:white
+    background:white;
+    border-bottom: 1px solid #F4F4F4;
 }
 .cart-befor{
     height:100vh;
@@ -104,5 +113,12 @@ export default {
 }
 .van-card:not(:first-child) {
     margin-top: 0px;
+}
+.edit .van-nav-bar__text{
+    font-size:15px;
+    padding:0 19px;
+}
+.icon-line-height{
+    margin-bottom:5px;
 }
 </style>

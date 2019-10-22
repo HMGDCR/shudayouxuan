@@ -6,9 +6,9 @@
                     <i class="iconfont icon-shouye1"></i>
                     <span>首页</span>
                 </router-link>
-                <router-link to="" tag="li">
-                    <i class="iconfont icon-fuli-"></i>
-                    <span>企业福利</span>
+                <router-link to="/home/list" tag="li">
+                    <i class="iconfont icon-shangpinfenlei"></i>
+                    <span>商品分类</span>
                 </router-link>
                 <router-link to="/cart/befor" tag="li">
                     <i class="iconfont cart icon-gouwu"></i>
@@ -47,6 +47,7 @@ export default {
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
+            color: #797d82;
             .iconfont {
                 font-size: 20px;
             }
@@ -56,11 +57,8 @@ export default {
             span {
                 margin-top: 2px;
                 font-size: 12px;
-                color: #797d82;
             }
         }
     }
 }
-
-
 </style>

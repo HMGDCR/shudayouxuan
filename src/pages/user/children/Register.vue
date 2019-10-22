@@ -34,10 +34,11 @@ export default {
     .register-hander{
         height: 44px;
         width: 100%;
-        border-bottom: 1px solid #ededed;
+       border-bottom: 1px solid #f6f6f6;
         span{
             line-height: 44px;
             float: right;
+            font-size: 15px;
         }
     }
     .logo{
@@ -56,20 +57,20 @@ export default {
         margin: 0px 25px;
         // border-bottom: 1px solid red;
         position: relative;
-        font-size: 14px;
+     
 
        input{
            width: 100%;
            height: 97%;
            border: none;
-        // border-bottom: 1px solid rgb(238, 241, 241);
+           font-size: 15px;
        }
        button{
-           width: 90px;
+           width: 72px;
            height: 30px;
            background: white;
            font-size: 14px;
-           color: rgb(212, 217, 221);
+           color: #bdc0c5;
            background-color: white;
            border: white;
            position: absolute;
@@ -82,7 +83,7 @@ export default {
             content: " ";
            width: 100%;
            height: 1px;
-           border-bottom: 1px solid rgb(238, 241, 241);
+           border-bottom: 1px solid #fbfbfb;
            display: block;
             }
 ///user/register
@@ -104,7 +105,7 @@ export default {
            width: 100%;
            height: 97%;
            border: none;
-           font-size: 14px;
+           font-size: 15px;           
       
 
        }
@@ -112,7 +113,7 @@ export default {
             content: " ";
            width: 100%;
            height: 1px;
-           border-bottom: 1px solid rgb(238, 241, 241);
+          border-bottom: 1px solid #f6f6f6;
            display: block;
            
            }
@@ -124,11 +125,11 @@ export default {
             height: 45px;
             border: #c03131 1px solid;
             background: #c03131;
-            font-size: 16px;
+            font-size: 15px;
             color: #fff;
-            margin-top: 50px;
+            margin-top: 54px;
             span{
-                opacity: .4;
+                opacity: .5;
             }
         }
     }

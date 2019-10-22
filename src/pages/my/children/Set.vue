@@ -3,13 +3,13 @@
         <van-nav-bar title="系统设置" left-arrow @click-left="onClickLeft" >
     <van-icon name="wap-home-o" size="23px" color="black" slot="left" />
     </van-nav-bar>
-        <div class="label flex aic jc-sb ">
+        <div class="label flex aic jc-sb border-bottom">
             <span>清除缓存</span>
-            <span>1010.6KB</span>
+            <span class="kb">1010.6 KB</span>
         </div>
         <div class="label flex aic jc-sb">意见反馈</div>
-        <div class="label flex aic jc-c" style="position:fixed;bottom:0;color:red;" @click="goBack">退出</div>
-        <div style="color:gray;margin-top:23px;font-size:13px;text-align:center">版本号 V16.0</div>
+        <div class="label flex aic jc-c loginOut" @click="goBack">退出</div>
+        <div class="vs">版本号 V1.6.0</div>
     </div>
 </template>
 
@@ -17,10 +17,19 @@
 export default {
     methods: {
         onClickLeft() {
-            Toast('返回');
+            this.$router.push("/my/center")
         },
         goBack(){
+            console.log(2222)
+            this.$dialog.confirm({
+            title: '提示',
+            message: '退出登录'
+            }).then(() => {
             this.$router.push("/my/center")
+            // on confirm
+            }).catch(() => {
+            // on cancel
+            });
         }
     }
 }
@@ -33,8 +42,32 @@ export default {
     padding:0 15px;
     background-color:white;
 }
+.kb{
+    font-size: 13px;
+    color: #bdc0c5;
+}
+.border-bottom{
+    border-bottom:1px solid #f3f1f1;
+}
 .my-set{
-    background-color:#ccc;
+    background-color:#f4f4f4;;
     height:100vh;
+}
+.vs{
+    color:#bdc0c5;
+    margin-top:23px;
+    font-size:13px;
+    text-align:center;
+}
+.loginOut{
+    position:fixed;
+    bottom:0;
+    color:#c03131;
+}
+.van-button__text{
+    color:black;
+}
+.van-dialog{
+    border-radius:0;
 }
 </style>

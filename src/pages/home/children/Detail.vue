@@ -3,16 +3,16 @@
         <!-- 轮播图 -->
         <van-swipe @change="onChange">
             <van-swipe-item>
-                <img src="@/assets/img/45cd68e89267b113b20dc15742ffb5e9.png" alt />
+                <img src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png?x-oss-process=image/resize,w_563" alt />
             </van-swipe-item>
             <van-swipe-item>
-                <img src="@/assets/img/45cd68e89267b113b20dc15742ffb5e9.png" alt />
+                <img src="https://mall.s.maizuo.com/71e5b918b306be65390ff0c3fb8155f2.jpg?x-oss-process=image/resize,w_563" alt />
             </van-swipe-item>
             <van-swipe-item>
-                <img src="@/assets/img/45cd68e89267b113b20dc15742ffb5e9.png" alt />
+                <img src="https://mall.s.maizuo.com/85692b2f7a7c0ac417a39ec33b4d8895.jpg?x-oss-process=image/resize,w_563" alt />
             </van-swipe-item>
             <van-swipe-item>
-                <img src="@/assets/img/45cd68e89267b113b20dc15742ffb5e9.png" alt />
+                <img src="https://mall.s.maizuo.com/ebbcef931beb1d633533835ef7f51639.jpg?x-oss-process=image/resize,w_563" alt />
             </van-swipe-item>
             <div class="custom-indicator" slot="indicator">{{ current + 1 }}/4</div>
         </van-swipe>
@@ -25,23 +25,23 @@
                 <span class="label f12" style="background-color: rgb(145, 188, 111);">包邮</span>
                 极鲜网 冻巴沙鱼柳 450-500g*2袋 分活动是佛活动啊过分分活动是佛光复读机啊过分活动啊过分分活动啊过分分活动啊过分分活动啊过分分活动啊过分分
                 </div>
-                <div class="item-info-slave">果园生态种植 皮薄香甜爽口 富含天然维C</div>
-                <div class="item-info-price flex jc-sb ai-fe">
+                <div class="item-info-slave color-gray">果园生态种植 皮薄香甜爽口 富含天然维C</div>
+                <div class="item-info-price flex jc-sb ai-fe mt-10">
                 <span>
                     <span class="price mr-5" style="font-size:15px">￥</span>
                     <span class="f20 price mr-5">44.9</span>
-                    <span class="f12 old-price mr-5" style="text-decoration:line-through;">￥56.9</span>
+                    <span class="f12 old-price mr-5 color-gray" style="text-decoration:line-through;">￥56.9</span>
                 </span>
-                <span class="f12">3932人购买</span>
+                <span class="f12 color-gray">3932人购买</span>
                 </div>
             </div>
         </div>
         <!-- 数目弹框 -->
         <div class="item-cell">
-            <van-cell is-link @click="showPopup" style="font-size:13px">规格： X {{count}}</van-cell>
+            <van-cell is-link @click="showPopup" style="font-size:13px"><span class="color-gray">规格： X </span>{{count}}</van-cell>
             <van-popup v-model="show" position="bottom" :style="{ height: '60%' }">
                 <div class="topic flex mt-15">
-                <img src="@/assets/img/45cd68e89267b113b20dc15742ffb5e9.png" alt />
+                <img class="img-backcolor" src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png?x-oss-process=image/resize,w_563" alt />
                 <div class="flex2 jc-c" style="height:100%">
                     <div style="margin-bottom:4px">
                     <span class="price mr-5" style="font-size:15px;">￥</span>
@@ -59,22 +59,21 @@
                 </div>
                 </div>
                 <van-goods-action style="width:100%">
-                <van-goods-action-icon icon="cart-o" info="5" text="购物车" @click="onClickIcon" class="ml-10"/>
-                <van-goods-action-button color="white" style="border-radius:0;color:black;height:50px;" type="warning"  text="加入购物车" @click="onClickButton" />
-                <van-goods-action-button style="border-radius:0;height:50px;margin-right:0" type="danger" text="立即购买" @click="onClickButton" />
+                <van-goods-action-button color="white" style="color:black" class="add-cart" type="warning"  text="加入购物车"  @click="onClickButton" />
+                <van-goods-action-button style="border-radius:0;height:50px;margin-right:0" type="danger" text="立即购买" color="#c03131" @click="onClickButton" />
                 </van-goods-action>
             </van-popup>
         </div>
         <!-- 未登录地址选择弹框 -->
         <div class="address-select">
-            <van-cell is-link @click="showPopup2" class="fcc">配送至：<span class="more-text" style="width:260px;height:19px;display:inline-block;font-size:13px;line-height:19px;padding-top:3px;">上海黄浦区非机动啥假发票感觉到破案机机感觉到破案机机感觉到破案机机机机机构</span></van-cell>
+            <van-cell is-link @click="showPopup2" class="fcc"><span class="color-gray">配送至：</span><span class="more-text selected-address" style="">上海黄浦区非机动啥假发票感觉到破案机机感觉到破案机机感觉到破案机机机机机构</span></van-cell>
             <van-popup v-model="show2" position="bottom" :style="{ height: '60%' }">
                 <div class="msg">
                 <div class="f15" style="margin-bottom:4px;">请选择配送区域</div>
                 <div class="f12" style="color:red;">未显示地区即超出配送范围，无法进行选择</div>
                 </div>
                 <div style="height:20px" class="ml-15">湖南省/衡阳市/耒阳市</div>
-                <van-area :area-list="areaList"/>
+                <van-area :area-list="areaList" style="color:black"/>
             </van-popup>
         </div>
         <!-- 登录地址选择弹框 -->
@@ -95,17 +94,32 @@
             </div>
         </van-popup>
         </div> -->
-        <div class="baged f12 flex ai-c" style><van-icon name="passed" icon-size="12px" color="red" style="margin-right:5px;"/>包邮</div>
-        <div class="mt-10 f12 fcc" style="background-color:white;height:46px;color:gray">—— 商品详情 ——</div>
+        <div class="baged f12 flex ai-c" style><van-icon name="passed" icon-size="12px" color="red" style="margin-right:5px;"/><span class="color-gray">包邮</span></div>
+        <div class="mt-10 f12 fcc color-gray" style="background-color:white;height:46px;">—— 商品详情 ——</div>
         <div class="images">
             <img src="https://mall.s.maizuo.com/92d393d03848b8ea112d609e0ae11a00.png" alt="">
             <img src="https://mall.s.maizuo.com/30266ad53356660a815d8b799eac35bf.jpg" alt="">
+            <img src="https://mall.s.maizuo.com/e828214d7b75e7db532bf1cf3cf13f2f.jpg" alt="">
+            <img src="https://mall.s.maizuo.com/f2919825a151d5631530d47b26fc27cd.jpg" alt="">
+            <img src="https://mall.s.maizuo.com/c9a60deecd83d63a7ff49512f92ff57f.jpg" alt="">
+            <div class="mt-10 f12 fcc color-gray" style="background-color:white;height:46px;">—— 预定流程及须知 ——</div>
+            <img src="https://file.sdyxmall.com/h5/v1/public/app/img/group5.b0b24d0.png" alt="">
+        </div>
+        <div class="context">
+            <p class="big-item">一、关于发货</p>
+            <p class="small-item">个工作日内发出（周末、法定节假日需顺延）个工作日内发出（周末、法定节假日需顺延）；</p>
+            <p class="big-item">二、关于发货</p>
+            <p class="small-item">个工作日内发出（周末、法定节假日需顺延）个工作日内发出（周末、法定节假日需顺延）；</p>
+            <p class="big-item">二、关于发货</p>
+            <p class="small-item">个工作日内发出（周末、法定节假日需顺延）个工作日内发出（周末、法定节假日需顺延）；</p>
+            <p class="big-item">二、关于发货</p>
+            <p class="small-item">个工作日内发出（周末、法定节假日需顺延）个工作日内发出（周末、法定节假日需顺延）；</p>
         </div>
         <!-- 底部购物车 -->
         <van-goods-action style="width:100%">
-            <van-goods-action-icon icon="cart-o" info="5" text="购物车" @click="onClickIcon" class="ml-10"/>
+            <van-goods-action-icon icon="cart-o" info="5" class="ml-10" @click="onClickIcon" />
             <van-goods-action-button color="white" style="border-radius:0;color:black;height:50px;" type="warning"  text="立即购买" @click="buyImmediate" />
-            <van-goods-action-button style="border-radius:0;height:50px;margin-right:0" type="danger" text="加入购物车" @click="onClickButton" />
+            <van-goods-action-button style="border-radius:0;height:50px;margin-right:0" type="danger" text="加入购物车" color="#c03131" @click="onClickButton" />
         </van-goods-action>
     </div>
 </template>
@@ -173,51 +187,67 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-#bac-white{
-    background-color:white;
+<style lang="less">
+.big-body .van-picker__confirm,.van-picker__cancel{
+    color: black;
 }
+.big-body .van-goods-action-icon__icon{
+    font-size:25px
+}
+</style>
+
+<style lang="less" scoped>
 // <!-- 轮播图 -->
 .van-swipe {
   position: relative;
+  background-color: rgb(249, 249, 249);
+  img {
+    height: 375px;
+    width: 100%;
+  }
 }
 .custom-indicator {
+    transform: scale(.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 10px;
-    bottom: 10px;
+    right: 14px;
+    bottom: 14px;
     position: absolute;
     font-size: 14px;
     box-sizing: border-box;
     width: 27.2px;
-    border: 1px solid rgb(133, 139, 137);
+    border: 1px solid #d2d6dc;
     background-color: white;
-    color: rgb(133, 139, 137);
+    color: #d2d6dc;
     z-index: 9;
 }
 .return{
+    font-size:28px;
     position:fixed;
     left:10px;
     top:10px;
-    height:23px;
-    width:23px;
+    height:28px;
+    width:28px;
     border-radius:23px;
-    background-color:white;
-    color:#ccc;
+    background-color:rgba(255, 255, 255, 0.5);
+    color:#2c3e50;
     text-align:center;
-    line-height:23px;
+    line-height:28px;
 }
-img {
-    height: 375px;
-    width: 100%;
-}
+
 // <!-- 商品介绍 -->
 .item-info {
     background-color:white;
-    border-bottom: 1px solid rgb(221, 218, 218);
+    border-bottom: 1px solid #f7f4f4;
     padding: 15px;
     box-sizing: border-box;
+}
+.van-cell.van-cell--clickable{
+    border-bottom: 1px solid #f7f4f4;
+}
+.color-gray{
+    color:#797d82
 }
 .item-info-container {
     font-size: 15px;
@@ -254,10 +284,7 @@ img {
   margin-top: 8px;
 }
 .price {
-  color: red;
-}
-.old-price {
-  color: gray;
+  color: #c03131;
 }
 .item-info-price {
   height: 30px;
@@ -306,10 +333,52 @@ img {
     height:38px;
 }
 .big-body{
-    background-color:#ccc;
+    background-color:#f4f4f4;
 }
 .images{
-    width:100%;
+    background:white;
+    img{
+        vertical-align: top;
+        width:100%;
+    }
+}
+.img-backcolor{
+    background-color:#f9f9f9
+}
+.van-goods-action-icon__icon{
+    width:30px;
+    font-size:30px;
+}
+.selected-address{
+    width:260px;
+    height:19px;
+    display:inline-block;
+    font-size:13px;
+    line-height:19px;
+    padding-top:3px;
+}
+.add-cart{
+    border-radius:0;
+    color:black;
+    height:50px;
+    margin-left:0
+}
+.context{
+    background-color: white;
+    padding:15px 15px 65px;
+}
+.big-item{
+    margin:12px 0;
+    font-size:12px;
+    font-weight:600;
+    color:#A6A6A6;
+    line-height:200%;
+}
+.small-item{
+    margin:12px 0;
+    font-size:12px;
+    color:#A6A6A6;
+    line-height:200%;
 }
 </style>
 
