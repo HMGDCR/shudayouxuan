@@ -3,16 +3,16 @@
     <!-- 导航栏 -->
     <div class="navagator">
         <van-nav-bar title="购物车" right-text="编辑" @click.native="toEdit">
-            <van-icon style="font-size:20px;" name="wap-home-o" slot="left" />
+            <van-icon  tyle="font-size:20px;" name="wap-home-o" slot="left" />
         </van-nav-bar>
     </div>
     <!-- 商城运费 -->
     <div style="height:44px;background:#fff;display:flex;line-height:44px">
         <van-checkbox style="padding: 0 15px" v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-        <span style="font-size:15px">商城承担运费</span>
+        <span style="font-size:15px;">商城承担运费</span>
     </div>
     <!-- 购物车列表 -->
-    <div>
+    <div >
         <div class="flx-cent">
             <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
             <van-card num="1" price="42.5" title="海边理发店"
@@ -31,8 +31,8 @@
     </div>
     <!-- 底部结算 -->
     <div class="buttom-nav">
-       <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll">全选</van-checkbox>
-        <van-button style="height:49px;width:105px" color="#BDC0C5" >结算</van-button>
+       <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll" ><span style="color: #797d82;">全选</span></van-checkbox>
+        <van-button style="height:49px;width:105px;font-size:17px" color="#C03131" >结算</van-button>
     </div>
     <Navagater></Navagater>
   </div>
@@ -86,7 +86,7 @@ export default {
     background:white
 }
 .flx-cent{
-    padding-bottom:  15px;
+    padding:15px 15px 15px 0;
     display: flex;
     background:white
 }
@@ -106,4 +106,5 @@ export default {
 .van-card:not(:first-child) {
     margin-top: 0px;
 }
+
 </style>

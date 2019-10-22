@@ -30,8 +30,8 @@
         </div>
         <!-- 底部结算 -->
         <div class="buttom-nav">
-        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll">全选</van-checkbox>
-            <van-button style="height:49px; width:105px; font-size:16px;" color="#c03131" >删除</van-button>
+        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll"><span style="color: #797d82;">全选</span></van-checkbox>
+            <van-button style="display:flex; justify-content: center;  align-items: center; height:33px; width:85px;margin-top: 8px;margin-right: 15px; font-size:16px;" color="#ef4040" ><span style="height:33px">删除</span></van-button>
         </div>
         <Navagater></Navagater>
     </div>
@@ -68,6 +68,7 @@ export default {
     color: #2e2f30;
 }
 .buttom-nav{
+   
     display: flex;
     justify-content: space-between;
     height: 49px;
@@ -85,7 +86,7 @@ export default {
     background:white
 }
 .flx-cent{
-    padding-bottom:  15px;
+    padding:15px 15px 15px 0;
     display: flex;
     background:white
 }
