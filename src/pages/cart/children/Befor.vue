@@ -3,13 +3,13 @@
     <!-- 导航栏 -->
     <div class="navagator">
         <van-nav-bar title="购物车" right-text="编辑" @click.native="toEdit">
-            <van-icon  tyle="font-size:20px;" name="wap-home-o" slot="left" />
+            <van-icon  style="font-size:20px;" name="wap-home-o" slot="left" />
         </van-nav-bar>
     </div>
     <!-- 商城运费 -->
-    <div style="height:44px;background:#fff;display:flex;line-height:44px">
+    <div style="height:44px;background:#fff;display:flex;line-height:44px;border-bottom:1px solid #F4F4F4">
         <van-checkbox style="padding: 0 15px" v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-        <span style="font-size:15px;">商城承担运费</span>
+        <span style="font-size:15px; ">商城承担运费</span>
     </div>
     <!-- 购物车列表 -->
     <div >
@@ -62,6 +62,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.van-nav-bar__left, .van-nav-bar__right {
+    font-size: 17px;
+    
+}
 .navagator .van-nav-bar .van-icon {
     color: #2e2f30;
 }
@@ -88,7 +92,8 @@ export default {
 .flx-cent{
     padding:15px 15px 15px 0;
     display: flex;
-    background:white
+    background:white;
+    border-bottom: 1px solid #F4F4F4
 }
 .cart-befor{
     height:100vh;
