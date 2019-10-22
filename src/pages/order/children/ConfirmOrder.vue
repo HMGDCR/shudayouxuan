@@ -9,7 +9,7 @@
         <!-- 使用 title 插槽来自定义标题 -->
         <template slot="title">
             <span class="custom-title">张三</span>
-            <span class="custom-title">，</span>
+            <span class="custom-title">&nbsp;</span>
             <span class="custom-title">13000000000</span>
             <div class="custom-title fonts">浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室</div>
         </template>
@@ -76,7 +76,7 @@ import PayWay from "@/pages/pay/children/PayWay.vue";
 export default {
     data() {
         return {
-            showFlag:false
+            // showFlag:false
         };
     },
     components: {
