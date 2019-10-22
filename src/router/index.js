@@ -108,12 +108,32 @@ export const routes = [
     // 支付
     {
         path:"/pay",
-        component:() => import("@/pages/pay/Pay")
+        component:() => import("@/pages/pay/Index"),
+        children:[
+            {
+                path:"payWay",
+                component:() => import("@/pages/pay/children/PayWay")
+            },
+            {
+                path:"payMoney",
+                component:() => import("@/pages/pay/children/Pay")
+            }
+        ]
     },
     // 购物车
     {
         path:"/cart",
-        component:() => import("@/pages/cart/Index")
+        component:() => import("@/pages/cart/Index"),
+        children:[
+            {
+                path:"befor",
+                component:()=>import("../pages/cart/children/Befor")
+            },
+            {
+                path:"after",
+                component:()=>import("../pages/cart/children/After")
+            }
+        ]
     }
 ]
 

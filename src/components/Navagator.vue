@@ -2,22 +2,22 @@
    <div class="footNave">
         <van-grid>
             <ul class="navagator">
-                <li>
+                <router-link to="/home/homePage" tag="li">
                     <i class="iconfont icon-shouye1"></i>
                     <span>首页</span>
-                </li>
-                <li>
+                </router-link>
+                <router-link to="" tag="li">
                     <i class="iconfont icon-fuli-"></i>
                     <span>企业福利</span>
-                </li>
-                <li>
+                </router-link>
+                <router-link to="/cart/befor" tag="li">
                     <i class="iconfont cart icon-gouwu"></i>
                     <span>购物车</span>
-                </li>
-                <li>
+                </router-link>
+                <router-link to="/my/center" tag="li">
                     <i class="iconfont icon-wode"></i>
                     <span>我的</span>
-                </li>
+                </router-link>
             </ul>
         </van-grid>
    </div>

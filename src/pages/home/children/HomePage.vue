@@ -7,7 +7,7 @@
             </van-swipe-item>
         </van-swipe>
         <!-- 宫格 -->
-        <van-grid :column-num="4" :border="false" class="grid">
+        <van-grid :column-num="4" :border="false" class="grid" @click.native="toList">
             <van-grid-item v-for="(item,index) in value" :key="index" :icon="item.img" :text="item.name" />
         </van-grid>
         <!-- 主体内容-->
@@ -30,7 +30,7 @@
                 </li>
             </ul>
             <ul class="goods">
-                <li class="listItem">
+                <li class="listItem" @click="toDetail">
                     <img src="https://mall.s.maizuo.com/1f8134cb7efe19ea0cfc86a1c84ff4c2.png?x-oss-process=image/resize,w_248" alt="">
                     <div class="textDescribe">
                         <span class="goodsName">【广东】 港式网红鱼皮</span>
@@ -122,6 +122,14 @@ export default {
                     name:"进口零食"
                 }
             ]
+        }
+    },
+    methods:{
+        toDetail(){
+            this.$router.push("/home/detail")
+        },
+        toList(){
+            this.$router.push("/home/list")
         }
     }
 
