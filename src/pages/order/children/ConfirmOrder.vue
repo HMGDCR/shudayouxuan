@@ -5,64 +5,60 @@
         <!-- //水平分割线 -->
         <div class="decorate"></div>
         <!-- //地址区域 -->
-        <van-cell icon="location-o" is-link id="area">
-        <!-- 使用 title 插槽来自定义标题 -->
-        <template slot="title">
-            <span class="custom-title">张三</span>
-            <span class="custom-title">，</span>
-            <span class="custom-title">13000000000</span>
-            <div class="custom-title fonts">浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室</div>
-        </template>
+        <van-cell icon="location-o" is-link id="area" @click="toAddressList">
+            <!-- 使用 title 插槽来自定义标题 -->
+            <template slot="title">
+                <span class="custom-title">张三</span>
+                <span class="custom-title">，</span>
+                <span class="custom-title">13000000000</span>
+                <div class="custom-title fonts">浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室</div>
+            </template>
         </van-cell>
         <div id="goods">
-        <!-- //商品部分 -->
-        <!-- //头部单元格 -->
-        <van-cell-group>
-            <van-cell title="运费15元（满68元免运费）" />
-        </van-cell-group>
-        <van-card
-            num="2"
-            price="30"
-            desc="单果重约12-16g"
-            title="A级-阳光冬枣（中）约2.6-3斤"
-            thumb="https://mall.s.maizuo.com/0238d75b8a9e13c5a18df9781c296c83.png"
-        ></van-card>
-        <!-- //尾部单元格 -->
-        <van-cell-group>
-            <van-cell title="商品金额" value="¥30.00" />
-        </van-cell-group>
-        <van-cell-group>
-            <van-cell title="运费" value="¥15.00" />
-        </van-cell-group>
+            <!-- //商品部分 -->
+            <!-- //头部单元格 -->
+            <van-cell-group>
+                <van-cell title="运费15元（满68元免运费）" />
+            </van-cell-group>
+            <van-card num="2" price="30" desc="单果重约12-16g" title="A级-阳光冬枣（中）约2.6-3斤"
+                thumb="https://mall.s.maizuo.com/0238d75b8a9e13c5a18df9781c296c83.png" >
+            </van-card>
+            <!-- //尾部单元格 -->
+            <van-cell-group>
+                <van-cell title="商品金额" value="¥30.00" />
+            </van-cell-group>
+            <van-cell-group>
+                <van-cell title="运费" value="¥15.00" />
+            </van-cell-group>
         </div>
         <div id="cell">
-        <van-cell icon="coupon-o" value="0张券可用" is-link>
-            <!-- 使用 title 插槽来自定义标题 -->
-            <template slot="title">
-            <span class="custom-title">现金券</span>
-            </template>
-        </van-cell>
-        <van-cell icon="comment-o" value="0张券可用" is-link>
-            <!-- 使用 title 插槽来自定义标题 -->
-            <template slot="title">
-            <span class="custom-title">苏打券</span>
-            </template>
-        </van-cell>
-        <van-cell icon="gem-o" value>
-            <!-- 使用 title 插槽来自定义标题 -->
-            <template slot="title">
-            <span class="custom-title">余额</span>
-            （
-            <span class="custom-title red">¥0.00</span>
-            ）
-            </template>
-        </van-cell>
-        <van-cell icon="balance-list-o" value="不开发票" is-link>
-            <!-- 使用 title 插槽来自定义标题 -->
-            <template slot="title">
-            <span class="custom-title">发票</span>
-            </template>
-        </van-cell>
+            <van-cell icon="coupon-o" value="0张券可用" is-link>
+                <!-- 使用 title 插槽来自定义标题 -->
+                <template slot="title">
+                <span class="custom-title">现金券</span>
+                </template>
+            </van-cell>
+            <van-cell icon="comment-o" value="0张券可用" is-link>
+                <!-- 使用 title 插槽来自定义标题 -->
+                <template slot="title">
+                <span class="custom-title">苏打券</span>
+                </template>
+            </van-cell>
+            <van-cell icon="gem-o" value>
+                <!-- 使用 title 插槽来自定义标题 -->
+                <template slot="title">
+                <span class="custom-title">余额</span>
+                （
+                <span class="custom-title red">¥0.00</span>
+                ）
+                </template>
+            </van-cell>
+            <van-cell icon="balance-list-o" value="不开发票" is-link>
+                <!-- 使用 title 插槽来自定义标题 -->
+                <template slot="title">
+                <span class="custom-title">发票</span>
+                </template>
+            </van-cell>
         </div>
         <div id="bottom">
             <van-submit-bar :price="3050" tip button-text="提交订单" @submit="onSubmit" />
@@ -84,10 +80,13 @@ export default {
     },
     methods: {
         goBack() {
-            this.$router.go(-1);
+            this.$router.push("/home/detail")
         },
         onSubmit() {
             this.$store.commit('payWayFlagChange', !this.$store.state.payWayFlag)
+        },
+        toAddressList(){
+            this.$router.push("/address/list")
         }
     }
 };

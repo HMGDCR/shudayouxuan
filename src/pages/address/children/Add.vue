@@ -20,7 +20,7 @@
       </van-cell-group>
       <van-cell-group>
         <van-icon name="location-o" class="site" @click.native="siteSwitch" />
-        <van-field placeholder="点击选择地址" style="padding-left:31px;" />
+        <van-field placeholder="点击选择地址" style="padding-left:31px;" @click.native="choseArea" />
       </van-cell-group>
       <van-cell-group>
         <van-field placeholder="详细地址:例如17号楼601等" />
@@ -38,25 +38,29 @@
 
 <script>
 export default {
-  data() {
-    return {
-      checked: ""
-    };
-  },
-  methods: {
-    //   导航栏返回事件
-    onClickReturn() {
-      alert("返回");
+    data() {
+        return {
+            checked: ""
+        };
     },
-    // 导航栏保存事件
-    onClickSave() {
-      alert("保存");
-    },
-    // 地址切换事件
-    siteSwitch() {
-      alert("选择地址");
+    methods: {
+        //   导航栏返回事件
+        onClickReturn() {
+            this.$router.push("/order/confirm")
+        },
+        // 导航栏保存事件
+        onClickSave() {
+            alert("保存");
+        },
+        // 地址切换事件
+        siteSwitch() {
+            alert("选择地址");
+        },
+        // 选择地址
+        choseArea(){
+            this.$router.push("/address/area")
+        }
     }
-  }
 };
 </script>
 <style lang="less">
