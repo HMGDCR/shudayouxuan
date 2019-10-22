@@ -4,7 +4,7 @@
             <!-- 导航 -->
             <div>
                 <van-nav-bar title="我的订单" class="myOrder">
-                    <van-icon name="wap-home-o" slot="left"  />
+                    <van-icon name="wap-home-o" slot="left" @click="toHomePage" />
                 </van-nav-bar>
             </div>
             <!-- 标签栏 -->
@@ -74,7 +74,11 @@
 
 <script>
 export default {
-
+    methods: {
+        toHomePage(){
+            this.$router.push("/home/homePage")
+        }
+    },
 }
 </script>
 

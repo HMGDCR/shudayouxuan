@@ -1,64 +1,64 @@
 <template>
-  <div class="cart-befor">
-    <!-- 导航栏 -->
-    <div class="navagator">
-        <van-nav-bar title="购物车" right-text="编辑" class="edit" @click.native="toEdit">
-            <van-icon  style="font-size:23px;" class="icon-line-height" name="wap-home-o" slot="left" />
-        </van-nav-bar>
-    </div>
-    <!-- 商城运费 -->
-    <div style="height:44px;background:#fff;display:flex;line-height:44px;border-bottom:1px solid #F4F4F4">
-        <van-checkbox style="padding: 0 15px" v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-        <span style="font-size:15px; ">商城承担运费</span>
-        <span class="no-fare">免运费</span>
-    </div>
-    <!-- 购物车列表 -->
-    <div >
-        <div class="flx-cent">
-            <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-            <div class="cart-goods">
-                <img src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png" alt="">
-            </div>
-            <div class="cart-container flex2 jc-sb">
-                <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
-                <div class="goods-price">
-                    <span class="price">￥44.9</span>
-                    <span class="old-price">￥55.9</span>
-                    <span class="count">X 1</span>
-                </div>
-            </div>
-            <!-- <van-card num="1" price="42.5" title="海边理发店" 
-            thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
-            <van-divider />
-        </van-card> -->
+    <div class="cart-befor">
+        <!-- 导航栏 -->
+        <div class="navagator">
+            <van-nav-bar title="购物车" right-text="编辑" class="edit">
+                <van-icon  style="font-size:23px;" class="icon-line-height" name="wap-home-o" slot="left"  @click.native="toEdit" />
+            </van-nav-bar>
         </div>
-        <div class="flx-cent">
-            <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-            <div class="cart-goods">
-            <img src="https://mall.s.maizuo.com/9085c7f2b5efb1a4abf3f3a962dcb088.png" alt="">
-            </div>
-            <div class="cart-container flex2 jc-sb">
-                <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
-                <div class="goods-price">
-                    <span class="price">￥44.9</span>
-                    <span class="old-price">￥55.9</span>
-                    <span class="count">X 1</span>
-                </div>
-            </div>
-            <!-- <van-card num="1" price="42.5" title="海边理发店"
-            thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
-            style="font-size: 15px" >
-            <van-divider />
-        </van-card> -->
+        <!-- 商城运费 -->
+        <div style="height:44px;background:#fff;display:flex;line-height:44px;border-bottom:1px solid #F4F4F4">
+            <van-checkbox style="padding: 0 15px" v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
+            <span style="font-size:15px; ">商城承担运费</span>
+            <span class="no-fare">免运费</span>
         </div>
+        <!-- 购物车列表 -->
+        <div >
+            <div class="flx-cent">
+                <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
+                <div class="cart-goods">
+                    <img src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png" alt="">
+                </div>
+                <div class="cart-container flex2 jc-sb">
+                    <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
+                    <div class="goods-price">
+                        <span class="price">￥44.9</span>
+                        <span class="old-price">￥55.9</span>
+                        <span class="count">X 1</span>
+                    </div>
+                </div>
+                <!-- <van-card num="1" price="42.5" title="海边理发店" 
+                thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
+                <van-divider />
+            </van-card> -->
+            </div>
+            <div class="flx-cent">
+                <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
+                <div class="cart-goods">
+                <img src="https://mall.s.maizuo.com/9085c7f2b5efb1a4abf3f3a962dcb088.png" alt="">
+                </div>
+                <div class="cart-container flex2 jc-sb">
+                    <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
+                    <div class="goods-price">
+                        <span class="price">￥44.9</span>
+                        <span class="old-price">￥55.9</span>
+                        <span class="count">X 1</span>
+                    </div>
+                </div>
+                <!-- <van-card num="1" price="42.5" title="海边理发店"
+                thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
+                style="font-size: 15px" >
+                <van-divider />
+            </van-card> -->
+            </div>
+        </div>
+        <!-- 底部结算 -->
+        <div class="buttom-nav">
+        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll" ><span style="color: #797d82;">全选</span></van-checkbox>
+            <van-button style="height:49px;width:105px;font-size:17px" color="#C03131" >结算</van-button>
+        </div>
+        <Navagater></Navagater>
     </div>
-    <!-- 底部结算 -->
-    <div class="buttom-nav">
-       <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll" ><span style="color: #797d82;">全选</span></van-checkbox>
-        <van-button style="height:49px;width:105px;font-size:17px" color="#C03131" >结算</van-button>
-    </div>
-    <Navagater></Navagater>
-  </div>
 </template>
 
 <script>

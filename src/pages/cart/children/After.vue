@@ -2,8 +2,8 @@
     <div class="cart-befor">
         <!-- 导航栏 -->
         <div class="navagator">
-            <van-nav-bar title="购物车" right-text="完成"  class="edit" @click.native="toCart">
-                <van-icon style="font-size:23px;" name="wap-home-o" class="icon-line-height" slot="left" />
+            <van-nav-bar title="购物车" right-text="完成"  class="edit">
+                <van-icon style="font-size:23px;" name="wap-home-o" class="icon-line-height" slot="left" @click.native="toCart" />
             </van-nav-bar>
         </div>
         <!-- 商城运费 -->
