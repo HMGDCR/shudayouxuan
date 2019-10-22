@@ -2,20 +2,21 @@
   <div class="cart-befor">
     <!-- 导航栏 -->
     <div class="navagator">
-        <van-nav-bar title="购物车" right-text="编辑" @click.native="toEdit">
-            <van-icon  style="font-size:20px;" name="wap-home-o" slot="left" />
+        <van-nav-bar title="购物车" right-text="编辑" class="edit" @click.native="toEdit">
+            <van-icon  style="font-size:23px;" class="icon-line-height" name="wap-home-o" slot="left" />
         </van-nav-bar>
     </div>
     <!-- 商城运费 -->
     <div style="height:44px;background:#fff;display:flex;line-height:44px;border-bottom:1px solid #F4F4F4">
         <van-checkbox style="padding: 0 15px" v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
         <span style="font-size:15px; ">商城承担运费</span>
+        <span class="no-fare">免运费</span>
     </div>
     <!-- 购物车列表 -->
     <div >
         <div class="flx-cent">
             <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-            <van-card num="1" price="42.5" title="海边理发店"
+            <van-card num="1" price="42.5" title="海边理发店" 
             thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
             <van-divider />
         </van-card>
@@ -60,7 +61,15 @@ export default {
     }
 };
 </script>
-
+<style lang="less">
+    .flx-cent {
+        .van-card__title.van-multi-ellipsis--l2{
+        width:200px;
+        font-size:15px;
+        color:#2e2f30;
+        }
+    }
+</style>
 <style lang="less" scoped>
 .van-nav-bar__left, .van-nav-bar__right {
     font-size: 17px;
@@ -111,5 +120,17 @@ export default {
 .van-card:not(:first-child) {
     margin-top: 0px;
 }
-
+.edit .van-nav-bar__text{
+    font-size:15px;
+    padding:0 19px;
+}
+.icon-line-height{
+    margin-bottom:5px;
+}
+.no-fare{
+    position:absolute;
+    right:15px;
+    color:#797d82;
+    font-size:12px;
+}
 </style>

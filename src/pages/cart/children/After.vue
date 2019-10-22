@@ -2,8 +2,8 @@
     <div class="cart-befor">
         <!-- 导航栏 -->
         <div class="navagator">
-            <van-nav-bar title="购物车" right-text="完成" @click.native="toCart">
-                <van-icon style="font-size:20px;" name="wap-home-o" slot="left" />
+            <van-nav-bar title="购物车" right-text="完成"  class="edit" @click.native="toCart">
+                <van-icon style="font-size:23px;" name="wap-home-o" class="icon-line-height" slot="left" />
             </van-nav-bar>
         </div>
         <!-- 商城运费 -->
@@ -15,7 +15,7 @@
         <div>
             <div class="flx-cent">
                 <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-                <van-card price="42.5" title="海边理发店" thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
+                <van-card price="42.5" title="海边理后方可读后感发动" thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
                 <van-divider />
             </van-card>
             <van-stepper style="padding-top:60px;padding-right:15px" v-model="value" />
@@ -113,5 +113,12 @@ export default {
 }
 .van-card:not(:first-child) {
     margin-top: 0px;
+}
+.edit .van-nav-bar__text{
+    font-size:15px;
+    padding:0 19px;
+}
+.icon-line-height{
+    margin-bottom:5px;
 }
 </style>
