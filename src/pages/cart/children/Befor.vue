@@ -73,9 +73,10 @@
       <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll">
         <span style="color: #797d82;">全选</span>
       </van-checkbox>
+      <span class="all-price">￥ 44.5</span>
       <van-button style="height:49px;width:105px;font-size:17px" color="#C03131">结算</van-button>
     </div>
-    <!-- <Navagater></Navagater> -->
+    <Navagater></Navagater>
   </div>
 </template>
 
@@ -120,6 +121,7 @@ export default {
 }
 .navagator .van-nav-bar .van-icon {
   color: #2e2f30;
+  
 }
 .navagator .van-nav-bar__text {
   color: #2e2f30;
@@ -132,7 +134,7 @@ export default {
   background: #fff;
   position: fixed;
   left: 0px;
-  bottom: 0;
+  bottom: 49px;
 }
 .van-card__content {
   padding-right: 15px;
@@ -235,5 +237,15 @@ export default {
     line-height: 25px;
     text-align: center;
   }
+}
+.all-price{
+    display:inline-block;
+    height:100%;
+    color:rgb(194, 60, 60);
+    font-size:16px;
+    position:absolute;
+    right:114px;
+    // line-height:49px;
+    margin-top:18px;
 }
 </style>

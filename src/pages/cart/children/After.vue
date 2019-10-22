@@ -79,7 +79,7 @@
         <span style="height:33px">删除</span>
       </van-button>
     </div>
-    <!-- <Navagater></Navagater> -->
+    <Navagater></Navagater>
   </div>
 </template>
 
@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-        this.$router.push("/home/homePage");
+      this.$router.push("/home/homePage");
     },
     checkAll() {
       this.$refs.checkboxGroup.toggleAll(true);
@@ -132,7 +132,7 @@ export default {
   background: #fff;
   position: fixed;
   left: 0px;
-  bottom: 0;
+  bottom: 49px;
 }
 .van-card__content {
   padding-right: 15px;
@@ -214,6 +214,7 @@ export default {
   right: 0;
   color: rgb(184, 181, 181);
   font-size: 12px;
+  
 }
 .small-box {
   width: 115px;

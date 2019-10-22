@@ -38,6 +38,7 @@ export default {
         },
         show(){
             this.$store.commit('payWayFlagChange', !this.$store.state.payWayFlag)
+            console.log("this.$store.state.payWayFlag",this.$store.state)
         }
     }
 };
