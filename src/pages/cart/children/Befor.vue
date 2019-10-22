@@ -16,18 +16,40 @@
     <div >
         <div class="flx-cent">
             <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-            <van-card num="1" price="42.5" title="海边理发店" 
+            <div class="cart-goods">
+                <img src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png" alt="">
+            </div>
+            <div class="cart-container flex2 jc-sb">
+                <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
+                <div class="goods-price">
+                    <span class="price">￥44.9</span>
+                    <span class="old-price">￥55.9</span>
+                    <span class="count">X 1</span>
+                </div>
+            </div>
+            <!-- <van-card num="1" price="42.5" title="海边理发店" 
             thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
             <van-divider />
-        </van-card>
+        </van-card> -->
         </div>
         <div class="flx-cent">
             <van-checkbox  v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-            <van-card num="1" price="42.5" title="海边理发店"
+            <div class="cart-goods">
+            <img src="https://mall.s.maizuo.com/9085c7f2b5efb1a4abf3f3a962dcb088.png" alt="">
+            </div>
+            <div class="cart-container flex2 jc-sb">
+                <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
+                <div class="goods-price">
+                    <span class="price">￥44.9</span>
+                    <span class="old-price">￥55.9</span>
+                    <span class="count">X 1</span>
+                </div>
+            </div>
+            <!-- <van-card num="1" price="42.5" title="海边理发店"
             thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
             style="font-size: 15px" >
             <van-divider />
-        </van-card>
+        </van-card> -->
         </div>
     </div>
     <!-- 底部结算 -->
@@ -132,5 +154,65 @@ export default {
     right:15px;
     color:#797d82;
     font-size:12px;
+}
+.van-card__content{
+    width:200px;
+}
+.cart-goods{
+    img{
+        width:95px;
+        height:95px;
+        background-color:#f8f8f8;
+        margin-left:15px;
+    }
+}
+.cart-container{
+    width:100%;
+    height:100%;
+    padding-left:15px;
+}
+.goods-msg{
+    display: inline-block;
+    width:207px;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis
+}
+.goods-price{
+    position:relative;
+    display:flex;
+    align-items: flex-end;
+    margin-top:50px;
+    height:26px;
+}
+.price{
+    font-size:15px;
+    margin-right:8px;
+    color:rgb(185, 23, 23);
+}
+.old-price{
+    font-size:12px;
+    color:rgb(172, 170, 170);
+    text-decoration: line-through;
+}
+.count{
+    display:inline-block;
+    // width:115px;
+    position:absolute;
+    right:0;
+    color:rgb(184, 181, 181);
+    font-size:12px;
+}
+.small-box {
+    width:115px;
+    display:inline-block;
+    margin-top: 15px;
+    height: 25px;
+    span {
+        height: 25px;
+        display: inline-block;
+        line-height: 25px;
+        text-align: center;
+    }
 }
 </style>
