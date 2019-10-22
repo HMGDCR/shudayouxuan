@@ -132,7 +132,7 @@ export default {
   background: #fff;
   position: fixed;
   left: 0px;
-  bottom: 0;
+  bottom: 49px;
 }
 .van-card__content {
   padding-right: 15px;
