@@ -117,7 +117,7 @@ export const routes = [
             {
                 path:"payMoney",
                 component:() => import("@/pages/pay/children/Pay")
-            }
+            },
         ]
     },
     // 购物车
