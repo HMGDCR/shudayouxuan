@@ -71,7 +71,12 @@ export default {
               {
             name: "新疆",
             address: "维吾尔"
+          },
+                 {
+            name: "新疆11",
+            address: "维吾尔11"
           }
+
         ];
       } else {
         this.searchResult = [];
