@@ -166,10 +166,10 @@ export default {
             this.$router.push("/order/confirm")
         },
         onClickIcon() {
-
+            this.$router.push("/cart/befor")
         },
         onClickButton() {
-
+            
         },
         onChange(index) {
             this.current = index;

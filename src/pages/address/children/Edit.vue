@@ -49,7 +49,7 @@ export default {
         },
         // 导航栏保存事件
         onClickSave() {
-            alert("保存");
+            this.$router.push("/address/list")
         },
         // 地址切换事件
         siteSwitch() {

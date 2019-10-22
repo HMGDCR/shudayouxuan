@@ -20,7 +20,6 @@ export default {
             this.$router.push("/my/center")
         },
         goBack(){
-            console.log(2222)
             this.$dialog.confirm({
             title: '提示',
             message: '退出登录'
