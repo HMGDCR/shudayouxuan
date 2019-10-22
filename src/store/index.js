@@ -9,7 +9,8 @@ const config = {
     plugins: [createPersistedState()],
     
     state:{
-        username:""
+        username:"",
+        payWayFlag:false
     },
 
     getters:{
@@ -17,6 +18,10 @@ const config = {
     },
 
     mutations:{
+        // 支付方式页面的显示与隐藏
+        payWayFlagChange(state,payload){
+            state.payWayFlag = payload
+        },
         // 获取用户名
         login(state,payload){
             

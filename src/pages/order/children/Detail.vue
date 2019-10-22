@@ -1,15 +1,11 @@
 <template>
     <div class="order-detail">
-
-
         <!-- 顶部导航栏 -->
         <div class="posflex">
             <van-nav-bar title="订单详情">
                 <van-icon name="arrow-left " slot="left" />
             </van-nav-bar>
         </div>
-
-
         <!-- 主体 -->
         <div style="">
             <div class="view">

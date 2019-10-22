@@ -3,7 +3,9 @@
         <!-- 头部 -->
         <header>
             <div class="head">
+                <router-link to="/user/login">
                 <img src="https://mall.s.maizuo.com/e915e2c990c30f8efa9e30bc75da41ee.jpg" alt="">
+                </router-link>
                 <span>立即登录</span>
             </div>
         </header>
@@ -20,7 +22,7 @@
         </ul>
 
         <div style="margin:10px 0;" class="orderInfo">
-            <van-cell-group class="user-group">
+            <van-cell-group class="user-group" @click="toOrderList">
                 <van-cell title="我的订单" is-link class="myOrder" />
             </van-cell-group>
             <van-row class="user-links">
@@ -73,6 +75,9 @@ export default {
         toSet(){
             console.log(1111111111)
             this.$router.push("/my/set")
+        },
+        toOrderList(){
+            this.$router.push("/order/list")
         }
     }
 };
