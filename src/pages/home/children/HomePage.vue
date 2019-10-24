@@ -17,6 +17,7 @@
     </van-grid>
     <!-- 主体内容-->
     <div class="content">
+      <van-sticky :offset-top="0">
       <ul class="navagater">
         <li>推荐</li>
         <li class="sales">
@@ -34,6 +35,8 @@
           </div>
         </li>
       </ul>
+</van-sticky>
+
       <ul class="goods">
         <li
           class="listItem"
@@ -235,6 +238,7 @@ export default {
   background: #ffffff;
   margin-bottom: 49px;
   .navagater {
+    background: #fff;
     height: 44px;
     display: flex;
     justify-content: space-around;

@@ -38,9 +38,9 @@
             <!-- <span class="old-price">￥55.9</span> -->
             <span class="count">
               <div class="small-box">
-                <span style="width:34px;border:1px solid gray;" @click="subtract(item.cartId,item.buyNum)">-</span>
-                <span style="width:46px;border:1px solid gray;border-left:0;">{{item.buyNum}}</span>
-                <span style="width:34px;border:1px solid gray;border-left:0;" @click="addOne(item.cartId,item.buyNum)">+</span>
+                <span style="width:34px;border:1px solid gray;" @click="subtract(item.cartId,item.buyNum,index)">-</span>
+                <span style="width:46px;border:1px solid gray;border-left:0;">{{count[index]}}</span>
+                <span style="width:34px;border:1px solid gray;border-left:0;" @click="addOne(item.cartId,item.buyNum,index)">+</span>
               </div>
             </span>
           </div>
@@ -95,21 +95,28 @@ export default {
       checked: true,
       carData:[],
       carId:"",
-      buyNum:0
+      buyNum:0,
+      count:[]
     };
   },
   created() {
     this.getCarData()
   },
+
   methods: {
-    addOne(cartId,buyNum){
+    addOne(cartId,buyNum,index){
       this.cartId=cartId
-      this.buyNum=buyNum+1
+      this.count[index]++
+      console.log("index",index)
+      console.log("this.count",this.count)
+      this.buyNum= buyNum+1 
         this.updateNum()
       console.log("add",this.cartId,"this.buyNum",this.buyNum)
     },
-    subtract(cartId,buyNum){
+    subtract(cartId,buyNum,index){
     this.cartId=cartId
+      this.count[index]--
+        console.log("this.count",this.count)
       this.buyNum=buyNum-1
     console.log("sub",this.carId,"this.buyNum",this.buyNum)
     this.updateNum()
@@ -134,6 +141,12 @@ export default {
       this.$axios.post(url).then(res=>{
         console.log("购物车的列表数据：",res)
         this.carData=res.list
+        // this.count=res.list.buyNum
+      res.list.forEach(item => {
+          this.count.push(item.buyNum)
+        });
+
+        console.log("this.count",this.count)
         console.log("this.carData",this.carData)        
       }).catch(err=>{
         console.log("err",err)
