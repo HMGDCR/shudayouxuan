@@ -29,26 +29,24 @@
       <span class="no-fare">免运费</span>
     </div>
     <!-- 购物车列表 -->
+           <van-checkbox-group v-model="result" ref="checkboxGroup">
     <div>
-      <div class="flx-cent">
+      <div class="flx-cent" v-for="(item,index) in carData" :key="index">
         <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
         <div class="cart-goods">
-          <img src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png" alt />
+          <img :src="item.imgUrl" alt />
         </div>
         <div class="cart-container flex2 jc-sb">
-          <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
+          <p class="goods-msg">{{item.masterName}}</p>
           <div class="goods-price">
             <span class="price">￥44.9</span>
             <span class="old-price">￥55.9</span>
-            <span class="count">X 1</span>
+            <span class="count">X {{item.buyNum}}</span>
           </div>
         </div>
-        <!-- <van-card num="1" price="42.5" title="海边理发店" 
-            thumb="https://img.yzcdn.cn/vant/t-thirt.jpg" style="font-size: 15px" >
-            <van-divider />
-        </van-card>-->
+     
       </div>
-      <div class="flx-cent">
+      <!-- <div class="flx-cent">
         <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
         <div class="cart-goods">
           <img src="https://mall.s.maizuo.com/9085c7f2b5efb1a4abf3f3a962dcb088.png" alt />
@@ -60,18 +58,15 @@
             <span class="old-price">￥55.9</span>
             <span class="count">X 1</span>
           </div>
-        </div>
-        <!-- <van-card num="1" price="42.5" title="海边理发店"
-            thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
-            style="font-size: 15px" >
-            <van-divider />
-        </van-card>-->
-      </div>
+        </div>     
+      </div> -->
     </div>
+        </van-checkbox-group>
     <!-- 底部结算 -->
     <div class="buttom-nav">
-      <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll">
+      <van-checkbox v-model="checked" type="primary" checked-color="#C03131" icon-size="15px" @click="checkAll">
         <span style="color: #797d82;">全选</span>
+      
       </van-checkbox>
       <span class="all-price">￥ 44.5</span>
       <van-button style="height:49px;width:105px;font-size:17px" color="#C03131">结算</van-button>
@@ -84,14 +79,59 @@
 import Navagater from "@/components/Navagator";
 export default {
   components: {
-    Navagater
+    Navagater,      
+  },
+  computed: {
+     carTotal(){
+             return  this.$store.state.carTotal
+        }
+  },
+  created() {
+    this.getCarData()
   },
   data() {
     return {
-      checked: true
+      checked: true,
+      result:[],
+      carData:[]
     };
   },
   methods: {
+    //获取商品详情,通过这个来获取商品的价格
+    getProductData(){
+    let idArr=[]
+    for(let i=0;i<this.carTotal.length;i++){
+      if(idArr.indexOf(this.carTotal[i])==-1){       
+           let url = "product/detail";
+            let data = {
+              productId:this.carTotal[i]
+            }
+              this.$axios.post(url,data).then(res=>{
+          console.log("商品详情：",res)
+        }).catch(err=>{
+          console.log("错误",err)
+        })
+
+      }
+    }
+     
+   
+    },
+    //获取数据
+    getCarData(){
+     
+      let url ="cart/list"
+      this.$axios.post(url).then(res=>{
+        console.log("购物车的列表数据：",res)
+        this.carData=res.list
+        console.log("this.carData",this.carData)
+          this.getProductData()
+
+      
+      }).catch(err=>{
+        console.log("err",err)
+      })
+    },
     onClickLeft() {
         this.$router.push("/home/homePage");
     },

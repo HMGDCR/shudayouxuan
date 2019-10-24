@@ -2,10 +2,10 @@
     <div class="big-body">
         <!-- 轮播图 -->
         <van-swipe @change="onChange">
-            <van-swipe-item>
-                <img src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png?x-oss-process=image/resize,w_563" alt />
+            <van-swipe-item v-for="(item,index) in result.banners" :key="index">               
+                <img :src="item" alt />
             </van-swipe-item>
-            <van-swipe-item>
+            <!-- <van-swipe-item>
                 <img src="https://mall.s.maizuo.com/71e5b918b306be65390ff0c3fb8155f2.jpg?x-oss-process=image/resize,w_563" alt />
             </van-swipe-item>
             <van-swipe-item>
@@ -13,8 +13,9 @@
             </van-swipe-item>
             <van-swipe-item>
                 <img src="https://mall.s.maizuo.com/ebbcef931beb1d633533835ef7f51639.jpg?x-oss-process=image/resize,w_563" alt />
-            </van-swipe-item>
-            <div class="custom-indicator" slot="indicator">{{ current + 1 }}/4</div>
+            </van-swipe-item> -->
+            <!-- 此处使用三元表达式，判断数据回来之前使用0，回来之后使用result -->
+            <div class="custom-indicator" slot="indicator">{{ current + 1 }}/{{result.banners?result.banners.length:0}}</div>
         </van-swipe>
         <div class="return" @click="goBack"><van-icon name="arrow-left" size="23px"/></div>    
         <!-- 商品介绍 -->
@@ -23,14 +24,16 @@
                 <div class="item-info-master">
                 <span class="label f12" style="background-color: rgb(120, 160, 209);">直降</span>
                 <span class="label f12" style="background-color: rgb(145, 188, 111);">包邮</span>
-                极鲜网 冻巴沙鱼柳 450-500g*2袋 分活动是佛活动啊过分分活动是佛光复读机啊过分活动啊过分分活动啊过分分活动啊过分分活动啊过分分活动啊过分分
+                <!-- 极鲜网 冻巴沙鱼柳 450-500g*2袋 分活动是佛活动啊过分分活动是佛光复读机啊过分活动啊过分分活动啊过分分活动啊过分分活动啊过分分活动啊过分分 -->
+             {{result.masterName}}
                 </div>
-                <div class="item-info-slave color-gray">果园生态种植 皮薄香甜爽口 富含天然维C</div>
+                <!-- <div class="item-info-slave color-gray">果园生态种植 皮薄香甜爽口 富含天然维C</div> -->
+                <div class="item-info-slave color-gray">  {{result.slaveName}}</div>
                 <div class="item-info-price flex jc-sb ai-fe mt-10">
                 <span>
                     <span class="price mr-5" style="font-size:15px">￥</span>
-                    <span class="f20 price mr-5">44.9</span>
-                    <span class="f12 old-price mr-5 color-gray" style="text-decoration:line-through;">￥56.9</span>
+                    <span class="f20 price mr-5">{{result.minPrice/100}}</span>
+                    <span class="f12 old-price mr-5 color-gray" style="text-decoration:line-through;">￥{{result.maxPrice/100}}</span>
                 </span>
                 <span class="f12 color-gray">3932人购买</span>
                 </div>
@@ -41,7 +44,7 @@
             <van-cell is-link @click="showPopup" style="font-size:13px"><span class="color-gray">规格： X </span>{{count}}</van-cell>
             <van-popup v-model="show" position="bottom" :style="{ height: '60%' }">
                 <div class="topic flex mt-15">
-                <img class="img-backcolor" src="https://mall.s.maizuo.com/5f727ae93559d9c445e944a58211b538.png?x-oss-process=image/resize,w_563" alt />
+                <img class="img-backcolor" :src="result.banners[0]" alt />
                 <div class="flex2 jc-c" style="height:100%">
                     <div style="margin-bottom:4px">
                     <span class="price mr-5" style="font-size:15px;">￥</span>
@@ -53,9 +56,9 @@
                 <div class="count-box">
                 <div>数量</div>
                 <div class="small-box">
-                    <span style="width:40px;border:1px solid gray;">-</span>
+                    <span style="width:40px;border:1px solid gray;" @click="subtraction">-</span>
                     <span style="width:72px;border:1px solid gray;border-left:0;">{{count}}</span>
-                    <span style="width:40px;border:1px solid gray;border-left:0;">+</span>
+                    <span style="width:40px;border:1px solid gray;border-left:0;" @click="add">+</span>
                 </div>
                 </div>
                 <van-goods-action style="width:100%">
@@ -97,11 +100,13 @@
         <div class="baged f12 flex ai-c" style><van-icon name="passed" icon-size="12px" color="red" style="margin-right:5px;"/><span class="color-gray">包邮</span></div>
         <div class="mt-10 f12 fcc color-gray" style="background-color:white;height:46px;">—— 商品详情 ——</div>
         <div class="images">
-            <img src="https://mall.s.maizuo.com/92d393d03848b8ea112d609e0ae11a00.png" alt="">
+            <img :src="item" alt="" v-for="(item,index) in result.descPics" :key="index">
+            
+            <!-- <img src="https://mall.s.maizuo.com/92d393d03848b8ea112d609e0ae11a00.png" alt="">
             <img src="https://mall.s.maizuo.com/30266ad53356660a815d8b799eac35bf.jpg" alt="">
             <img src="https://mall.s.maizuo.com/e828214d7b75e7db532bf1cf3cf13f2f.jpg" alt="">
             <img src="https://mall.s.maizuo.com/f2919825a151d5631530d47b26fc27cd.jpg" alt="">
-            <img src="https://mall.s.maizuo.com/c9a60deecd83d63a7ff49512f92ff57f.jpg" alt="">
+            <img src="https://mall.s.maizuo.com/c9a60deecd83d63a7ff49512f92ff57f.jpg" alt=""> -->
             <div class="mt-10 f12 fcc color-gray" style="background-color:white;height:46px;">—— 预定流程及须知 ——</div>
             <img src="https://file.sdyxmall.com/h5/v1/public/app/img/group5.b0b24d0.png" alt="">
         </div>
@@ -117,7 +122,7 @@
         </div>
         <!-- 底部购物车 -->
         <van-goods-action style="width:100%">
-            <van-goods-action-icon icon="cart-o" info="5" class="ml-10" @click="onClickIcon" />
+            <van-goods-action-icon icon="cart-o" :info="total" class="ml-10" @click="onClickIcon" />
             <van-goods-action-button color="white" style="border-radius:0;color:black;height:50px;" type="warning"  text="立即购买" @click="buyImmediate" />
             <van-goods-action-button style="border-radius:0;height:50px;margin-right:0" type="danger" text="加入购物车" color="#c03131" @click="onClickButton" />
         </van-goods-action>
@@ -127,8 +132,9 @@
 export default {
     data() {
         return {
-            radio: '1',
-            count: 2,
+            count:0,
+            productId:"",
+            radio: '1',            
             current: 0,
             show: false,
             show2: false,
@@ -155,10 +161,39 @@ export default {
                 120104: "南开区",
                 120105: "河北区"
                 }
-            }
+            },
+            result:{} //详情数据
+            // banners:[],//轮播图
+            // descPics:[]
         };
     },
+    //监听属性
+    watch: {
+    
+    },
+    //计算属性
+    computed: {
+        // count(){
+        //   return  this.$store.state.count
+        // },
+        total(){
+             return  this.$store.state.total
+        },
+         carTotal(){
+             return  this.$store.state.carTotal
+        }
+    },
     methods: {
+        //减法
+        subtraction(){
+       
+        if(this.count>0){
+        this.count--}
+        },
+        add(){
+   
+        this.count++
+        },
         goBack(){
             this.$router.go(-1)
         },
@@ -169,9 +204,24 @@ export default {
             this.$router.push("/cart/befor")
         },
         onClickButton() {
-            
+            //添加到购物车
+            //（1） 购物车的商品数量增加
+            //  this.$store.commit("addtoCart")
+             //（2）把商品的Id传到购物
+            //  this.$store.commit("carTotals",this.productId)
+             console.log("数组Id",this.carTotal)
+            let url ="cart/add";
+            let data = {
+                productId:this.productId,
+                buyNum:this.count
+            };
+            this.$axios.post(url,data).then(res=>{
+                console.log("购车：",res)
+            }).catch(err=>{
+                console.log("购物车错误：",err)
+            })
         },
-        onChange(index) {
+        onChange(index) {    
             this.current = index;
         },
         showPopup() {
@@ -182,8 +232,26 @@ export default {
         },
         showPopup3() {
             this.show3 = true;
+        },
+        //获取商品详情的数据
+        getDetail(productId){         
+            let url ="product/detail?productId="+productId          
+            this.$axios.post(url).then(res=>{
+                
+              this.result= res.result
+              console.log("详情：",this.result)
+
+            }).catch(err=>{
+                console.log("err",err)
+            })
         }
-    }
+    },
+
+    created() {
+       this.productId=  this.$route.params.productId
+       this.getDetail(this.productId)
+       console.log("穿过来的Id",this.productId)
+    },
 };
 </script>
 

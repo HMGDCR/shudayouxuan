@@ -1,9 +1,10 @@
+//商品分类页面------陈超
 <template>
     <div>
         <!-- 导航 -->
         <div class="bar">
         <van-row type="flex" justify="space-between">
-            <van-icon name="arrow-left" @click="toHomePage" style="padding-left:10px;font-size:18px;padding-top:16px" />
+            <van-icon name="arrow-left" @click="toHomePage" style="padding-left:10px;font-size:18px;padding-top:18px" />
             <i cionfont ic></i>
             <van-search v-model="value" placeholder="请输入搜索关键词" show-action
             shape="round" @search="onSearch" style=" width: 340px;" >
@@ -15,7 +16,7 @@
         <van-tree-select height="100vh" :items="items"
         :main-active-index.sync="activeIndex" style=" padding-top: 54px;" >
         <template slot="content">
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 0">
+            <van-grid :border="false"   :gutter="6" :column-num="2" v-if="activeIndex === 0  ">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -34,7 +35,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 0">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 0">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -51,7 +52,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 1">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 1">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -68,7 +69,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 2">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 2">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -85,7 +86,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 3">
+            <van-grid :border="false"  :gutter="6"  :column-num="2" v-if="activeIndex === 3">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -102,7 +103,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 4">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 4">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -119,7 +120,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 5">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 5">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -136,7 +137,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 6">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 6">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -154,7 +155,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 7">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 7">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -171,7 +172,7 @@
             </van-grid-item>
             </van-grid>
 
-            <van-grid :border="false" :column-num="2" v-if="activeIndex === 8">
+            <van-grid :border="false"  :gutter="6" :column-num="2" v-if="activeIndex === 8">
             <van-grid-item>
                 <van-image
                 class="target-img"
@@ -221,7 +222,7 @@ export default {
 };
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .news {
     padding: 8px 0 6px 0;
     color: #191a1b;

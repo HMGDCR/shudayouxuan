@@ -3,137 +3,190 @@ import Router from "vue-router"
 
 Vue.use(Router)
 
-export const routes = [
-    {
-        path:"",
+export const routes = [{
+        path: "",
         redirect: "/home/homePage",
-        meta:{
-            title:"首页",
+        // redirect: "/product/list",
+
+        meta: {
+            title: "首页",
         }
     },
     // 首页
     {
-        path:"/home",
-        component:() => import("@/pages/home/Index"),
-        children:[
-            {
-                path:"homePage",
-                component:() => import("@/pages/home/children/HomePage")
+        path: "/home",
+        // path: "/product",
+        component: () =>
+
+            import ("@/pages/home/Index"),
+        children: [{
+                path: "homePage",
+                // path: "list",
+
+                component: () =>
+                    import ("@/pages/home/children/HomePage"),
+                // import ("@/pages/home/list/index"),
             },
+
             {
-                path:"list",
-                component:() => import("@/pages/home/children/List")
+                path: "list",
+                component: () =>
+                    import ("@/pages/home/children/List")
             },
+
             {
-                path:"detail",
-                component:() => import("@/pages/home/children/Detail")
+                path: "detail/:productId",
+                component: () =>
+                    import ("@/pages/home/children/Detail")
             }
+
+            // {
+            //     path: "detail/:productId",
+            //     meta: {
+            //         title: "商品详情"
+            //     },
+            //     component: () =>
+            //         import ("@/pages/home/detail/index")
+            // }
         ]
     },
     // 个人中心
     {
-        path:"/my",
-        component:() => import("@/pages/my/Index"),
-        children:[
+        path: "/my",
+        component: () =>
+            import ("@/pages/my/Index"),
+        children: [
             // 个人设置
             {
-                path:"set",
-                component:() => import("@/pages/my/children/Set")
+                path: "set",
+                component: () =>
+                    import ("@/pages/my/children/Set")
             },
             // 个人中心
             {
-                path:"center",
-                component:() => import("@/pages/my/children/Center")
+                path: "center",
+                component: () =>
+                    import ("@/pages/my/children/Center")
             },
         ]
     },
-    
+
     // 订单详情
     {
-        path :"/order",
-        component:() => import("@/pages/order/Index"),
-        children:[
-            {
-                path:"list",
-                component:() => import("@/pages/order/children/List")
+        path: "/order",
+        component: () =>
+            import ("@/pages/order/Index"),
+        children: [{
+                path: "list",
+                component: () =>
+                    import ("@/pages/order/children/List")
             },
             {
-                path:"detail",
-                component:() => import("@/pages/order/children/Detail")
+                path: "detail",
+                component: () =>
+                    import ("@/pages/order/children/Detail")
             },
             {
-                path:"confirm",
-                component:() => import("@/pages/order/children/ConfirmOrder")
+                path: "confirm",
+                component: () =>
+                    import ("@/pages/order/children/ConfirmOrder")
             }
         ]
     },
     // 地址
     {
-        path:"/address",
-        component:() => import("@/pages/address/Index"),
-        children:[
-            {
-                path:"add",
-                component:() => import("@/pages/address/children/Add")
+        path: "/address",
+        component: () =>
+            import ("@/pages/address/Index"),
+        children: [{
+                path: "add",
+                component: () =>
+                    import ("@/pages/address/children/Add")
             },
             {
-                path:"edit",
-                component:() => import("@/pages/address/children/Edit")
+                path: "edit",
+                component: () =>
+                    import ("@/pages/address/children/Edit")
             },
             {
-                path:"list",
-                component:() => import("@/pages/address/children/List")
+                path: "list",
+                component: () =>
+                    import ("@/pages/address/children/List")
             },
             {
-                path:"area",
-                component:() => import("@/pages/address/children/SelectArea")
+                path: "area",
+                component: () =>
+                    import ("@/pages/address/children/SelectArea")
             }
         ]
     },
     // 用户 user
     {
-        path:"/user",
-        component:() => import("@/pages/user/Index"),
-        children:[
-            {
-                path:"login",
-                component:() => import("@/pages/user/children/Login")
+        path: "/user",
+        component: () =>
+            import ("@/pages/user/Index"),
+        children: [{
+                path: "login",
+                component: () =>
+                    import ("@/pages/user/children/Login")
             },
             {
-                path:"register",
-                component:() => import("@/pages/user/children/Register")
+                path: "register",
+                component: () =>
+                    import ("@/pages/user/children/Register")
             }
         ]
     },
     // 支付
     {
-        path:"/pay",
-        component:() => import("@/pages/pay/Index"),
-        children:[
-            {
-                path:"payWay",
-                component:() => import("@/pages/pay/children/PayWay")
+        path: "/pay",
+        component: () =>
+            import ("@/pages/pay/Index"),
+        children: [{
+                path: "payWay",
+                component: () =>
+                    import ("@/pages/pay/children/PayWay")
             },
             {
-                path:"payMoney",
-                component:() => import("@/pages/pay/children/Pay")
+                path: "payMoney",
+                component: () =>
+                    import ("@/pages/pay/children/Pay")
             },
         ]
     },
     // 购物车
     {
-        path:"/cart",
-        component:() => import("@/pages/cart/Index"),
-        children:[
-            {
-                path:"befor",
-                component:()=>import("../pages/cart/children/Befor")
+        path: "/cart",
+        component: () =>
+            import ("@/pages/cart/Index"),
+        children: [{
+                path: "befor",
+                component: () =>
+                    import ("../pages/cart/children/Befor")
             },
             {
-                path:"after",
-                component:()=>import("../pages/cart/children/After")
+                path: "after",
+                component: () =>
+                    import ("../pages/cart/children/After")
             }
         ]
+    },
+
+    // {
+    //     path: "/cart",
+    //     meta: {
+    //         title: "购物车"
+    //     },
+    //     component: () =>
+    //         import ("@/pages/cart/index")
+    // },
+
+    // 测试
+    {
+        path: "/demo",
+        name: "demo",
+        component: () =>
+            import ("@/pages/demo/demo")
     }
 ]
 

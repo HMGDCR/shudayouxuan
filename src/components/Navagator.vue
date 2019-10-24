@@ -1,6 +1,7 @@
 <template>
-   <div class="footNave">
-        <van-grid>
+   <div >
+       <div class="kongbai"></div>
+        <van-grid class="footNave">
             <ul class="navagator">
                 <router-link to="/home/homePage" tag="li">
                     <i class="iconfont icon-shouye1"></i>
@@ -30,6 +31,11 @@ export default {
 </script>
 
 <style scoped lang="less">
+.kongbai{
+
+    height: 100px;
+    width: 100%;
+}
 .footNave {
     position: fixed;
     width: 100%;
