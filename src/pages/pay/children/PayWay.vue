@@ -17,7 +17,8 @@
             </van-cell-group>
         </van-radio-group>
         <div class="submit">
-            <van-button class="button" type="danger" size="large" @click="payMoney">支付 ¥45.00</van-button>
+            <!-- <van-button class="button" type="danger" size="large" @click="payMoney">支付 ¥45.00</van-button> -->
+            <van-button class="button" type="danger" size="large" @click="payMoney">支付 ¥{{totalPay}}</van-button>
         </div>
         </div>
     </div>
@@ -31,16 +32,74 @@ export default {
     },
     methods: {
         payMoney() {
+            //点击支付生成订单
+            let urlOrder = "/order/add"
+           this.$store.commit("addressInfo","广西")           
+         
+            let dataOrder = {
+                preOrderId:this.preOrderId,
+                allFee:this.totalPay,
+                addressInfo:this.addressInfo,
+                discount:this.discount,               
+            }
+             console.log("dataOrder",dataOrder)
+
+            this.$axios.post(urlOrder,dataOrder).then(res=>{
+                console.log("生成订单：",res)
+            }).catch(err=>{
+                console.log("生成订单失败：",err)
+            })
+            //支付成功够，我们需要把存在vuex中的被选中的购物车Id删除，这就需要调用删除购物车的方法            
+            let url = "cart/del"
+      let data={
+        cartId:this.SeletCarNum
+      }
+        this.$axios.post(url,data).then(res=>{
+
+            console.log("删除购物车成功：",res)
+            //删除成功后，需要清空vuex中的被选中商品的购物车Id
+            this.$store.commit("SeletCarNum",[])
+         
+            console.log("支付成功后的this.SeletCarNum",this.SeletCarNum)
+        }).catch(err=>{
+            console.log("删除购物车失败：",err)
+        })
             this.$router.push("/pay/payMoney");
         },
         goBack() {
             this.$router.go(-1);
+            this.$store.commit("SeletCarNum",[])
+            this.$store.commit("totalPay",0)
         },
         show(){
             this.$store.commit('payWayFlagChange', !this.$store.state.payWayFlag)
             console.log("this.$store.state.payWayFlag",this.$store.state)
         }
-    }
+    },
+  computed: {
+      //获取预订单Id
+      preOrderId(){
+          return this.$store.state.preOrderId
+      },
+      //获取vuex中的被选中商品购物车的Id
+      SeletCarNum(){
+          return this.$store.state.SeletCarNum
+      },
+      //商品的总价格
+      totalPay(){
+        return this.$store.state.totalPay
+      },
+      //用户地址
+      addressInfo(){
+           return this.$store.state.addressInfo
+      },
+      //优惠券
+        discount(){
+             return this.$store.state.discount
+        }
+       
+
+    },
 };
 </script>
 

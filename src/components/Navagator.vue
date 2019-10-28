@@ -1,6 +1,6 @@
 <template>
    <div >
-       <div class="kongbai"></div>
+       <!-- <div class="kongbai"></div> -->
         <van-grid class="footNave">
             <ul class="navagator">
                 <router-link to="/home/homePage" tag="li">
@@ -31,11 +31,11 @@ export default {
 </script>
 
 <style scoped lang="less">
-.kongbai{
+// .kongbai{
 
-    height: 100px;
-    width: 100%;
-}
+//     height: 100px;
+//     width: 100%;
+// }
 .footNave {
     position: fixed;
     width: 100%;

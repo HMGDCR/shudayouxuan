@@ -9,7 +9,7 @@
         <!-- 商品信息 -->
         <div class="ctxPay">
             <div class="titlePay">苏打优选商品</div>
-            <div class="pricePay">￥0</div>
+            <div class="pricePay">￥{{totalPrice}}</div>
         </div>
         <!-- 收款方 -->
         <div class="context">
@@ -35,8 +35,15 @@ export default {
     methods: {
         goHome(){
             this.$router.push("/home/homePage")
+            this.$store.commit("totalPrice",0)
         }
-    }
+    },
+     computed: {
+      totalPrice(){
+        let totalPrice=this.$store.state.totalPrice
+        return Number(totalPrice)
+      }
+    },
 };
 </script>
 

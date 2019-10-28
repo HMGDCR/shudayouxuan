@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Router from "vue-router"
+import store from '@/store/index'
 
 Vue.use(Router)
 
@@ -87,7 +88,12 @@ export const routes = [{
                     import ("@/pages/order/children/Detail")
             },
             {
+                //need表示的是，这个页面需要登录的时候，用户才可以跳转到订单页面
                 path: "confirm",
+                meta: {
+                    title: "确认订单",
+                    needLogin: true
+                },
                 component: () =>
                     import ("@/pages/order/children/ConfirmOrder")
             }
@@ -137,6 +143,26 @@ export const routes = [{
             }
         ]
     },
+
+    { //user组件合并
+        path: "/logRe",
+        component: () =>
+            import ("@/pages/user/logRe"),
+        children: [{
+                //登录
+                path: "login",
+                component: () =>
+                    import ("@/pages/user/logRe"),
+            },
+            {
+                //注册
+                path: "register",
+                component: () =>
+                    import ("@/pages/user/logRe"),
+            },
+
+        ]
+    },
     // 支付
     {
         path: "/pay",
@@ -144,6 +170,7 @@ export const routes = [{
             import ("@/pages/pay/Index"),
         children: [{
                 path: "payWay",
+                name: "payWay",
                 component: () =>
                     import ("@/pages/pay/children/PayWay")
             },
@@ -171,6 +198,13 @@ export const routes = [{
             }
         ]
     },
+    //优惠券
+    {
+        path: "coupon",
+        name: "coupon",
+        component: () =>
+            import ("@/pages/coupon/coupon")
+    },
 
     // {
     //     path: "/cart",
@@ -191,7 +225,26 @@ export const routes = [{
 ]
 
 let router = new Router({
-    routes
+        routes
+    })
+    // 使用路由守卫
+router.beforeEach((to, from, next) => {
+    let { needLogin } = to.meta
+    let { isLogin } = store.state
+    console.log("isLogin", isLogin)
+    console.log("needLogin", needLogin)
+    console.log("to.path !== '/logRe/login'", to.path !== '/logRe/login')
+        // document.title = title;
+        //判断，如果不是登录，且要跳转的页面需要登录的时候，我们是先需要跳转到登录页面的
+    if (needLogin && !isLogin && to.path !== '/logRe/login') {
+        next({
+            path: "/logRe/login"
+        })
+        console.log("已经进入路由守卫了")
+    } else {
+        next()
+        console.log("没有进入路由守卫！！！")
+    }
 })
 
 

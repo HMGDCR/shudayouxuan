@@ -3,10 +3,14 @@
         <!-- 头部 -->
         <header>
             <div class="head">
-                <router-link to="/user/login">
+                <!-- <router-link to="/user/login"> -->
+                <router-link to="/logRe/login">
                 <img src="https://mall.s.maizuo.com/e915e2c990c30f8efa9e30bc75da41ee.jpg" alt="">
                 </router-link>
-                <span>立即登录</span>
+                <span>
+                    {{isLogin?phone:"立即登录"}}
+                    <!-- {{isLogin}} -->
+                    </span>
             </div>
         </header>
         <ul class="wealthBox">
@@ -79,7 +83,15 @@ export default {
         toOrderList(){
             this.$router.push("/order/list")
         }
-    }
+    },
+    computed: {
+       isLogin(){
+           return this.$store.state.isLogin;
+       },
+        phone(){
+           return this.$store.state.phone;
+       }
+    },
 };
 </script>
 

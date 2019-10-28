@@ -11,16 +11,71 @@ const config = {
     state: {
         total: 0,
         carTotal: [], //购物车的数量
-
+        totalPrice: 0, //结算的总价格   
         username: "",
-        payWayFlag: false
+        phone: "",
+        isLogin: false,
+        payWayFlag: false,
+        token: "",
+        SeletCarNum: [], //存放选中购物车的Id,当购物车Befor的商品被选中的时候，使用
+        preOrderId: "", //预订单的Id,
+        totalPay: 0, //实际支付
+        discount: 0, //优惠金额      
+        addressInfo: "", //用户的地址
+
+
     },
 
     getters: {
-
+        token: (state) => state.token
     },
 
     mutations: {
+        //优惠金额
+        discount(state, payload) {
+            state.discount = payload
+        },
+
+        //用户地址
+        addressInfo(state, payload) {
+            state.addressInfo = payload
+        },
+
+        //最后支付
+        totalPay(state, payload) {
+            state.totalPay = payload
+        },
+        // 修改预订单Id
+        updataPreOrderId(state, payload) {
+            state.preOrderId = payload
+        },
+        //当我们支付成功之后，删除我们已经购买商品的购物车
+        SeletCarNum(state, payload) {
+            state.SeletCarNum = payload
+        },
+
+        //结算的总价格
+        totalPrice(state, payload) {
+            state.totalPrice = payload
+        },
+        //用户名
+        username(state, payload) {
+            state.username = payload
+        },
+        //手机号码
+        phone(state, payload) {
+            state.phone = payload
+        },
+        //登录状态
+        isLogin(state, payload) {
+            state.isLogin = payload
+        },
+
+        //updateToken
+        updateToken(state, payload) {
+            state.token = payload
+        },
+
         // 支付方式页面的显示与隐藏
         payWayFlagChange(state, payload) {
             state.payWayFlag = payload
@@ -29,15 +84,7 @@ const config = {
         login(state, payload) {
 
         },
-        //商品购买的个数
-        // subtraction(state, paload) {
-        //     if (state.count > 0) {
-        //         state.count = state.count - 1
-        //     }
-        // },
-        // add(state, payload) {
-        //     state.count = state.count + 1
-        // },
+
         //购买总数
         addtoCart(state, payload) {
             state.total = state.total + 1

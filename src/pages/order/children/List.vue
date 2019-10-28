@@ -32,7 +32,7 @@
                     <van-button size="small" class="buttosize">重新购买</van-button>
                 </div>
             </van-card>
-            <van-card num="1" price="42.5" title="海边理发店"
+            <!-- <van-card num="1" price="42.5" title="海边理发店"
                 thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
                 style="font-size: 15px">
                 <van-divider />
@@ -67,14 +67,36 @@
                     <span class="flr">已取消</span>
                     <van-button size="small" class="buttosize">重新购买</van-button>
                 </div>
-            </van-card>
+            </van-card> -->
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            orderList:[]
+        }
+    },
+    created() {
+        this.getOrderList()
+    },
     methods: {
+        //获取所有的订单
+        getOrderList(){
+            let url = "/order/list"
+            let data = {
+                pageNum:2
+            }
+            this.$axios.post(url,data).then(res=>{
+                console.log("我的订单:",res)
+                this.orderList=res.list
+             
+            }).catch(err=>{
+                console.log("获取订单失败：",err)
+            })
+        },
         toHomePage(){
             this.$router.push("/home/homePage")
         }

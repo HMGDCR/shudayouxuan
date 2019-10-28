@@ -14,6 +14,7 @@
     </div>
     <!-- 商城运费 -->
     <div
+      v-if="false"
       style="height:44px;background:#fff;display:flex;line-height:44px;border-bottom: 1px solid #F4F4F4"
     >
       <van-checkbox
@@ -27,20 +28,31 @@
     <!-- 购物车列表 -->
     <div>
       <div class="flx-cent" v-for="(item,index) in carData" :key="index">
-        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
+        <van-checkbox
+          v-model="item.checked"
+          checked-color="#C03131"
+          icon-size="15px"
+          @change="selectOne"
+        ></van-checkbox>
         <div class="cart-goods">
           <img :src="item.imgUrl" alt />
         </div>
         <div class="cart-container flex2 jc-sb">
           <p class="goods-msg">{{item.masterName}}</p>
           <div class="goods-price">
-            <span class="price">￥44.9</span>
+            <span class="price">￥{{item.price/100}}</span>
             <!-- <span class="old-price">￥55.9</span> -->
             <span class="count">
               <div class="small-box">
-                <span style="width:34px;border:1px solid gray;" @click="subtract(item.cartId,item.buyNum,index)">-</span>
-                <span style="width:46px;border:1px solid gray;border-left:0;">{{count[index]}}</span>
-                <span style="width:34px;border:1px solid gray;border-left:0;" @click="addOne(item.cartId,item.buyNum,index)">+</span>
+                <span
+                  style="width:34px;border:1px solid gray;"
+                  @click="subtract(item.cartId,item.buyNum,index)"
+                >-</span>
+                <span style="width:46px;border:1px solid gray;border-left:0;">{{item.buyNum}}</span>
+                <span
+                  style="width:34px;border:1px solid gray;border-left:0;"
+                  @click="addOne(item.cartId,item.buyNum,index)"
+                >+</span>
               </div>
             </span>
           </div>
@@ -65,20 +77,28 @@
             </span>
           </div>
         </div>
-      </div> -->
+      </div>-->
     </div>
     <!-- 底部结算 -->
+    <!-- <div class="buttom-nav" v-if="isShow?isShow:false"> -->
     <div class="buttom-nav">
-      <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px" @click="checkAll">
+      <van-checkbox
+        v-model="checkedAll"
+        checked-color="#C03131"
+        icon-size="15px"
+        @click="selectAll"
+      >
         <span style="color: #797d82;">全选</span>
       </van-checkbox>
       <van-button
         style="display:flex; justify-content: center;  align-items: center; height:33px; width:85px;margin-top: 8px;margin-right: 15px; font-size:16px;"
         color="#ef4040"
+        @click="delCar"
       >
-        <span style="height:33px">删除</span>
+        <span style="height:33px" >删除</span>
       </van-button>
     </div>
+    <div class="kongbai"></div>
     <Navagater></Navagater>
   </div>
 </template>
@@ -92,65 +112,147 @@ export default {
   data() {
     return {
       value: 1,
-      checked: true,
-      carData:[],
-      carId:"",
-      buyNum:0,
-      count:[]
+      checked: false,
+      carData: [],
+      checkedAll: false,
+      count: [],
+      isShow:false
     };
   },
   created() {
-    this.getCarData()
+    this.getCarData();
   },
-
+// computed: {
+//   isShow(){
+//    return this.buyNums>0?true:false
+//    }
+// },
+// watch: {
+//   buyNums(){
+//   this.isShow= this.buyNums.length>0?true:false
+//   console.log("this.isShow",this.isShow)
+//   }
+// },
   methods: {
-    addOne(cartId,buyNum,index){
-      this.cartId=cartId
-      this.count[index]++
-      console.log("index",index)
-      console.log("this.count",this.count)
-      this.buyNum= buyNum+1 
-        this.updateNum()
-      console.log("add",this.cartId,"this.buyNum",this.buyNum)
-    },
-    subtract(cartId,buyNum,index){
-    this.cartId=cartId
-      this.count[index]--
-        console.log("this.count",this.count)
-      this.buyNum=buyNum-1
-    console.log("sub",this.carId,"this.buyNum",this.buyNum)
-    this.updateNum()
-    },
-    //修改商品数量
-    updateNum(){
-      let url ="cart/updateNum"
-      let data ={
-        cartId:this.cartId,
-         buyNum:this.buyNum
+    //删除购物车
+    delCar(){
+      
+       let selectArr = this.carData.filter(item => {
+        return item.checked == true;
+      });
+      let selectCarId=selectArr.map(item=>{
+        return item.cartId
+      })
+      let url = "cart/del"
+      let data={
+        cartId:selectCarId
       }
       this.$axios.post(url,data).then(res=>{
-        console.log("修改商品数量：",res)
+        console.log("删除",res)
+        selectCarId.forEach(carId=>{
+            this.carData=this.carData.filter(item=>{           
+           return item.cartId!=carId
+        })
+        })
+         
       }).catch(err=>{
-        console.log("错误：",err)
+        console.log("删除失败：",err)
       })
-    },
-       //获取数据
-    getCarData(){
      
-      let url ="cart/list"
-      this.$axios.post(url).then(res=>{
-        console.log("购物车的列表数据：",res)
-        this.carData=res.list
-        // this.count=res.list.buyNum
-      res.list.forEach(item => {
-          this.count.push(item.buyNum)
-        });
+    },
 
-        console.log("this.count",this.count)
-        console.log("this.carData",this.carData)        
-      }).catch(err=>{
-        console.log("err",err)
-      })
+    //单选
+    selectOne(value) {
+      console.log("单选：", value);
+      //筛选出被选中的状态
+      let selectArr = this.carData.filter(item => {
+        return item.checked == true;
+      });
+      if (selectArr.length == this.carData.length) {
+        this.checkedAll = true;
+      } else {
+        this.checkedAll = false;
+      }
+    },
+    selectAll() {
+      console.log("checkedAll", this.checkedAll);
+      this.carData = this.carData.map(item => {
+        return {
+          ...item,
+          checked: !this.checkedAll
+        };
+      });
+    },
+
+    addOne(cartId, buyNum, index) {
+      this.isShow=true
+      this.count[index]++;
+      console.log("index", index);
+      console.log(" this.count[index]+", this.count[index]);
+      console.log("this.count", this.count);
+      this.buyNums = buyNum + 1;
+      this.updateNum(cartId,this.buyNums,index);
+    },
+    subtract(cartId, buyNum, index) {
+      if(this.count[index]>0){
+        this.count[index]--;      
+        this.buyNums = buyNum - 1;
+      this.updateNum(cartId, this.buyNums,index);
+      // return false
+      }
+      else{
+        this.isShow=false
+      }
+     
+    },
+    //修改商品数量
+    updateNum(cartId, buyNums,index) {
+      let url = "cart/updateNum";
+      let data = {
+        cartId: cartId,
+        buyNum: buyNums
+      };
+      this.$axios
+        .post(url, data)
+        .then(res => {
+          console.log("修改商品数量：", res);
+          this.carData[index].buyNum =this.count[index]
+          
+        })
+        .catch(err => {
+          console.log("错误：", err);
+        });
+    },
+    //获取数据
+    getCarData() {
+      let url = "cart/all";
+      this.$axios
+        .post(url)
+        .then(res => {
+          console.log("购物车的列表数据：", res);
+
+          let resList = res.list.filter(item => {
+            return item.buyNum > 0;
+          });
+
+          this.carData = resList.map(item => {
+            return {
+              ...item,
+              checked: false
+            };
+          });
+
+          // this.count=res.list.buyNum
+          res.list.forEach(item => {
+            this.count.push(item.buyNum);
+          });
+
+          console.log("this.count", this.count);
+          console.log("this.carData", this.carData);
+        })
+        .catch(err => {
+          console.log("err", err);
+        });
     },
     onClickLeft() {
       this.$router.push("/home/homePage");
@@ -166,6 +268,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.kongbai {
+  height: 100px;
+  width: 100%;
+}
 .van-nav-bar__left,
 .van-nav-bar__right {
   font-size: 17px;
@@ -270,7 +376,6 @@ export default {
   right: 0;
   color: rgb(184, 181, 181);
   font-size: 12px;
-  
 }
 .small-box {
   width: 115px;

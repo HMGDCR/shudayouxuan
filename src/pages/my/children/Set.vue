@@ -19,12 +19,20 @@ export default {
         onClickLeft() {
             this.$router.push("/my/center")
         },
-        goBack(){
+        goBack(){//退出
             this.$dialog.confirm({
             title: '提示',
             message: '退出登录'
             }).then(() => {
-            this.$router.push("/my/center")
+                let url = "/user/logout"
+                this.$axios.post(url).then(res=>{
+                    this.$toast.success("退出成功")
+                     this.$router.push("/my/center")
+                    this.$store.commit("isLogin",false)
+                    this.$store.commit("updateToken","")
+                
+                })
+           
             // on confirm
             }).catch(() => {
             // on cancel

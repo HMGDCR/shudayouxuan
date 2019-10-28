@@ -44,7 +44,7 @@
             <van-cell is-link @click="showPopup" style="font-size:13px"><span class="color-gray">规格： X </span>{{count}}</van-cell>
             <van-popup v-model="show" position="bottom" :style="{ height: '60%' }">
                 <div class="topic flex mt-15">
-                <img class="img-backcolor" :src="result.banners[0]" alt />
+                <img class="img-backcolor" :src="result.banners&&result.banners[0]" alt />
                 <div class="flex2 jc-c" style="height:100%">
                     <div style="margin-bottom:4px">
                     <span class="price mr-5" style="font-size:15px;">￥</span>
@@ -122,7 +122,7 @@
         </div>
         <!-- 底部购物车 -->
         <van-goods-action style="width:100%">
-            <van-goods-action-icon icon="cart-o" :info="total" class="ml-10" @click="onClickIcon" />
+            <van-goods-action-icon icon="cart-o" :info="result.cartNum==0?'':result.cartNum" class="ml-10" @click="onClickIcon" />
             <van-goods-action-button color="white" style="border-radius:0;color:black;height:50px;" type="warning"  text="立即购买" @click="buyImmediate" />
             <van-goods-action-button style="border-radius:0;height:50px;margin-right:0" type="danger" text="加入购物车" color="#c03131" @click="onClickButton" />
         </van-goods-action>
@@ -132,7 +132,7 @@
 export default {
     data() {
         return {
-            count:0,
+            count:1,
             productId:"",
             radio: '1',            
             current: 0,
@@ -211,18 +211,22 @@ export default {
             //  this.$store.commit("carTotals",this.productId)
              console.log("数组Id",this.carTotal)
             let url ="cart/add";
+        this.add()
             let data = {
                 productId:this.productId,
                 buyNum:this.count
             };
             this.$axios.post(url,data).then(res=>{
-                console.log("购车：",res)
+                this.result.cartNum+=this.count   
+                console.log("返回结果",res)             
+              
             }).catch(err=>{
                 console.log("购物车错误：",err)
             })
         },
         onChange(index) {    
             this.current = index;
+  
         },
         showPopup() {
             this.show = true;
@@ -240,7 +244,7 @@ export default {
                 
               this.result= res.result
               console.log("详情：",this.result)
-
+            
             }).catch(err=>{
                 console.log("err",err)
             })
