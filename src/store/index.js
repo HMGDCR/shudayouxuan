@@ -1,6 +1,8 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import createPersistedState from 'vuex-persistedstate'
+//导入adress模块
+import address from './address/address'
 
 Vue.use(Vuex)
 
@@ -22,6 +24,10 @@ const config = {
         totalPay: 0, //实际支付
         discount: 0, //优惠金额      
         addressInfo: "", //用户的地址
+        payMoney: 0, //修改后的实际金额
+        orderId: "", //订单的Id,
+        editaddress: {} //修改地址
+
 
 
     },
@@ -31,6 +37,17 @@ const config = {
     },
 
     mutations: {
+        // 修改地址
+        editaddress(state, payload) {
+            state.editaddress = payload
+        },
+        //订单的Id
+        orderId(state, payload) {
+            state.orderId = payload
+        },
+        payMoney(state, payload) {
+            state.payMoney = payload
+        },
         //优惠金额
         discount(state, payload) {
             state.discount = payload
@@ -103,7 +120,7 @@ const config = {
     },
 
     modules: {
-
+        address
     }
 
 

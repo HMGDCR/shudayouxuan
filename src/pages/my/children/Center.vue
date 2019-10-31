@@ -7,10 +7,7 @@
                 <router-link to="/logRe/login">
                 <img src="https://mall.s.maizuo.com/e915e2c990c30f8efa9e30bc75da41ee.jpg" alt="">
                 </router-link>
-                <span>
-                    {{isLogin?phone:"立即登录"}}
-                    <!-- {{isLogin}} -->
-                    </span>
+                <router-link to="/logRe/login" tag="span"> {{isLogin?phone:"立即登录"}}</router-link>               
             </div>
         </header>
         <ul class="wealthBox">

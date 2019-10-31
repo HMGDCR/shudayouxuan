@@ -3,7 +3,7 @@
     <div class="register-hander flex jc-sb aic">
       <span></span>
       <span class="ml-40">注册</span>
-      <router-link to="/my/center" tag="span" class="mr-15">登录</router-link>
+      <!-- <router-link to="/my/center" tag="span" class="mr-15">登录</router-link> -->
     </div>
     <div class="logo">
       <img src="https://file.sdyxmall.com/h5/auth/public/app/img/logo.adec77d.png" alt />

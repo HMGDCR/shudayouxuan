@@ -7,7 +7,6 @@ Vue.use(Router)
 export const routes = [{
         path: "",
         redirect: "/home/homePage",
-        // redirect: "/product/list",
 
         meta: {
             title: "首页",
@@ -16,17 +15,16 @@ export const routes = [{
     // 首页
     {
         path: "/home",
-        // path: "/product",
+
         component: () =>
 
             import ("@/pages/home/Index"),
         children: [{
                 path: "homePage",
-                // path: "list",
 
                 component: () =>
                     import ("@/pages/home/children/HomePage"),
-                // import ("@/pages/home/list/index"),
+
             },
 
             {
@@ -41,14 +39,6 @@ export const routes = [{
                     import ("@/pages/home/children/Detail")
             }
 
-            // {
-            //     path: "detail/:productId",
-            //     meta: {
-            //         title: "商品详情"
-            //     },
-            //     component: () =>
-            //         import ("@/pages/home/detail/index")
-            // }
         ]
     },
     // 个人中心
@@ -109,37 +99,20 @@ export const routes = [{
                 component: () =>
                     import ("@/pages/address/children/Add")
             },
-            {
-                path: "edit",
+            { //修改地址
+                path: "edit/:addressId",
                 component: () =>
-                    import ("@/pages/address/children/Edit")
+                    import ("@/pages/address/children/SelectArea")
             },
             {
                 path: "list",
                 component: () =>
                     import ("@/pages/address/children/List")
             },
-            {
+            { //新建地址
                 path: "area",
                 component: () =>
                     import ("@/pages/address/children/SelectArea")
-            }
-        ]
-    },
-    // 用户 user
-    {
-        path: "/user",
-        component: () =>
-            import ("@/pages/user/Index"),
-        children: [{
-                path: "login",
-                component: () =>
-                    import ("@/pages/user/children/Login")
-            },
-            {
-                path: "register",
-                component: () =>
-                    import ("@/pages/user/children/Register")
             }
         ]
     },
@@ -175,7 +148,7 @@ export const routes = [{
                     import ("@/pages/pay/children/PayWay")
             },
             {
-                path: "payMoney",
+                path: "payMoney/:isShow",
                 component: () =>
                     import ("@/pages/pay/children/Pay")
             },

@@ -17,7 +17,7 @@
     </div>
     <!-- 商城运费 -->
     <div
-    v-if="false"
+      v-if="false"
       style="height:44px;background:#fff;display:flex;line-height:44px;border-bottom:1px solid #F4F4F4"
     >
       <van-checkbox
@@ -35,11 +35,11 @@
       <!-- <router-link :to="`/home/detail/${item.productId}`" tag="div"></router-link> -->
       <div class="flx-cent" v-for="(item,index) in carData" :key="index">
         <van-checkbox
-         v-model="item.checked" 
-         checked-color="#C03131" 
-         icon-size="15px"
-         @change="selectOne(index)"
-         ></van-checkbox>
+          v-model="item.checked"
+          checked-color="#C03131"
+          icon-size="15px"
+          @change="selectOne(index)"
+        ></van-checkbox>
         <router-link :to="`/home/detail/${item.productId}`" tag="div" class="cart-goods">
           <img :src="item.imgUrl" alt />
         </router-link>
@@ -51,7 +51,7 @@
             <span class="count">X {{item.buyNum}}</span>
           </div>
         </div>
-     </div>
+      </div>
       <!-- <div class="flx-cent">
         <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
         <div class="cart-goods">
@@ -65,22 +65,26 @@
             <span class="count">X 1</span>
           </div>
         </div>     
-      </div> -->
+      </div>-->
     </div>
-   <div class="kongbai"></div>
+    <div class="kongbai"></div>
     <!-- 底部结算 -->
-    <div class="buttom-nav"  v-if="carData.length>0?true:false">
-      <van-checkbox v-model="checkedAll" 
-    
-       checked-color="#C03131" 
-       icon-size="15px"
-       @click="selectAll"
-       >
-        <span style="color: #797d82;">全选</span>
-      
+    <div class="buttom-nav" v-if="carData.length>0?true:false">
+      <van-checkbox
+        v-model="checkedAll"
+        checked-color="#C03131"
+        icon-size="15px"
+       
+        @click="selectAll"
+      >
+        <span style="color: #797d82; fontSize:18px;">全选</span>
       </van-checkbox>
       <span class="all-price" v-show="totalPrice>0">￥{{totalPrice}}</span>
-      <van-button  style="height:49px;width:105px;font-size:17px" color="#C03131" @click="payMoney">结算</van-button>
+      <van-button
+        style="height:49px;width:105px;font-size:17px"
+        color="#C03131"
+        @click="payMoney"
+      >结算</van-button>
     </div>
     <Navagater></Navagater>
   </div>
@@ -90,154 +94,135 @@
 import Navagater from "@/components/Navagator";
 export default {
   components: {
-    Navagater,      
+    Navagater
   },
   computed: {
-     carTotal(){
-             return  this.$store.state.carTotal
-        },
-        //计算总价钱
-        totalPrice(){
-          let money=0
-          //筛选出选中的状态
-          let listArr=this.carData.filter(item=>{
-            return item.checked==true
-          })
-          // 遍历筛选的选项
-          listArr.forEach(item => {
-            money+=(item.buyNum*item.price/100);
-          });
-          return money.toFixed(2)>0?money.toFixed(2):0
-        },
+    carTotal() {
+      return this.$store.state.carTotal;
+    },
+    //计算总价钱
+    totalPrice() {
+      let money = 0;
+      //筛选出选中的状态
+      let listArr = this.carData.filter(item => {
+        return item.checked == true;
+      });
+      // 遍历筛选的选项
+      listArr.forEach(item => {
+        money += (item.buyNum * item.price) / 100;
+      });
+      return money.toFixed(2) > 0 ? money.toFixed(2) : 0;
+    },
 
-        //测试的，查看商品购物车被选中的carId
-        SeletCarNum(){
-          return this.$store.state.SeletCarNum;
-        }
-
-
+    //测试的，查看商品购物车被选中的carId
+    SeletCarNum() {
+      return this.$store.state.SeletCarNum;
+    }
   },
   created() {
-    this.getCarData()
+    this.getCarData();
   },
   data() {
     return {
       checkedAll: false,
-      result:[],
-      carData:[],
-      seCarId:[] //存放购物车Id
-    
+      result: [],
+      carData: [],
+      seCarId: [] //存放购物车Id
     };
   },
   methods: {
     //结算
-    payMoney(){
-    //当购物车的长度为0的时候，结算按钮不能跳转    
-    if(this.SeletCarNum.length>0){
-      console.log("点击跳转")
-      console.log("this.SeletCarNum",this.SeletCarNum)
-      this.$loading(true)
-      let $this = this
-      //预订单接口
-      let url = "/preOrder/add"
-      let data={
-        totalMoney:this.totalPrice,
-        cartId:this.seCarId
+    payMoney() {
+      //当购物车的长度为0的时候，结算按钮不能跳转
+      if (this.SeletCarNum.length > 0) {
+        this.$loading(true);
+        let $this = this;
+        //预订单接口
+        let url = "/preOrder/add";
+        let data = {
+          totalMoney: this.totalPrice,
+          cartId: this.seCarId
+        };
+        this.$axios
+          .post(url, data)
+          .then(res => {
+            this.$store.commit("updataPreOrderId", res.result.preOrderId);
+            setTimeout(() => {
+              this.$store.commit("totalPrice", this.totalPrice);
+              this.$router.push("/order/confirm");
+              $this.$loading(false);
+            }, 500);
+          })
+          .catch(err => {
+            console.log("添加预订单失败：", err);
+          });
+      } else {
+        this.$toast("亲，您还没有选择需要的宝贝呦！！！");
       }
-      this.$axios.post(url,data).then(res=>{
-        console.log("添加预订单：",res)
-        this.$store.commit("updataPreOrderId",res.result.preOrderId)
-           setTimeout(()=>{
-        this.$store.commit("totalPrice",this.totalPrice)
-         this.$router.push("/order/confirm")
-        $this.$loading(false)
-      },500)
-      }).catch(err=>{
-        console.log("添加预订单失败：",err)
-      })
-      
-   
-    }else{
-      this.$toast("亲，您还没有选择需要的宝贝呦！！！")
-    }
-      
-   
-
-     
     },
     //获取商品详情,通过这个来获取商品的价格
- 
+
     // 单选 这里我们使用组件的change的事件，它自带一个回调参数，这个参数是布尔值，可以选中的状态
-    selectOne(value){   
-    
-         // 被选中商品的数量
-        let selectArr= this.carData.filter(item=>{
+    selectOne(value) {
+      // 被选中商品的数量
+      let selectArr = this.carData.filter(item => {
+        return item.checked;
+      });
 
-             return item.checked;
-         })
+      //把被选中的商品的购物车Id存起来
+      this.seCarId = selectArr.map(item => {
+        return item.cartId;
+      });
 
-         console.log("被选中的有：",selectArr)
-        //把被选中的商品的购物车Id存起来
-         this.seCarId=selectArr.map(item=>{
-          return  item.cartId
-         })
-           console.log("被选中商品购物车的Id的有：",this.seCarId)
-          //把被选中的商品的购物车Id存到vuex中，用于当我们支付完后，需要把他们删除
-          this.$store.commit("SeletCarNum",this.seCarId)
-          //查看被选中商品购物车的Id
-          console.log("vuex中SeletCarNum的值：",this.SeletCarNum)
+      //把被选中的商品的购物车Id存到vuex中，用于当我们支付完后，需要把他们删除
+      this.$store.commit("SeletCarNum", this.seCarId);
 
-        // 判断被选中商品和全部商品的数量是否相等
-        if(selectArr.length==this.carData.length){
-          this.checkedAll=true
-        }
-        else{
-          this.checkedAll=false
-        }
+      // 判断被选中商品和全部商品的数量是否相等
+      if (selectArr.length == this.carData.length) {
+        this.checkedAll = true;
+      } else {
+        this.checkedAll = false;
+      }
     },
     // 全选 全使用的是点击事件click
-    selectAll(value){
-      console.log("多选：",this.checkedAll)
-      this.carData=this.carData.map(item=>{
+    selectAll(value) {
+      this.carData = this.carData.map(item => {
         return {
           ...item,
           checked: !this.checkedAll
-        }
-      })
+        };
+      });
     },
 
     //获取数据
-    getCarData(){     
-      let url ="cart/all"
-      this.$axios.post(url).then(res=>{
-      
-    let resList= res.list.filter(item=>{
-      return item.buyNum >0
-       })
-         console.log("购物车的列表数据：",resList)
-        //由于返回的对象里没有我们需要的checked属性，所有我们需要对数组里的每一个对象添加checked属性，使用的方式是map和扩展运算符
-        this.carData= resList.map(item=>{
-
-          return {
-            ...item,
-            checked:false
-          }
+    getCarData() {
+      let url = "cart/all";
+      this.$axios
+        .post(url)
+        .then(res => {
+          let resList = res.list.filter(item => {
+            return item.buyNum > 0;
+          });
+          console.log("购物车的列表数据：", resList);
+          //由于返回的对象里没有我们需要的checked属性，所有我们需要对数组里的每一个对象添加checked属性，使用的方式是map和扩展运算符
+          this.carData = resList.map(item => {
+            return {
+              ...item,
+              checked: false
+            };
+          });
         })
-        // this.carData=res.list
-        console.log("this.carData",this.carData)
-          // this.getProductData()      
-      }).catch(err=>{
-        console.log("err",err)
-      })
+        .catch(err => {
+          console.log("err", err);
+        });
     },
     onClickLeft() {
-        this.$router.push("/home/homePage");
+      this.$router.push("/home/homePage");
     },
     checkAll() {
       this.$refs.checkboxGroup.toggleAll(true);
     },
     toEdit() {
-      console.log(1111111);
       this.$router.push("/cart/after");
     }
   }
@@ -253,10 +238,9 @@ export default {
 }
 </style>
 <style lang="less" scoped>
-.kongbai{
-
-    height: 100px;
-    width: 100%;
+.kongbai {
+  height: 100px;
+  width: 100%;
 }
 .van-nav-bar__left,
 .van-nav-bar__right {
@@ -264,7 +248,6 @@ export default {
 }
 .navagator .van-nav-bar .van-icon {
   color: #2e2f30;
-  
 }
 .navagator .van-nav-bar__text {
   color: #2e2f30;
@@ -278,10 +261,10 @@ export default {
   position: fixed;
   left: 0px;
   bottom: 49px;
-  .accounts{
+  .accounts {
     position: fixed;
     right: 0;
-    bottom:49px;
+    bottom: 49px;
   }
 }
 .van-card__content {
@@ -343,6 +326,7 @@ export default {
   padding-left: 15px;
 }
 .goods-msg {
+  font-size: 16px;
   display: inline-block;
   width: 207px;
   white-space: nowrap;
@@ -386,14 +370,14 @@ export default {
     text-align: center;
   }
 }
-.all-price{
-    display:inline-block;
-    height:100%;
-    color:rgb(194, 60, 60);
-    font-size:16px;
-    position:absolute;
-    right:114px;
-    // line-height:49px;
-    margin-top:18px;
+.all-price {
+  display: inline-block;
+  height: 100%;
+  color: rgb(194, 60, 60);
+  font-size: 16px;
+  position: absolute;
+  right: 114px;
+  // line-height:49px;
+  margin-top: 18px;
 }
 </style>

@@ -5,15 +5,20 @@
     </div>
     <div class="register-hander" v-else>
       <router-link to="/logRe/login" tag="span" class="mr-15">登录</router-link>
+      <!-- <span class="mr-15">登录</span> -->
     </div>
     <div class="logo">
       <img src="https://file.sdyxmall.com/h5/auth/public/app/img/logo.adec77d.png" alt />
     </div>
-    <form>
+    <form onsubmit="return false;">
       <div class="form">
-        <div class="form-input">
+        <div class="form-input" v-if="path==='/logRe/register'">
           <input placeholder="手机号" type="text" v-model="phone" />
-          <van-button type="primary" :loading="loading" :loading-text="loadingText"  @click="getSmsCode">获取验证码</van-button>
+          <van-button type="primary" :loading="loading" :loading-text="loadingText"  @click="getSmsCode" :disabled="isDisable" ><span v-if="isSmsCode">{{times}}秒</span>获取验证码</van-button>
+        </div>
+         <div class="form-input" v-else>
+          <input placeholder="手机号" type="text" v-model="phone" />
+          <van-button type="primary" :loading="loading" :loading-text="loadingText" @click="getSmsCodeLogin" :disabled="isDisableLogin"><span v-if="isSmsCodeLogin">{{Logintimes}}秒</span>获取验证码</van-button>
         </div>
         <div v-if="tureorfales" class="phone">请输入手机号码</div>
         <div class="form-Verification">
@@ -28,14 +33,14 @@
         <!-- <router-link to="/my/center" tag="div" class="mr-25 ml-25" v-if="path===`/logRe/login`"> -->
         <div class="mr-25 ml-25" v-if="path===`/logRe/login`" @click="getLogin">      
           <van-button type="primary">
-            <span>短信登录</span>
+            <span :class="isLoginColor?'spanPre':'spanNow'">短信登录</span>
           </van-button>
           </div>
         <!-- </router-link> -->
 
-        <div class="mr-25 ml-25" @click="getRegister" v-else>
+        <div class="mr-25 ml-25 reGister" @click="getRegister" v-else>
           <van-button type="primary">
-            <span>注册</span>
+            <span :class="isRegisterColor?'spanPre':'spanNow'">注册</span>
           </van-button>
         </div>
       </div>
@@ -57,24 +62,35 @@ export default {
       password: "hmg",
       smsCode: "",
       loading:false,
-      loadingText:""
+      loadingText:"",
+     
+    
+      
     };
   },
-  methods: {   
+  methods: {  
+     
+   
     //注册
     getRegister() {
-      let url = "/user/register";
+     
+
+       
+      if( this.checkPhone(this.phone)){
+         let url = "/user/register";
       let data = {
         phone: this.phone,
         password: this.password,
         smsCode: this.smsCode
       };
+
       this.$axios
         .post(url, data)
         .then(res => {
           console.log("注册：", res);
            let clear = this.$toast.success("注册成功")
            setTimeout(()=>{
+             this.$router.push("/logRe/login")
              clear.clear()
            },1000)
         })
@@ -85,14 +101,24 @@ export default {
             clear.clear()
           },1000)
         });
+      }
+      else{
+        this.$toast.fail("注册失败")
+      }
+     
+
+
     },
     //登录
     getLogin(){
+if( this.checkPhone(this.phone)){
+      
       let url = "/user/login";
       let data ={
         phone: this.phone,      
         smsCode: this.smsCode
       }
+
       this.$axios.post(url,data).then(res=>{
         console.log("登录：",res)
         //给this.$toast.success("登录成功")一个变量，用于在定时器里清除
@@ -111,6 +137,13 @@ export default {
         console.log("登录失败",err)
            this.$toast.fail("请输入正确的手机号码")
       })
+}
+else{
+   this.$toast.fail("登录失败")
+}
+
+
+
     },
 
     getEye() {
@@ -123,13 +156,30 @@ export default {
       let path = this.$route.path;
       return path;
     },
-    
+    isRegisterColor(){
+     console.log(" this.phone", this.phone)
+      let isRegiColor =this.phone==""||this.password=="" || this.smsCode==""?true:false
+      console.log("isRegiColor",isRegiColor)
+      return isRegiColor
+    },
+    isLoginColor(){
+      let isRegiColor =this.phone==""||this.password=="" || this.smsCode==""?true:false
+      console.log("isRegiColor",isRegiColor)
+      return isRegiColor
+    }
+
   
   }
 };
 </script>
 
 <style scoped lang="less">
+//倒计时的样式
+.timeStyle{
+  text-decoration: line-through ;
+  color: #bdc0c5;
+}
+
 .register-hander {
   height: 44px;
   width: 100%;
@@ -164,7 +214,7 @@ export default {
     font-size: 15px;
   }
   button {
-    width: 72px;
+    width: 102px;
     height: 30px;
     background: white;
     font-size: 14px;
@@ -221,8 +271,11 @@ export default {
     font-size: 15px;
     color: #fff;
     margin-top: 54px;
-    span {
+    .spanPre {
       opacity: 0.5;
+    }
+     .spanNow {
+      opacity: 1;
     }
   }
 }

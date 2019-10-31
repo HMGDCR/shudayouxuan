@@ -12,11 +12,11 @@
                 <van-field placeholder="姓名" v-model="from.name" />
             </van-cell-group>
             <van-cell-group>
-                <van-field placeholder="手机号码" v-model="from.QQnumber"/>
+                <van-field placeholder="手机号码" v-model="from.tel"/>
             </van-cell-group>
             <van-cell-group>
                 <van-icon name="location-o" class="site" @click.native="siteSwitch" />
-                <van-field placeholder="点击选择地址" style="padding-left:32px;" v-model="from.address"/>
+                <van-field placeholder="点击选择地址" style="padding-left:32px;" v-model="from.addressDetail"/>
             </van-cell-group>
             <van-cell-group>
                 <van-field placeholder="详细地址:例如17号楼601等" v-model="from.detailedAddress"/>
@@ -34,28 +34,72 @@ export default {
     data() {
         return {
             checked: "",
+            addresId:"",
+           
             from:{
                 name:'陈媛媛',
-                QQnumber:"2457584377",
-                address:"湖北省安陆市",
+                tel:"2457584377",
+                addressDetail:"湖北省安陆市",
                 detailedAddress:"碧涢路东苑小区B座3栋301",
             }
         }
     },
+    created() {
+    this.addresId= this.$route.params.addressId
+    
+    this.getEdit(this.addresId)
+    },
+
     methods: {
+        //获取数据
+        getEdit(addressId){
+            let url = "/address/detail"
+            let data={
+                addressId:addressId
+            }
+            this.$axios.post(url,data).then(res=>{
+                console.log("编辑：",res.result)
+               this.from = res.result              
+            }).catch(err=>{
+                console.log("获取编辑失败",err)
+            })
+        },
+
         //   导航栏返回事件
         onClickReturn() {
             this.$router.push("/home/homePage")
         },
         // 导航栏保存事件
         onClickSave() {
-            this.$router.push("/address/list")
+            
+            //调用编辑接口
+            let url ="/address/edit"
+            let data = {
+                addressId:this.addresId
+            }   
+            this.$axios.post(url,data).then(res=>{
+               let toastClear= this.$toast.success("修改成功")
+               console.log("res",res)
+                setTimeout(()=>{
+                    toastClear.clear()
+                     this.$router.push("/address/list")
+                },1000)
+            }).catch(err=>{
+                this.$toast.fail("修改失败")
+                console.log("修改失败",err)
+            })
+           
         },
         // 地址切换事件
         siteSwitch() {
             alert("选择地址");
         }
-    }
+    },
+    computed: {
+        // editAddress(){           
+        //     return this.$store.state.editAddress
+        // }
+    },
 };
 </script>
 

@@ -88,7 +88,7 @@
         icon-size="15px"
         @click="selectAll"
       >
-        <span style="color: #797d82;">全选</span>
+        <span style="color: #797d82;fontSize:18px;">全选</span>
       </van-checkbox>
       <van-button
         style="display:flex; justify-content: center;  align-items: center; height:33px; width:85px;margin-top: 8px;margin-right: 15px; font-size:16px;"
@@ -194,7 +194,7 @@ export default {
       this.updateNum(cartId,this.buyNums,index);
     },
     subtract(cartId, buyNum, index) {
-      if(this.count[index]>0){
+      if(this.count[index]>1){
         this.count[index]--;      
         this.buyNums = buyNum - 1;
       this.updateNum(cartId, this.buyNums,index);
@@ -346,6 +346,7 @@ export default {
   padding-left: 15px;
 }
 .goods-msg {
+  font-size: 16px;
   display: inline-block;
   width: 207px;
   white-space: nowrap;

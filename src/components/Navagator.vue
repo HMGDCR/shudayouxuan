@@ -36,6 +36,14 @@ export default {
 //     height: 100px;
 //     width: 100%;
 // }
+
+.router-link-exact-active{
+   
+     span,.iconfont{
+        color: #FAB646;
+    }
+}
+
 .footNave {
     position: fixed;
     width: 100%;
@@ -62,6 +70,7 @@ export default {
             }
             span {
                 margin-top: 2px;
+                margin-bottom: 4px;
                 font-size: 12px;
             }
         }

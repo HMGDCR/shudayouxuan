@@ -19,9 +19,14 @@
             </div>
         </div>
         <!-- 商品详情 -->
-        <div class="goodsDetail">
-            <van-card num="1" price="42.5" title="海边理发店"
-                thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
+        <div class="goodsDetail" >
+            <template>
+              <div v-for="(items,indexs) in orderList" :key="indexs">
+
+
+                       <van-card :num="item.buyNum" price="42.5" :title="item.masterName"
+            v-for="(item,index) in items.carts" :key="index"
+                :thumb="item.imgUrl"
                 style="font-size: 15px">
                 <van-divider />
                 <div slot="footer" style="height:40px">
@@ -32,6 +37,9 @@
                     <van-button size="small" class="buttosize">重新购买</van-button>
                 </div>
             </van-card>
+              </div>
+            </template>
+         
             <!-- <van-card num="1" price="42.5" title="海边理发店"
                 thumb="https://img.yzcdn.cn/vant/t-thirt.jpg"
                 style="font-size: 15px">
@@ -85,7 +93,7 @@ export default {
     methods: {
         //获取所有的订单
         getOrderList(){
-            let url = "/order/list"
+            let url = "/order/all"
             let data = {
                 pageNum:2
             }

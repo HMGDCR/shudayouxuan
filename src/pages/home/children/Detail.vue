@@ -172,10 +172,7 @@ export default {
     
     },
     //计算属性
-    computed: {
-        // count(){
-        //   return  this.$store.state.count
-        // },
+    computed: {       
         total(){
              return  this.$store.state.total
         },
@@ -187,7 +184,7 @@ export default {
         //减法
         subtraction(){
        
-        if(this.count>0){
+        if(this.count>1){
         this.count--}
         },
         add(){
@@ -211,13 +208,14 @@ export default {
             //  this.$store.commit("carTotals",this.productId)
              console.log("数组Id",this.carTotal)
             let url ="cart/add";
-        this.add()
+        // this.add()
             let data = {
                 productId:this.productId,
                 buyNum:this.count
             };
             this.$axios.post(url,data).then(res=>{
-                this.result.cartNum+=this.count   
+                // this.result.cartNum+=this.count   
+                this.result.cartNum++
                 console.log("返回结果",res)             
               
             }).catch(err=>{

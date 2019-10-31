@@ -1,64 +1,39 @@
 <template>
   <div>
-    <van-coupon-cell
-  :coupons="coupons"
-  :chosen-coupon="chosenCoupon"
-  @click="showList = true"
+    <van-password-input
+  :value="value"
+  info="密码为 6 位数字"
+  :mask="false"
+  
+  :focused="showKeyboard"
+  @focus="showKeyboard = true"
+ 
 />
-
-<!-- 优惠券列表 -->
-<van-popup v-model="showList" position="bottom">
-  <van-coupon-list
-    :coupons="coupons"
-    :chosen-coupon="chosenCoupon"
-    :disabled-coupons="disabledCoupons"
-    @change="onChange"
-    @exchange="onExchange"
-   
-    
-  />
-</van-popup>
+    <van-number-keyboard
+     
+  :show="showKeyboard"
+  @input="onInput"
+  @delete="onDelete"
+  @blur="showKeyboard = false"
+/>
   </div>
 </template>
-
 <script>
-const coupon = {
-  available: 1,
-  condition: '无使用门槛\n最多优惠12元',
-  reason: '',
-  value: 150,
-  name: '优惠券名称',
-  startAt: 1489104000,
-  endAt: 1514592000,
-  valueDesc: '1.5',
-  unitDesc: '元',
-   description:"bbbb"
-
-};
 export default {
-    data() {
+  data() {
     return {
-      chosenCoupon: -1,
-      coupons: [coupon],
-      disabledCoupons: [coupon],
-      showList:true
-    }
+      value: '123456',
+      showKeyboard: true
+    };
   },
 
   methods: {
-    onChange(index) {
-      this.showList = false;
-      this.chosenCoupon = index;      
-      console.log("切换了",Number(this.coupons[index].valueDesc))
-      // //子组件传参数
-      // this.$emit("getCounponMoney",Number(this.coupons[index].valueDesc))
+    onInput(key) {
+      this.value = (this.value + key).slice(0, 6);
     },
-    onExchange(code) {
-      this.coupons.push(coupon);
+    onDelete() {
+      this.value = this.value.slice(0, this.value.length - 1);
     }
   }
 }
 </script>
-
-
-

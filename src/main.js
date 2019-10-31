@@ -10,6 +10,9 @@ import mixin from '@/mixin/mixin'
 import $axios from '@/utils/request';
 Vue.prototype.$axios = $axios;
 
+//导入适配
+import 'amfe-flexible'
+
 // 有赞UI库引入
 import Vant from 'vant';
 import 'vant/lib/index.css';
