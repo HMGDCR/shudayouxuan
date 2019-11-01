@@ -179,14 +179,6 @@ export const routes = [{
             import ("@/pages/coupon/coupon")
     },
 
-    // {
-    //     path: "/cart",
-    //     meta: {
-    //         title: "购物车"
-    //     },
-    //     component: () =>
-    //         import ("@/pages/cart/index")
-    // },
 
     // 测试
     {
@@ -204,19 +196,16 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
     let { needLogin } = to.meta
     let { isLogin } = store.state
-    console.log("isLogin", isLogin)
-    console.log("needLogin", needLogin)
-    console.log("to.path !== '/logRe/login'", to.path !== '/logRe/login')
-        // document.title = title;
-        //判断，如果不是登录，且要跳转的页面需要登录的时候，我们是先需要跳转到登录页面的
+
+    // document.title = title;
+    //判断，如果不是登录，且要跳转的页面需要登录的时候，我们是先需要跳转到登录页面的
     if (needLogin && !isLogin && to.path !== '/logRe/login') {
         next({
             path: "/logRe/login"
         })
-        console.log("已经进入路由守卫了")
+
     } else {
         next()
-        console.log("没有进入路由守卫！！！")
     }
 })
 

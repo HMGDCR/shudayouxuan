@@ -13,8 +13,10 @@
     </div>
     <!-- 中部地址栏 -->
     <div class="view-main">
+
+       <van-radio-group v-model="radio" checked-color="#c53539">
       <div class="address-list-item" v-for="(item,index) in addressList" :key="index">
-        <div class="info">
+        <div class="info" @click="goComirm">
           <div class="addressee">{{item.name}}&nbsp;&nbsp;{{item.tel}}</div>
           <div class="address-detail">{{item.addressDetail}}</div>
         </div>
@@ -23,9 +25,8 @@
                         <van-checkbox v-model="item.checked" checked-color="#C71D23" @click="selectOne(index)"> <span>默认地址</span> </van-checkbox>
           </div>-->
 
-          <van-radio-group v-model="radio">
-            <van-radio :name="index" @click="selectOne(index)">默认地址</van-radio>
-          </van-radio-group>
+         
+            <van-radio :name="index" @click="selectOne(item,item.addressId)">默认地址</van-radio>          
 
           <div class="delEdit">
             <div class="delete" @click="delButton(item.addressId,index)">
@@ -45,7 +46,9 @@
           </div>
         </div>
       </div>
+      </van-radio-group>
     </div>
+    <div class="kongbai"></div>
     <!-- 底部新建栏 -->
     <div class="address-list-button">
       <div>
@@ -65,7 +68,7 @@ export default {
     return {
       // checked: "",
       addressList: [],
-      radio: "1"
+      radio: 1
     };
   },
   computed: {
@@ -77,13 +80,26 @@ export default {
     this.getAddress();
   },
   methods: {
+    goComirm(){
+         this.$router.push("/order/confirm");
+    },
     //选择默认地址
-    selectOne(index) {
-      this.addressList[index].checked = true;
-      this.$store.commit("address", this.addressList[index]);
-      setTimeout(() => {
-        this.$router.push("/order/confirm");
-      }, 1000);
+    selectOne(data,index) {
+      console.log("默认地址：",index,"data",data)
+       let url ="/address/edit?addressId="+index
+     
+     let deta={
+       ...data,
+       isDefault:true
+     }
+       this.$axios.post(url,deta).then(res=>{
+         console.log("默认修改成功：",res)
+       }).catch(err=>{
+         console.log("默认修改失败：",err)
+       })
+      // setTimeout(() => {
+      //   this.$router.push("/order/confirm");
+      // }, 1000);
     },
 
     //获取地址的数据列表
@@ -101,6 +117,15 @@ export default {
               checked: false
             };
           });
+
+         res.list.forEach((i,ix) => {
+           if(i.isDefault){
+             this.radio=ix
+           }
+         });
+
+
+
         })
         .catch(err => {
           console.log("获取地址失败：", err);
@@ -113,63 +138,27 @@ export default {
     //删除按钮事件
     delButton(addressId, index) {
       ///////////////////
-      // this.$dialog
-      //   .confirm({
-      //     title: "删除内容",
-      //     message: "你即将永久删除xxx内容"
-      //   })
-      //   .then(() => {      
-      //     if (confirm()) {
-
-      //        console.log("addressId", addressId, "index", index);
-      // let url = "/address/del";
-      // let data = {
-      //   addressId: addressId
-      // };
-      // this.$axios
-      //   .post(url, data)
-      //   .then(res => {
-      //     console.log("删除成功", res);
-      //     this.$toast.success(
-      //       `已经成功删除${this.addressList[index].addressDetail}`
-      //     );
-      //     this.addressList.splice(index, 1);
-      //   })
-      //   .catch(err => {
-      //     console.log("删除失败：", err);
-      //     this.$toast.fail(`删除${this.addressList[index].addressDetail}失败`);
-      //   });
-
-            
-      //     }
-      //   })
-      //   .catch(() => {
-      //     // on cancel
-      //   });
-
-      ////////////////////
-
-      // alert("确认删除");
-
-      console.log("addressId", addressId, "index", index);
-      let url = "/address/del";
-      let data = {
+       
+          let data = {
         addressId: addressId
       };
-      this.$axios
-        .post(url, data)
-        .then(res => {
-          console.log("删除成功", res);
-          this.$toast.success(
-            `已经成功删除${this.addressList[index].addressDetail}`
-          );
-          this.addressList.splice(index, 1);
-        })
-        .catch(err => {
-          console.log("删除失败：", err);
-          this.$toast.fail(`删除${this.addressList[index].addressDetail}失败`);
-        });
-
+       this.$dialog.confirm({
+            title: '提示',
+            message: '退出删除'
+            }).then(() => {
+           let url = "/address/del";
+                this.$axios.post(url,data).then(res=>{
+                   let clear= this.$toast.success("删除成功")
+                    setTimeout(()=>{
+                        clear.clear()                        
+                    },500)
+                     this.addressList.splice(index, 1);                  
+                })
+           
+            
+            }).catch(() => {
+          
+            });   
 
         ////////////////删除结束
     },
@@ -178,6 +167,7 @@ export default {
       console.log("编辑", this.addressList[index]);
       this.$store.commit("editaddress", this.addressList[index]);
       this.$router.push(`/address/edit/${this.addressList[index].addressId}`);
+      // this.$router.push(`/address/edit`);
     },
     onClickSave() {}
   }
@@ -203,6 +193,7 @@ export default {
   width: 100vw;
   display: flex;
   position: fixed;
+  z-index: 100;
 }
 .van-hairline--bottom {
   height: 44px;
@@ -375,5 +366,11 @@ export default {
     color: #ffffff;
     border-radius: 50%;
   }
+}
+//空白
+.kongbai{
+  height: 80px;
+  width: 100%;
+  background: #fff;
 }
 </style>

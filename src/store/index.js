@@ -12,7 +12,7 @@ const config = {
 
     state: {
         total: 0,
-        carTotal: [], //购物车的数量
+        cartNum: 0, //购物车的数量
         totalPrice: 0, //结算的总价格   
         username: "",
         phone: "",
@@ -21,12 +21,14 @@ const config = {
         token: "",
         SeletCarNum: [], //存放选中购物车的Id,当购物车Befor的商品被选中的时候，使用
         preOrderId: "", //预订单的Id,
-        totalPay: 0, //实际支付
+        allFee: 0, //实际支付
         discount: 0, //优惠金额      
         addressInfo: "", //用户的地址
         payMoney: 0, //修改后的实际金额
         orderId: "", //订单的Id,
-        editaddress: {} //修改地址
+        editaddress: {}, //修改地址
+
+        demoUserName: "李白"
 
 
 
@@ -37,6 +39,9 @@ const config = {
     },
 
     mutations: {
+        demoUserName(state, payload) {
+            state.demoUserName = payload
+        },
         // 修改地址
         editaddress(state, payload) {
             state.editaddress = payload
@@ -59,8 +64,8 @@ const config = {
         },
 
         //最后支付
-        totalPay(state, payload) {
-            state.totalPay = payload
+        allFee(state, payload) {
+            state.allFee = payload
         },
         // 修改预订单Id
         updataPreOrderId(state, payload) {
@@ -107,9 +112,9 @@ const config = {
             state.total = state.total + 1
         },
         // 购物车的商品数量
-        carTotals(state, payload) {
+        cartNum(state, payload) {
             //把商品的Id传到购物车中         
-            state.carTotal.push(payload)
+            state.cartNum = payload
 
 
         }

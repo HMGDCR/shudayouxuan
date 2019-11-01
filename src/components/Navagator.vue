@@ -13,7 +13,7 @@
                 </router-link>
                 <router-link to="/cart/befor" tag="li">
                     <i class="iconfont cart icon-gouwu"></i>
-                    <span>购物车</span>
+                    <span class="cartNum"><span v-if="cartNum>0">{{cartNum}}</span>购物车</span>
                 </router-link>
                 <router-link to="/my/center" tag="li">
                     <i class="iconfont icon-wode"></i>
@@ -26,21 +26,21 @@
 
 <script>
 export default {
-
+computed: {
+    cartNum(){
+        console.log("this.$store.state.cartNum=======",this.$store.state.cartNum)
+        return this.$store.state.cartNum
+    }
+},
 }
 </script>
 
 <style scoped lang="less">
-// .kongbai{
-
-//     height: 100px;
-//     width: 100%;
-// }
 
 .router-link-exact-active{
    
      span,.iconfont{
-        color: #FAB646;
+        color: rgb(192, 49, 49);
     }
 }
 
@@ -62,6 +62,7 @@ export default {
             justify-content: space-around;
             align-items: center;
             color: #797d82;
+            // color: #2e2f30;
             .iconfont {
                 font-size: 20px;
             }
@@ -72,6 +73,22 @@ export default {
                 margin-top: 2px;
                 margin-bottom: 4px;
                 font-size: 12px;
+            }
+            .cartNum{
+                position: relative;
+            }
+            .cartNum>span{               
+                position: absolute;
+                bottom: 25px;
+                left: 20px;
+                height: 15px;
+                width: 20px;
+                border-radius: 10px;
+                background: #c03131;
+                color: #ffffff;
+                font-size: 12px;
+                text-align: center;
+                line-height: 15px;
             }
         }
     }

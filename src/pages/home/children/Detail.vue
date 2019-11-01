@@ -163,8 +163,7 @@ export default {
                 }
             },
             result:{} //详情数据
-            // banners:[],//轮播图
-            // descPics:[]
+           
         };
     },
     //监听属性
@@ -176,9 +175,10 @@ export default {
         total(){
              return  this.$store.state.total
         },
-         carTotal(){
-             return  this.$store.state.carTotal
-        }
+        cartNum(){
+            return this.$store.state.cartNum
+        },
+       
     },
     methods: {
         //减法
@@ -205,8 +205,8 @@ export default {
             //（1） 购物车的商品数量增加
             //  this.$store.commit("addtoCart")
              //（2）把商品的Id传到购物
-            //  this.$store.commit("carTotals",this.productId)
-             console.log("数组Id",this.carTotal)
+     
+            
             let url ="cart/add";
         // this.add()
             let data = {
@@ -214,10 +214,13 @@ export default {
                 buyNum:this.count
             };
             this.$axios.post(url,data).then(res=>{
-                // this.result.cartNum+=this.count   
-                this.result.cartNum++
+                
+                this.result.cartNum= this.result.cartNum++
+                let Num = this.result.cartNum++
+                this.$store.commit("cartNum",Num+1)
+
                 console.log("返回结果",res)             
-              
+              console.log("catNum",this.cartNum)
             }).catch(err=>{
                 console.log("购物车错误：",err)
             })

@@ -22,7 +22,7 @@
           type="danger"
           size="large"
           @click="payMoney"
-        >支付 ¥{{totalPay*100 |formatMoney}}</van-button>
+        >支付 ¥{{allFee*100 |formatMoney}}</van-button>
       </div>
     </div>
   </div>
@@ -45,7 +45,7 @@ export default {
       let urlOrder = "/order/add";    
       let dataOrder = {
         preOrderId: this.preOrderId,
-        allFee: this.totalPay,
+        allFee: this.allFee,
         addressInfo: this.addressInfo,
         discount: this.discount
       };     
@@ -73,6 +73,8 @@ export default {
         .then(res => {
           //删除成功后，需要清空vuex中的被选中商品的购物车Id
           this.$store.commit("SeletCarNum", []);
+          this.$store.commit("cartNum", 0);
+
         })
         .catch(err => {
           console.log("删除购物车失败：", err);
@@ -82,7 +84,7 @@ export default {
     goBack() {
       this.$router.go(-1);
       this.$store.commit("SeletCarNum", []);
-      this.$store.commit("totalPay", 0);
+      this.$store.commit("allFee", 0);
     },
     show() {
       this.$store.commit("payWayFlagChange", !this.$store.state.payWayFlag);
@@ -98,8 +100,8 @@ export default {
       return this.$store.state.SeletCarNum;
     },
     //////////////////商品的总价格
-    totalPay() {
-      return this.$store.state.totalPay;
+    allFee() {
+      return this.$store.state.allFee;
     },
     ////////////////////用户地址
     addressInfo() {

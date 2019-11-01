@@ -1,10 +1,6 @@
 <template>
   <div class="selectArea">
-    <van-nav-bar :title="add?'新建地址':'编辑地址'" left-text left-arrow @click-left="onClickLeft" />
-    <div class="search">
-      <div class="flot-rigth">请选择</div>
-      <van-search class="flot-left" placeholder="请输入搜索关键词" v-model="value" />
-    </div>
+    <van-nav-bar :title="add?'新建地址':'编辑地址'" left-text left-arrow @click-left="onClickLeft" />  
     <div>
       <van-address-edit
       :address-info="addressInfo"
@@ -13,12 +9,12 @@
         save
         show-postal
        :save-button-text="buttonText"
-        show-set-default
-        show-search-result
-        :search-result="searchResult"
+        :show-set-default="showdefault"
+       
         @save="onSave"
         @delete="onDelete"
-        @change-detail="onChangeDetail"
+        @change-default="onChangeDetail"
+
       />
     </div>
   </div>
@@ -34,7 +30,7 @@ export default {
   
   data() {
     return {
-      value: "",
+    showdefault:true,
       areaList: {},      
       searchResult: [],
       newArr: [],
@@ -48,6 +44,10 @@ export default {
       console.log("返回");
       this.$router.go(-1);
     },
+    //////////////////////////设置是否默认地址
+    onChangeDetail(value){
+        console.log("是否默认地址：",value)
+    },
     onSave(content) {  
       /////////////////添加地址的情况下
       if(this.add){      
@@ -56,8 +56,12 @@ export default {
       let data = content;
       this.$axios
         .post(url, data)
-        .then(res => {
-          this.$toast.success("添加地址成功");
+        .then(res => {         
+           let toastClear= this.$toast.success("添加地址成功")              
+                setTimeout(()=>{
+                    toastClear.clear()
+                     this.$router.push("/address/list")
+                },1000)
         })
         .catch(err => {
           this.$toast.fail("添加地址失败");
@@ -65,15 +69,13 @@ export default {
       }
       /////////////////////////修改
       else{
-         this.newArr = content; //需要保存的对象           
-              console.log("修改",this.editaddress)
+         this.newArr = content; //需要保存的对象                  
                let data = content;
            //调用编辑接口
             let url ="/address/edit?addressId="+this.addressId
              
             this.$axios.post(url,data).then(res=>{
-               let toastClear= this.$toast.success("修改成功")
-               console.log("res",res)
+               let toastClear= this.$toast.success("修改成功")              
                 setTimeout(()=>{
                     toastClear.clear()
                      this.$router.push("/address/list")
@@ -160,8 +162,7 @@ export default {
     };
   },
   computed: {
-    add(){ //判断我们是否是通过添加地址跳转过来的
-    console.log(this.$route.path.includes("area"));
+    add(){ //判断我们是否是通过添加地址跳转过来的    
        return this.$route.path.includes("area");
     },
     editaddress(){
@@ -174,6 +175,16 @@ export default {
 </script>
 
 <style lang="less">
+//默认地址的背景颜色
+.van-switch--on{
+  background-color: #c53539;
+}
+//保存按钮的背景颜色
+.van-button--danger{
+   background-color: #c53539;
+}
+
+
 .van-picker__toolbar .van-picker__confirm {
   color: black;
 }

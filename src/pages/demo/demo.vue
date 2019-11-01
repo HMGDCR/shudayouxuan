@@ -1,39 +1,47 @@
+
+
 <template>
   <div>
-    <van-password-input
-  :value="value"
-  info="密码为 6 位数字"
-  :mask="false"
-  
-  :focused="showKeyboard"
-  @focus="showKeyboard = true"
- 
-/>
-    <van-number-keyboard
-     
-  :show="showKeyboard"
-  @input="onInput"
-  @delete="onDelete"
-  @blur="showKeyboard = false"
-/>
+    <!-- 父组件 没有异步请求 -->
+    <child :userName="userName" @getChild="getChild" />
+    <p>父组件userName：{{userName}}</p>
+
+    <input type="text" v-model="value" />
+    <p>vuex传值----{{demoUserName}}</p>
+    <br />
+    <button @click="changeVuex">vuex值的修改</button>
   </div>
 </template>
 <script>
+import child from "./child";
 export default {
+  components: {
+    child
+  },
   data() {
     return {
-      value: '123456',
-      showKeyboard: true
+      userName: "炮哥",
+      value: ""
     };
   },
-
+  created() {
+    this.value = this.demoUserName;
+  },
   methods: {
-    onInput(key) {
-      this.value = (this.value + key).slice(0, 6);
+    //changeVuex
+    changeVuex() {
+      this.$store.commit("demoUserName", this.value);
     },
-    onDelete() {
-      this.value = this.value.slice(0, this.value.length - 1);
+    getChild(value) {
+      this.userName = value;
+    }
+  },
+  computed: {
+    demoUserName() {
+      return this.$store.state.demoUserName;
     }
   }
-}
+};
 </script>
+
+  

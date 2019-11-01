@@ -26,10 +26,14 @@ export default {
             }).then(() => {
                 let url = "/user/logout"
                 this.$axios.post(url).then(res=>{
-                    this.$toast.success("退出成功")
-                     this.$router.push("/my/center")
+                   let clear= this.$toast.success("退出成功")
+                    setTimeout(()=>{
+                        clear.clear()
+                          this.$router.push("/my/center")
                     this.$store.commit("isLogin",false)
                     this.$store.commit("updateToken","")
+                    },500)
+                   
                 
                 })
            

@@ -9,7 +9,7 @@
     <!-- 商品信息 -->
     <div class="ctxPay">
       <div class="titlePay">苏打优选商品</div>
-      <div class="pricePay">￥{{payMoney |formatMoney}}</div>
+      <div class="pricePay">￥{{allFee |formatMoney}}</div>
     </div>
     <!-- 收款方 -->
     <div class="context">
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       orderId:"",
-      payMoney:0,
+      // payMoney:0,
       isShow:true
     };
   },
@@ -49,7 +49,7 @@ export default {
         .then(res => {
           console.log("获取订单所有数据：", res);
           
-          this.payMoney=Number(res.list[0].allFee)*100
+          // this.payMoney=Number(res.list[0].allFee)*100
           this.orderId=res.list[0].orderId
         })
         .catch(err => {
@@ -63,13 +63,17 @@ export default {
       let url = "/order/pay";
       let data = {
         orderId: this.orderId,
-        allFee: this.payMoney
+        allFee: this.allFee
       };
+      let clearLoding=this.$loading(true);
       this.$axios
         .post(url, data)
         .then(res => {
-          let toastClear = this.$toast.success("支付成功");
+          this.$loading(false);
+          let toastClear = this.$toast.success("支付成功");         
+
           setTimeout(() => {
+            
             toastClear.clear();
             this.$router.push("/order/detail");
           }, 1000);
@@ -79,6 +83,12 @@ export default {
           this.$toast.fail("支付失败");
         });
     }
+  },
+  computed: {
+     //////////////////商品的总价格
+    allFee() {
+      return this.$store.state.allFee*100;
+    },
   },
  
 };

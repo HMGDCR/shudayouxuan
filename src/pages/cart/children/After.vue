@@ -27,6 +27,7 @@
     </div>
     <!-- 购物车列表 -->
     <div>
+
       <div class="flx-cent" v-for="(item,index) in carData" :key="index">
         <van-checkbox
           v-model="item.checked"
@@ -40,12 +41,12 @@
         <div class="cart-container flex2 jc-sb">
           <p class="goods-msg">{{item.masterName}}</p>
           <div class="goods-price">
-            <span class="price">￥{{item.price/100}}</span>
-            <!-- <span class="old-price">￥55.9</span> -->
+            <span class="price">￥{{item.price/100}}</span>         
             <span class="count">
               <div class="small-box">
                 <span
-                  style="width:34px;border:1px solid gray;"
+                :class="item.buyNum>1?'subtractYess':'subtractNo'"
+                  style="width:34px;"
                   @click="subtract(item.cartId,item.buyNum,index)"
                 >-</span>
                 <span style="width:46px;border:1px solid gray;border-left:0;">{{item.buyNum}}</span>
@@ -58,29 +59,10 @@
           </div>
         </div>
       </div>
-      <!-- <div class="flx-cent">
-        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-        <div class="cart-goods">
-          <img src="https://mall.s.maizuo.com/9085c7f2b5efb1a4abf3f3a962dcb088.png" alt />
-        </div>
-        <div class="cart-container flex2 jc-sb">
-          <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
-          <div class="goods-price">
-            <span class="price">￥44.9</span>
-           
-            <span class="count">
-              <div class="small-box">
-                <span style="width:34px;border:1px solid gray;">-</span>
-                <span style="width:46px;border:1px solid gray;border-left:0;">3</span>
-                <span style="width:34px;border:1px solid gray;border-left:0;">+</span>
-              </div>
-            </span>
-          </div>
-        </div>
-      </div>-->
+       <Nothing  v-if="carData.length==0?true:false"></Nothing> 
+    
     </div>
-    <!-- 底部结算 -->
-    <!-- <div class="buttom-nav" v-if="isShow?isShow:false"> -->
+    <!-- 底部结算 -->    
     <div class="buttom-nav">
       <van-checkbox
         v-model="checkedAll"
@@ -95,7 +77,7 @@
         color="#ef4040"
         @click="delCar"
       >
-        <span style="height:33px" >删除</span>
+        <span style="display:block;width:85px; height:33px;background: rgb(192, 49, 49);display:flex; justify-content: center;  align-items: center;">删除</span>
       </van-button>
     </div>
     <div class="kongbai"></div>
@@ -105,9 +87,11 @@
 
 <script>
 import Navagater from "@/components/Navagator";
+import Nothing from './nothing'
 export default {
   components: {
-    Navagater
+    Navagater,
+    Nothing
   },
   data() {
     return {
@@ -116,23 +100,17 @@ export default {
       carData: [],
       checkedAll: false,
       count: [],
-      isShow:false
+      isShow:false,
+    
+      
     };
   },
   created() {
     this.getCarData();
   },
-// computed: {
-//   isShow(){
-//    return this.buyNums>0?true:false
-//    }
-// },
-// watch: {
-//   buyNums(){
-//   this.isShow= this.buyNums.length>0?true:false
-//   console.log("this.isShow",this.isShow)
-//   }
-// },
+
+
+
   methods: {
     //删除购物车
     delCar(){
@@ -149,6 +127,7 @@ export default {
       }
       this.$axios.post(url,data).then(res=>{
         console.log("删除",res)
+         this.$store.commit("cartNum",0)
         selectCarId.forEach(carId=>{
             this.carData=this.carData.filter(item=>{           
            return item.cartId!=carId
@@ -198,10 +177,11 @@ export default {
         this.count[index]--;      
         this.buyNums = buyNum - 1;
       this.updateNum(cartId, this.buyNums,index);
-      // return false
+     
       }
       else{
         this.isShow=false
+         
       }
      
     },
@@ -216,8 +196,16 @@ export default {
         .post(url, data)
         .then(res => {
           console.log("修改商品数量：", res);
-          this.carData[index].buyNum =this.count[index]
-          
+          this.carData[index].buyNum =this.count[index] 
+          console.log("this.count",this.count)
+          //遍历数据，统计购车的总数量
+          let Num = 0
+          this.count.forEach(item=>{
+            Num+=item
+           
+          })
+           console.log("购物车数量：",Num)
+            this.$store.commit("cartNum",Num)        
         })
         .catch(err => {
           console.log("错误：", err);
@@ -278,10 +266,12 @@ export default {
 }
 
 .van-button {
-  line-height: 0px;
+  line-height: 0px; 
 }
 .navagator .van-nav-bar .van-icon {
-  color: #2e2f30;
+  // color: #2e2f30;
+    color: #797d82;
+  font-size: 24px;
 }
 .navagator .van-nav-bar__text {
   color: #2e2f30;
@@ -375,7 +365,7 @@ export default {
   width: 115px;
   position: absolute;
   right: 0;
-  color: rgb(184, 181, 181);
+  color: #797d82;
   font-size: 12px;
 }
 .small-box {
@@ -383,6 +373,11 @@ export default {
   display: inline-block;
   margin-top: 15px;
   height: 25px;
+  .subtractNo{
+   border:1px solid #d2d6dc;
+  }.subtractYess{
+   border:1px solid #797d82;
+  }
   span {
     height: 25px;
     display: inline-block;

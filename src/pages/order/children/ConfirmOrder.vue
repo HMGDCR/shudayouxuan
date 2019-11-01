@@ -7,18 +7,30 @@
     <!-- //地址区域 -->
     <van-cell icon="location-o" is-link id="area" @click="toAddressList">
       <!-- 使用 title 插槽来自定义标题 -->
-      <template slot="title">
-        <span class="custom-title">{{address.address.name}}</span>
+    
+      <template slot="title" v-if="addresList">
+        <span class="custom-title">{{addresList.name}}</span>
         <span class="custom-title">&nbsp;</span>
-        <span class="custom-title">{{address.address.tel}}</span>
-        <div class="custom-title fonts">{{address.address.addressDetail}}</div>
+        <span class="custom-title">{{addresList.tel}}</span>
+        <div
+          class="custom-title fonts"
+        >{{addresList.city}}{{addresList.county}}{{addresList.addressDetail}}</div>
       </template>
+      <!-- 未设置地址 -->
+  <template slot="title"  v-else>
+        <span
+          style=" display: flex;
+    justify-content: flex-start;
+    align-items: center;height:100%; "
+        >未填写地址</span>
+      </template>
+
     </van-cell>
     <div id="goods">
       <!-- //商品部分 -->
       <!-- //头部单元格 -->
       <van-cell-group>
-        <van-cell :title="`运费${expressFee/100}元（满${fullReduceMoney/100}元免运费）`" />
+        <van-cell :title="`运费${expressFee}元（满${fullReduceMoney/100}元免运费）`" />
       </van-cell-group>
 
       <van-card
@@ -64,7 +76,7 @@
       </van-cell>
     </div>
     <div id="bottom">
-      <!-- <van-submit-bar :price="payMoney" tip button-text="提交订单" @submit="onSubmit" /> -->
+     
       <van-submit-bar :price="allFee*100" tip button-text="提交订单" @submit="onSubmit" />
     </div>
     <PayWay :class="$store.state.payWayFlag?'show':''"></PayWay>
@@ -83,12 +95,12 @@ export default {
       isExpressFee: true, //运费
       fullReduceMoney: 0, //满减
       discountMoney: 0, //优惠金额
-      totalPay: 0, //实际支付
+     
       counponMoney: 0, //实际支付
-      conditionValue: 0, //优惠券满减
-      payMoney: 0,
+      conditionValue: 0, //优惠券满减     
       type: "", //打折的类型 ‘01’代表的是满减，‘02’代表的是打折
-      flag: false
+      flag: false,
+      addresList: {}
     };
   },
   components: {
@@ -97,6 +109,24 @@ export default {
   },
 
   methods: {
+    //获取地址数据
+    getAddress() {
+      let url = "/address/all";
+      this.$axios
+        .post(url)
+        .then(res => {
+          console.log("地址列表:", res.list);
+          let arrList = res.list.filter(item => {
+            return item.isDefault == true;
+          });
+          this.addresList = arrList[0];
+          this.$store.commit("address", this.addresList);
+          console.log("遍历后的地址：", typeof this.addresList == "undefined");
+        })
+        .catch(err => {
+          console.log("地址列表失败：", err);
+        });
+    },
     //获取子组件传值
     getCounponMoney(result) {
       this.discountMoney = result;
@@ -134,11 +164,17 @@ export default {
       this.$store.commit("totalPrice", 0);
     },
     onSubmit() {
+
+        if(typeof this.addresList == "undefined"){
+          this.$toast.fail("请选择地址")
+          return false;
+        }
+
       this.$store.commit("payWayFlagChange", !this.$store.state.payWayFlag);
-      this.$store.commit("totalPay", this.allFee);
+      this.$store.commit("allFee", this.allFee);
       this.$store.commit("discount", this.counponMoney);
-      this.$store.commit("payMoney", this.payMoney);
-      console.log('四个参数',this.allFee,this.preOrderId,this.address,this.allFee)
+    
+   
     },
     toAddressList() {
       this.$router.push("/address/list");
@@ -146,6 +182,7 @@ export default {
   },
   created() {
     this.getPreOrderData();
+    this.getAddress();
   },
   computed: {
     //使用计算属性，计算总的实付金额
@@ -183,6 +220,11 @@ export default {
 }
 .van-nav-bar {
   height: 44px;
+     
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
 }
 .van-nav-bar__title {
   font-size: 17px;
@@ -200,6 +242,7 @@ export default {
   border-color: #fafafb;
 }
 #area {
+  margin-top: 45px;
   margin-bottom: 12px;
   padding: 14px 17px;
   height: 97px;
@@ -226,7 +269,7 @@ export default {
     color: rgb(189, 193, 197);
   }
   .van-cell__right-icon {
-    margin-top: 24px;
+   
   }
   .van-cell {
     margin-bottom: 12px;
@@ -377,5 +420,14 @@ export default {
 }
 .show {
   display: none;
+}
+//地址的样式
+.van-cell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#area .van-cell__left-icon {
+  margin-top: 0px;
 }
 </style>

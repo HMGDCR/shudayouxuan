@@ -31,8 +31,7 @@
     </div>
     <!-- 购物车列表 -->
 
-    <div>
-      <!-- <router-link :to="`/home/detail/${item.productId}`" tag="div"></router-link> -->
+    <div class="wrap">
       <div class="flx-cent" v-for="(item,index) in carData" :key="index">
         <van-checkbox
           v-model="item.checked"
@@ -52,20 +51,7 @@
           </div>
         </div>
       </div>
-      <!-- <div class="flx-cent">
-        <van-checkbox v-model="checked" checked-color="#C03131" icon-size="15px"></van-checkbox>
-        <div class="cart-goods">
-          <img src="https://mall.s.maizuo.com/9085c7f2b5efb1a4abf3f3a962dcb088.png" alt />
-        </div>
-        <div class="cart-container flex2 jc-sb">
-          <p class="goods-msg">商品信息多余文字会省略的啊啊啊啊啊啊</p>
-          <div class="goods-price">
-            <span class="price">￥44.9</span>
-            <span class="old-price">￥55.9</span>
-            <span class="count">X 1</span>
-          </div>
-        </div>     
-      </div>-->
+      <Nothing  v-if="carData.length==0?true:false"></Nothing> 
     </div>
     <div class="kongbai"></div>
     <!-- 底部结算 -->
@@ -92,9 +78,11 @@
 
 <script>
 import Navagater from "@/components/Navagator";
+import Nothing from './nothing'
 export default {
   components: {
-    Navagater
+    Navagater,
+    Nothing
   },
   computed: {
     carTotal() {
@@ -203,7 +191,7 @@ export default {
           let resList = res.list.filter(item => {
             return item.buyNum > 0;
           });
-          console.log("购物车的列表数据：", resList);
+         
           //由于返回的对象里没有我们需要的checked属性，所有我们需要对数组里的每一个对象添加checked属性，使用的方式是map和扩展运算符
           this.carData = resList.map(item => {
             return {
@@ -238,6 +226,7 @@ export default {
 }
 </style>
 <style lang="less" scoped>
+
 .kongbai {
   height: 100px;
   width: 100%;
@@ -247,7 +236,8 @@ export default {
   font-size: 17px;
 }
 .navagator .van-nav-bar .van-icon {
-  color: #2e2f30;
+  color: #797d82;
+  font-size: 24px;
 }
 .navagator .van-nav-bar__text {
   color: #2e2f30;
